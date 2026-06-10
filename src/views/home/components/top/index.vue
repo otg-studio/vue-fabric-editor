@@ -8,12 +8,10 @@
       <import-Json></import-Json>
       <Divider type="vertical" />
       <import-file></import-file>
-      <Button type="text" @click="clear">{{ $t('cleanUp') }}</Button>
-      <!-- 全部模板 -->
+      <Divider type="vertical" />
       <Button type="text" to="/template" target="_blank">{{ $t('ui.allTemplates') }}</Button>
-      <!-- 批次產圖 -->
+      <Divider type="vertical" />
       <Button type="text" @click="batchGenerateRef?.open()">{{ $t('ui.batchGenerate') }}</Button>
-      <Tooltip :content="$t('tip')" placement="bottom"></Tooltip>
       <Divider type="vertical" />
 
       <myTemplName></myTemplName>

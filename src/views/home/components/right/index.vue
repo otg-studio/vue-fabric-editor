@@ -10,10 +10,12 @@ const hide = defineAsyncComponent(() => import('@/components/hide.vue'));
 const group = defineAsyncComponent(() => import('@/components/group.vue'));
 const lock = defineAsyncComponent(() => import('@/components/lock.vue'));
 const dele = defineAsyncComponent(() => import('@/components/del.vue'));
+const edit = defineAsyncComponent(() => import('@/components/edit.vue'));
 
 const bgBar = defineAsyncComponent(() => import('@/components/bgBar.vue'));
 const setSize = defineAsyncComponent(() => import('@/components/setSize.vue'));
 const replaceImg = defineAsyncComponent(() => import('@/components/replaceImg.vue'));
+const clipImage = defineAsyncComponent(() => import('@/components/clipImage.vue'));
 const filters = defineAsyncComponent(() => import('@/components/filters.vue'));
 const imgStroke = defineAsyncComponent(() => import('@/components/imgStroke.vue'));
 // const elementData = defineAsyncComponent(() => import('@/components/elementData.vue'));
@@ -24,6 +26,9 @@ const attributeShadow = defineAsyncComponent(() => import('@/components/attribut
 const attributeBorder = defineAsyncComponent(() => import('@/components/attributeBorder.vue'));
 const attributeRounded = defineAsyncComponent(() => import('@/components/attributeRounded.vue'));
 const attributeFont = defineAsyncComponent(() => import('@/components/attributeFont.vue'));
+const attributeTextContent = defineAsyncComponent(
+  () => import('@/components/attributeTextContent.vue')
+);
 const attributeTextFloat = defineAsyncComponent(
   () => import('@/components/attributeTextFloat.vue')
 );
