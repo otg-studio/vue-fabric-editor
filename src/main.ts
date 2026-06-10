@@ -6,7 +6,7 @@ import 'view-ui-plus/dist/styles/viewuiplus.css';
 import './styles/index.less';
 import VueLazyLoad from 'vue3-lazyload';
 // 自定义字体文件
-import '@/assets/fonts/font.css';
+// Removed import '@/assets/fonts/font.css';
 
 import { VueMasonryPlugin } from 'vue-masonry';
 
