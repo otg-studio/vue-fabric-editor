@@ -26,17 +26,13 @@
           <DropdownItem name="clipboard" divided>{{ $t('save.copy_to_clipboard') }}</DropdownItem>
           <DropdownItem name="clipboardBase64">{{ $t('save.copy_to_clipboardstr') }}</DropdownItem>
           <DropdownItem name="saveJson" divided>{{ $t('save.save_as_json') }}</DropdownItem>
-          <DropdownItem name="batchGenerate" divided>批次產圖 (Batch Generate)</DropdownItem>
         </DropdownMenu>
       </template>
     </Dropdown>
-    <batch-generate ref="batchGenerateRef" />
   </div>
 </template>
 
 <script setup name="save-bar">
-import { ref } from 'vue';
-import BatchGenerate from './batchGenerate.vue';
 import { Modal } from 'view-ui-plus';
 import useSelect from '@/hooks/select';
 import useMaterial from '@/hooks/useMaterial';
@@ -46,7 +42,6 @@ import { Spin } from 'view-ui-plus';
 import { useRoute } from 'vue-router';
 import { Message } from 'view-ui-plus';
 const route = useRoute();
-const batchGenerateRef = ref(null);
 
 const { createTmplByCommon, updataTemplInfo, routerToId } = useMaterial();
 
@@ -92,9 +87,6 @@ const cbMap = {
       Message.warning('请登录');
     }
     Spin.hide();
-  },
-  batchGenerate() {
-    batchGenerateRef.value?.open();
   },
 };
 

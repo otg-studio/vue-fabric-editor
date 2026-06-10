@@ -11,6 +11,8 @@
       <Divider type="vertical" />
       <Button type="text" to="/template" target="_blank">全部模板</Button>
       <Divider type="vertical" />
+      <Button type="text" @click="batchGenerateRef?.open()">批次產圖</Button>
+      <Divider type="vertical" />
 
       <myTemplName></myTemplName>
       <!-- 标尺开关 -->
@@ -34,14 +36,18 @@
       <login></login>
       <lang></lang>
     </div>
+
+    <batch-generate ref="batchGenerateRef" />
   </Header>
 </template>
 
 <script name="Top" setup lang="ts">
+import { ref, computed } from 'vue';
 import proIcon from '@/assets/icon/proIcon.png';
 // 导入元素
 import importJson from '@/components/importJSON.vue';
 import importFile from '@/components/importFile.vue';
+import batchGenerate from '@/components/batchGenerate.vue';
 
 // 顶部组件
 import logo from '@/components/logo.vue';
@@ -56,6 +62,8 @@ import history from '@/components/history.vue';
 
 const props = defineProps(['ruler']);
 const emit = defineEmits(['update:ruler']);
+
+const batchGenerateRef = ref<InstanceType<typeof batchGenerate> | null>(null);
 
 const toggleModel = computed({
   get() {

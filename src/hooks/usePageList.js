@@ -127,11 +127,13 @@ export default function usePageList({
 
 const getMaterialInfoUrl = (info) => {
   const imgUrl = info?.data?.attributes?.url || '';
+  if (imgUrl.startsWith('data:')) return imgUrl;
   return APIHOST + imgUrl;
 };
 
 const getMaterialPreviewUrl = (info) => {
   const imgUrl = info?.data?.attributes?.formats?.small?.url || info?.data?.attributes?.url || '';
+  if (imgUrl.startsWith('data:')) return imgUrl;
   return APIHOST + imgUrl;
 };
 
