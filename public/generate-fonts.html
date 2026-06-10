@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Font Preview Generator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/genjyuu-gothic@5.2.5/400.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap">
+  <style>
+    body { font-family: sans-serif; padding: 20px; text-align: center; }
+    canvas { border: 1px solid #ddd; margin-top: 10px; border-radius: 4px; }
+    .font-box { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h2>正在產生字體預覽圖...</h2>
+  <p>稍等幾秒鐘，等字體載入完成後會自動產生並下載 PNG 圖片。</p>
+  
+  <div style="position: absolute; opacity: 0; pointer-events: none;">
+    <span style="font-family: 'Genjyuu Gothic'">源柔ゴシック</span>
+    <span style="font-family: 'Noto Sans TC'">思源黑體</span>
+    <span style="font-family: 'Noto Serif TC'">思源宋體</span>
+  </div>
+
+  <div id="output"></div>
+
+  <script>
+    const fonts = [
+      { name: '源柔ゴシック', family: 'Genjyuu Gothic', filename: 'genjyuu.png' },
+      { name: '思源黑體', family: 'Noto Sans TC', filename: 'noto_sans.png' },
+      { name: '思源宋體', family: 'Noto Serif TC', filename: 'noto_serif.png' }
+    ];
+
+    document.fonts.ready.then(() => {
+      setTimeout(() => {
+        const output = document.getElementById('output');
+        
+        fonts.forEach((f, index) => {
+          const div = document.createElement('div');
+          div.className = 'font-box';
+
+          const canvas = document.createElement('canvas');
+          canvas.width = 200;
+          canvas.height = 50;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 200, 50);
+          
+          ctx.fillStyle = '#333333';
+          ctx.font = `20px "${f.family}"`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(f.name, 100, 26);
+          
+          div.appendChild(canvas);
+          div.appendChild(document.createElement('br'));
+          
+          const a = document.createElement('a');
+          a.href = canvas.toDataURL('image/png');
+          a.download = f.filename;
+          a.textContent = '📥 下載 ' + f.name + ' 預覽圖';
+          a.style.display = 'inline-block';
+          a.style.marginTop = '10px';
+          a.style.padding = '8px 16px';
+          a.style.background = '#2d8cf0';
+          a.style.color = '#fff';
+          a.style.textDecoration = 'none';
+          a.style.borderRadius = '4px';
+          
+          div.appendChild(a);
+          output.appendChild(div);
+
+          setTimeout(() => {
+            a.click();
+          }, index * 500);
+        });
+        
+        document.querySelector('h2').innerText = '✅ 預覽圖產生完成！';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

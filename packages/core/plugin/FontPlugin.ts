@@ -113,7 +113,7 @@ class FontPlugin implements IPluginTempl {
   createFontCSS(arr: any[]) {
     let code = '';
     arr.forEach((item) => {
-      if (item.file.includes('fonts.googleapis.com/css')) {
+      if (item.file.includes('fonts.googleapis.com/css') || item.file.endsWith('.css')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = item.file;

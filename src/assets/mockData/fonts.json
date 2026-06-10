@@ -1,20 +1,20 @@
 [
   {
-    "name": "AlimamaShuHeiTi",
+    "name": "Genjyuu Gothic",
     "type": "text",
-    "file": "https://github.kuaitu.cc/uploads/Alimama_Shu_Hei_Ti_Bold_1e2474cd26.ttf",
-    "img": "https://github.kuaitu.cc/uploads/20230620202535_f63d9cc2ba.png"
+    "file": "https://cdn.jsdelivr.net/npm/@fontsource/genjyuu-gothic@5.2.5/400.css",
+    "img": "/fonts/genjyuu.png"
   },
   {
     "name": "Noto Sans TC",
     "type": "text",
     "file": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap",
-    "img": ""
+    "img": "/fonts/noto_sans.png"
   },
   {
     "name": "Noto Serif TC",
     "type": "text",
     "file": "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap",
-    "img": ""
+    "img": "/fonts/noto_serif.png"
   }
 ]
