@@ -10,7 +10,7 @@
     "displayName": "思源黑體",
     "name": "Noto Sans TC",
     "type": "text",
-    "file": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap",
+    "file": "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-tc@5.0.14/400.css",
     "img": "/fonts/noto_sans.png"
   },
   {

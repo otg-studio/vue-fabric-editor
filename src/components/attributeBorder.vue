@@ -174,6 +174,8 @@ const changeCommon = (key, value) => {
   if (activeObject) {
     activeObject.set(key, value);
     activeObject.set('strokeUniform', true);
+    activeObject.set('strokeLineJoin', 'round');
+    activeObject.set('strokeLineCap', 'round');
     canvasEditor.canvas.renderAll();
   }
 };
@@ -184,6 +186,7 @@ const borderSet = (key) => {
   if (activeObject) {
     const stroke = strokeDashList.find((item) => item.label === key);
     activeObject.set(stroke.value);
+    activeObject.set('strokeLineJoin', 'round');
     canvasEditor.canvas.renderAll();
   }
 };
