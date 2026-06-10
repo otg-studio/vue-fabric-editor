@@ -6,80 +6,22 @@
  * @Description: 分页通用
  */
 
-const repoSrc = import.meta.env.APP_APIHOST;
-import axios from 'axios';
-import qs from 'qs';
+import { getMockData, getMockDataAll } from '@/assets/mockData';
 
 // 分类API
-const typeApi = (url) => axios.get(`${repoSrc}/api/${url}?pagination[pageSize]=200`);
+const typeApi = (url) => {
+  return Promise.resolve({ data: { data: getMockDataAll(url) } });
+};
 
 // 分页API
-const pageApi = (url, queryParams) => axios.get(`${repoSrc}/api/${url}?${queryParams}`);
+const pageApi = (url, filters, pagination) => {
+  return Promise.resolve({ data: getMockData(url, filters, pagination) });
+};
 
-const getInfo = (id) => axios.get(`${repoSrc}/api/templs/${id}`);
-
-function getQueryParams(option, filters) {
-  filters.forEach((item) => {
-    const { key, value, type } = item;
-    if (value) {
-      option.filters[key] = { [type]: value };
-    }
-  });
-  return qs.stringify(option);
-}
-
-function getPageParams(
-  page,
-  typeValue,
-  searchKeyWord,
-  searchTypeKey,
-  searchWordKey,
-  pageSize,
-  fields
-) {
-  const query = {
-    populate: {
-      img: '*',
-    },
-    filters: {},
-    fields,
-    pagination: {
-      page: page,
-      pageSize: pageSize,
-    },
-  };
-
-  const queryParams = getQueryParams(query, [
-    {
-      key: searchTypeKey,
-      value: typeValue,
-      type: '$eq',
-    },
-    {
-      key: searchWordKey,
-      value: searchKeyWord,
-      type: '$contains',
-    },
-  ]);
-  return queryParams;
-}
-
-function getMaterialInfoUrl(info) {
-  const imgUrl = info?.data?.attributes?.url || '';
-  if (!imgUrl) return '';
-  return imgUrl.startsWith('http')
-    ? imgUrl.replace('http//', 'http://').replace('https//', 'https://')
-    : repoSrc + imgUrl;
-}
-
-function getMaterialPreviewUrl(info) {
-  const imgUrl = info?.data?.attributes?.formats?.small?.url || info?.data?.attributes?.url || '';
-  if (!imgUrl) return '';
-  return imgUrl.startsWith('http')
-    ? imgUrl.replace('http//', 'http://').replace('https//', 'https://')
-    : repoSrc + imgUrl;
-}
-
+const getInfo = (id) => {
+  // Not used deeply in pageList.js, dummy implementation
+  return Promise.resolve({ data: { data: {} } });
+};
 export default function usePageList({
   typeUrl,
   listUrl,
@@ -123,7 +65,7 @@ export default function usePageList({
       const list = res.data.data.map((item) => {
         return {
           value: item.id,
-          label: item.attributes.name,
+          label: item.name,
         };
       });
       typeList.value = [
@@ -142,24 +84,23 @@ export default function usePageList({
   const getPageData = async () => {
     pageLoading.value = true;
     try {
-      const params = getPageParams(
-        page.value,
-        typeValue.value,
-        searchKeyWord.value,
-        searchTypeKey,
-        searchWordKey,
-        pageSize,
-        fields
-      );
-      const res = await pageApi(listUrl, params);
+      const filters = {
+        typeId: typeValue.value,
+        keyword: searchKeyWord.value,
+      };
+      const paginationInfo = {
+        page: page.value,
+        pageSize: pageSize,
+      };
+      const res = await pageApi(listUrl, filters, paginationInfo);
       const list = res.data.data.map((item) => {
         return {
           id: item.id,
-          name: item.attributes.name,
-          desc: item.attributes.desc,
-          json: item.attributes?.json,
-          src: getMaterialInfoUrl(item.attributes.img),
-          previewSrc: getMaterialPreviewUrl(item.attributes.img),
+          name: item.name,
+          desc: item.desc,
+          json: item.json,
+          src: item.src,
+          previewSrc: item.previewSrc,
         };
       });
       Object.keys(res.data.meta.pagination).forEach((key) => {
