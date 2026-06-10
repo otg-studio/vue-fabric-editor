@@ -21,6 +21,7 @@
       <template #list>
         <DropdownMenu>
           <DropdownItem name="saveMyClould">{{ $t('save.save_my_spase') }}</DropdownItem>
+          <DropdownItem name="saveLocal" divided>儲存至本機瀏覽器</DropdownItem>
           <DropdownItem name="saveImg" divided>{{ $t('save.save_as_picture') }}</DropdownItem>
           <DropdownItem name="saveSvg">{{ $t('save.save_as_svg') }}</DropdownItem>
           <DropdownItem name="clipboard" divided>{{ $t('save.copy_to_clipboard') }}</DropdownItem>
@@ -85,6 +86,27 @@ const cbMap = {
       }
     } catch (error) {
       Message.warning('请登录');
+    }
+    Spin.hide();
+  },
+  async saveLocal() {
+    try {
+      Spin.show();
+      const json = canvasEditor.getJson();
+      const thumbnail = canvasEditor.canvas.toDataURL({ format: 'jpeg', quality: 0.2 });
+      const id = route?.query?.id || Date.now().toString();
+      const { saveLocalTemplate } = await import('@/utils/localDB');
+      await saveLocalTemplate({
+        id,
+        name: '本機設計_' + new Date().toLocaleString(),
+        json: JSON.stringify(json),
+        thumbnail,
+        updatedAt: Date.now(),
+      });
+      Message.success('儲存至本機瀏覽器成功！');
+    } catch (error) {
+      console.error(error);
+      Message.error('儲存本機失敗');
     }
     Spin.hide();
   },

@@ -9,7 +9,14 @@
 <template>
   <div>
     <!-- 搜索组件 -->
-    <div class="search-box">
+    <div style="margin-bottom: 10px">
+      <RadioGroup v-model="storageMode" type="button" @on-change="modeChange" style="width: 100%">
+        <Radio label="cloud" style="width: 50%; text-align: center">雲端模板</Radio>
+        <Radio label="local" style="width: 50%; text-align: center">本機模板</Radio>
+      </RadioGroup>
+    </div>
+
+    <div class="search-box" v-if="storageMode === 'cloud'">
       <Dropdown @on-click="createType" placement="bottom-start" style="margin-right: 10px" transfer>
         <Button type="primary" icon="md-add"></Button>
         <template #list>
@@ -43,9 +50,10 @@
 
     <!-- 列表 -->
     <div style="height: calc(100vh - 160px)" id="myFileTemplBox">
+      <!-- 雲端模板 -->
       <Scroll
         key="myFileTemplBox"
-        v-if="showScroll"
+        v-if="storageMode === 'cloud' && showScroll"
         :on-reach-bottom="nextPage"
         :height="scrollHeight"
         :distance-to-edge="[-1, -1]"
@@ -74,6 +82,30 @@
         <Spin size="large" fix :show="pageLoading"></Spin>
         <Divider plain v-if="isDownBottom">已经到底了</Divider>
       </Scroll>
+
+      <!-- 本機模板 -->
+      <div
+        v-if="storageMode === 'local'"
+        style="overflow-y: auto; height: 100%; display: flex; flex-wrap: wrap"
+      >
+        <div v-for="info in localTemplates" :key="info.id" class="item" style="margin-bottom: 10px">
+          <file
+            :isLocal="true"
+            :src="info.thumbnail"
+            :json="info.json"
+            :previewSrc="info.thumbnail"
+            :itemId="info.id"
+            :name="info.name"
+            @change="loadLocal"
+          ></file>
+        </div>
+        <div
+          v-if="localTemplates.length === 0"
+          style="text-align: center; width: 100%; margin-top: 50px; color: #999"
+        >
+          尚無本機儲存模板
+        </div>
+      </div>
     </div>
 
     <!-- 创建设计 -->
@@ -101,10 +133,30 @@ import useMaterial from '@/hooks/useMaterial';
 import usePageList, { getMaterialInfoUrl, getMaterialPreviewUrl } from '@/hooks/usePageList';
 // 路由
 import { useRoute } from 'vue-router';
+import { ref, reactive } from 'vue';
+
 const route = useRoute();
 
 // 用户素材API操作
 const { createdFileType, createTmpl } = useMaterial();
+
+const storageMode = ref('cloud');
+const localTemplates = ref([]);
+
+const loadLocal = async () => {
+  const { getLocalTemplates } = await import('@/utils/localDB');
+  const list = await getLocalTemplates();
+  localTemplates.value = list.map((item) => ({
+    ...item,
+    json: JSON.parse(item.json),
+  }));
+};
+
+const modeChange = (val) => {
+  if (val === 'local') {
+    loadLocal();
+  }
+};
 
 // 检索条件
 const filters = reactive({

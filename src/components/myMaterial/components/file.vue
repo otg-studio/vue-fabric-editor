@@ -72,6 +72,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  isLocal: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['change']);
@@ -87,6 +91,10 @@ const operation = (value) => {
 const fileName = ref('');
 
 const reNameFile = () => {
+  if (props.isLocal) {
+    Message.warning('本機模板暫不支援重命名');
+    return;
+  }
   fileName.value = props.name;
   Modal.confirm({
     title: '重命名',
@@ -110,8 +118,14 @@ const reNameFile = () => {
 };
 
 const deleteFile = async () => {
-  await removeTemplInfo(props.itemId);
-  emit('change');
+  if (props.isLocal) {
+    const { deleteLocalTemplate } = await import('@/utils/localDB');
+    await deleteLocalTemplate(props.itemId);
+    emit('change');
+  } else {
+    await removeTemplInfo(props.itemId);
+    emit('change');
+  }
 };
 
 const beforeClearTip = () => {
@@ -129,9 +143,13 @@ const getTempData = async () => {
   Spin.show({
     render: (h) => h('div', t('alert.loading_data')),
   });
-  const data = await getTemplInfo(props.itemId);
-  routerToId(props.itemId);
-  canvasEditor.loadJSON(JSON.stringify(data.data.attributes.json), Spin.hide);
+  if (props.isLocal) {
+    canvasEditor.loadJSON(props.json, Spin.hide);
+  } else {
+    const data = await getTemplInfo(props.itemId);
+    routerToId(props.itemId);
+    canvasEditor.loadJSON(JSON.stringify(data.data.attributes.json), Spin.hide);
+  }
 };
 
 const modalVisable = ref(false);

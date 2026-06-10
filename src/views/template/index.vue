@@ -20,9 +20,6 @@
         <div class="right">
           <Button type="primary" to="/" size="smail" target="_blank">新建设计</Button>
           <Divider type="vertical" />
-          <a href="https://pro.kuaitu.cc/" target="_blank">
-            <img width="15" :src="proIcon" alt="vue-fbric-editor" />
-          </a>
           <!-- 预览 -->
           <login></login>
           <lang></lang>
@@ -86,7 +83,6 @@
 import { toRaw } from 'vue';
 import { Spin } from 'view-ui-plus';
 import qs from 'qs';
-import proIcon from '@/assets/icon/proIcon.png';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
