@@ -14,6 +14,22 @@
       <Row :gutter="10">
         <Col flex="1">
           <InputNumber
+            v-model="baseAttr.width"
+            @on-change="(value) => changeCommon('width', value)"
+            :append="$t('bgSeting.width')"
+          ></InputNumber>
+        </Col>
+        <Col flex="1">
+          <InputNumber
+            v-model="baseAttr.height"
+            @on-change="(value) => changeCommon('height', value)"
+            :append="$t('bgSeting.height')"
+          ></InputNumber>
+        </Col>
+      </Row>
+      <Row :gutter="10">
+        <Col flex="1">
+          <InputNumber
             v-model="baseAttr.left"
             @on-change="(value) => changeCommon('left', value)"
             :append="$t('attributes.left')"
@@ -77,6 +93,8 @@ const baseAttr = reactive({
   angle: 0,
   left: 0,
   top: 0,
+  width: 0,
+  height: 0,
   rx: 0,
   ry: 0,
 });
@@ -91,6 +109,8 @@ const getObjectAttr = (e) => {
     baseAttr.left = activeObject.get('left');
     baseAttr.top = activeObject.get('top');
     baseAttr.angle = activeObject.get('angle') || 0;
+    baseAttr.width = Math.round(activeObject.getScaledWidth());
+    baseAttr.height = Math.round(activeObject.getScaledHeight());
   }
 };
 
@@ -98,6 +118,16 @@ const getObjectAttr = (e) => {
 const changeCommon = (key, value) => {
   const activeObject = canvasEditor.canvas.getActiveObjects()[0];
   if (activeObject) {
+    if (key === 'width') {
+      activeObject.set('scaleX', value / activeObject.width);
+      canvasEditor.canvas.renderAll();
+      return;
+    }
+    if (key === 'height') {
+      activeObject.set('scaleY', value / activeObject.height);
+      canvasEditor.canvas.renderAll();
+      return;
+    }
     // 透明度特殊转换
     if (key === 'opacity') {
       activeObject && activeObject.set(key, value / 100);
