@@ -41,7 +41,7 @@
 import useSelect from '@/hooks/select';
 
 const update = getCurrentInstance();
-const { canvasEditor, isOne, isMatchType } = useSelect(['rect']);
+const { canvasEditor, isOne, isMatchType, fabric } = useSelect(['rect', 'image']);
 
 // 属性值
 const baseAttr = reactive({
@@ -62,10 +62,61 @@ const getObjectAttr = (e) => {
 const changeCommon = (value) => {
   const activeObject = canvasEditor.canvas.getActiveObjects()[0];
   if (activeObject) {
-    activeObject.set('ry', value);
-    activeObject.set('rx', value);
-    activeObject.set('roundValue', value);
-    canvasEditor.canvas.renderAll();
+    if (activeObject.type === 'image') {
+      activeObject.set('roundValue', value);
+      if (value > 0) {
+        // 建立矩形遮罩來實現圓角
+        // 由於 clipPath 會跟著 activeObject 一起被 scale，
+        // 為了讓視覺上的圓角半徑 = value，我們必須除以 scaleX / scaleY
+        const scaleX = activeObject.get('scaleX') || 1;
+        const scaleY = activeObject.get('scaleY') || 1;
+
+        const w = activeObject.width;
+        const h = activeObject.height;
+        const rx = Math.max(0, Math.round(Number(value) / scaleX));
+        const ry = Math.max(0, Math.round(Number(value) / scaleY));
+
+        const x = -w / 2;
+        const y = -h / 2;
+        const r1 = Math.min(rx, w / 2);
+        const r2 = Math.min(ry, h / 2);
+
+        // 使用 Path 繪製圓角矩形，完全避開 fabric.Rect 的 rx/ry 當 clipPath 時可能失效的問題
+        const pathString = `
+          M ${x + r1} ${y}
+          L ${x + w - r1} ${y}
+          A ${r1} ${r2} 0 0 1 ${x + w} ${y + r2}
+          L ${x + w} ${y + h - r2}
+          A ${r1} ${r2} 0 0 1 ${x + w - r1} ${y + h}
+          L ${x + r1} ${y + h}
+          A ${r1} ${r2} 0 0 1 ${x} ${y + h - r2}
+          L ${x} ${y + r2}
+          A ${r1} ${r2} 0 0 1 ${x + r1} ${y}
+          Z
+        `
+          .trim()
+          .replace(/\s+/g, ' ');
+
+        const rect = new fabric.Path(pathString, {
+          originX: 'center',
+          originY: 'center',
+          left: 0,
+          top: 0,
+          fill: '#000000',
+          absolutePositioned: false,
+        });
+
+        activeObject.set('clipPath', rect);
+        activeObject.set('dirty', true);
+      } else {
+        activeObject.set('clipPath', null);
+      }
+    } else {
+      activeObject.set('ry', value);
+      activeObject.set('rx', value);
+      activeObject.set('roundValue', value);
+    }
+    canvasEditor.canvas.requestRenderAll();
   }
 };
 

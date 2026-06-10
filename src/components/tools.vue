@@ -21,6 +21,10 @@
       <span @click="() => addPolygon()" :draggable="true" @dragend="addPolygon">
         <polygonIcon width="26" height="26"></polygonIcon>
       </span>
+      <!-- 插入圖片按鈕 -->
+      <span @click="insertImg" title="插入圖片">
+        <Icon type="md-image" :size="24" />
+      </span>
     </div>
     <Divider plain orientation="left">{{ $t('draw_elements') }}</Divider>
     <div class="tool-box">
@@ -97,6 +101,8 @@ import barCodeIcon from '@/assets/icon/tools/barCode.svg';
 // const { getCanvasBound, isOutsideCanvas } = useCalculate();
 
 import { useI18n } from 'vue-i18n';
+import { Utils } from '@kuaitu/core';
+const { getImgStr, selectFiles } = Utils;
 
 const LINE_TYPE = {
   polygon: 'polygon',
@@ -135,6 +141,27 @@ const addTextBox = (event) => {
   });
 
   canvasEditor.addBaseType(text, { center: true, event });
+};
+
+const insertImg = () => {
+  cancelDraw();
+  selectFiles({ accept: 'image/*', multiple: true }).then((fileList) => {
+    Array.from(fileList).forEach((item) => {
+      getImgStr(item).then((file) => {
+        if (!file) throw new Error('file is undefined');
+        const imgEl = document.createElement('img');
+        imgEl.src = file;
+        document.body.appendChild(imgEl);
+        imgEl.onload = async () => {
+          const imgItem = await canvasEditor.createImgByElement(imgEl);
+          canvasEditor.addBaseType(imgItem, {
+            scale: true,
+          });
+          imgEl.remove();
+        };
+      });
+    });
+  });
 };
 
 const addTriangle = (event) => {
