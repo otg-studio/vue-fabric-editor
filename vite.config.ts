@@ -60,7 +60,7 @@ const config = ({ mode }) => {
       }),
     ],
     build: {
-      target: 'es2015',
+      target: 'es2020',
       outDir: resolve(__dirname, 'dist'),
       assetsDir: 'assets',
       assetsInlineLimit: 8192,
@@ -71,6 +71,20 @@ const config = ({ mode }) => {
         output: {
           chunkFileNames: 'js/[name].[hash].js',
           entryFileNames: 'js/[name].[hash].js',
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('fabric')) {
+                return 'fabric';
+              }
+              if (id.includes('view-ui-plus')) {
+                return 'view-ui';
+              }
+              if (id.includes('vue') || id.includes('vue-router') || id.includes('vue-i18n')) {
+                return 'vue-vendor';
+              }
+              return 'vendor';
+            }
+          },
         },
       },
     },

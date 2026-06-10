@@ -1,33 +1,36 @@
 <script lang="ts" setup>
-import align from '@/components/align.vue';
-import centerAlign from '@/components/centerAlign.vue';
-import flip from '@/components/flip.vue';
+import { defineAsyncComponent } from 'vue';
 
-import clone from '@/components/clone.vue';
-import hide from '@/components/hide.vue';
-import group from '@/components/group.vue';
-import lock from '@/components/lock.vue';
-import dele from '@/components/del.vue';
+const align = defineAsyncComponent(() => import('@/components/align.vue'));
+const centerAlign = defineAsyncComponent(() => import('@/components/centerAlign.vue'));
+const flip = defineAsyncComponent(() => import('@/components/flip.vue'));
 
-import bgBar from '@/components/bgBar.vue';
-import setSize from '@/components/setSize.vue';
-import replaceImg from '@/components/replaceImg.vue';
-import filters from '@/components/filters.vue';
-import imgStroke from '@/components/imgStroke.vue';
-// import elementData from '@/components/elementData.vue';
-// 右侧组件
-// import attribute from '@/components/attribute.vue';
-import attributePostion from '@/components/attributePostion.vue';
-import attributeId from '@/components/attributeId.vue';
-import attributeShadow from '@/components/attributeShadow.vue';
-import attributeBorder from '@/components/attributeBorder.vue';
-import attributeRounded from '@/components/attributeRounded.vue';
-import attributeFont from '@/components/attributeFont.vue';
-import attributeTextFloat from '@/components/attributeTextFloat.vue';
-import attributeColor from '@/components/attributeColor.vue';
-import attributeBarcode from '@/components/attributeBarcode.vue';
-import attributeQrCode from '@/components/attributeQrCode.vue';
-import cropperImg from '@/components/cropperImg.vue';
+const clone = defineAsyncComponent(() => import('@/components/clone.vue'));
+const hide = defineAsyncComponent(() => import('@/components/hide.vue'));
+const group = defineAsyncComponent(() => import('@/components/group.vue'));
+const lock = defineAsyncComponent(() => import('@/components/lock.vue'));
+const dele = defineAsyncComponent(() => import('@/components/del.vue'));
+
+const bgBar = defineAsyncComponent(() => import('@/components/bgBar.vue'));
+const setSize = defineAsyncComponent(() => import('@/components/setSize.vue'));
+const replaceImg = defineAsyncComponent(() => import('@/components/replaceImg.vue'));
+const filters = defineAsyncComponent(() => import('@/components/filters.vue'));
+const imgStroke = defineAsyncComponent(() => import('@/components/imgStroke.vue'));
+// const elementData = defineAsyncComponent(() => import('@/components/elementData.vue'));
+// const attribute = defineAsyncComponent(() => import('@/components/attribute.vue'));
+const attributePostion = defineAsyncComponent(() => import('@/components/attributePostion.vue'));
+const attributeId = defineAsyncComponent(() => import('@/components/attributeId.vue'));
+const attributeShadow = defineAsyncComponent(() => import('@/components/attributeShadow.vue'));
+const attributeBorder = defineAsyncComponent(() => import('@/components/attributeBorder.vue'));
+const attributeRounded = defineAsyncComponent(() => import('@/components/attributeRounded.vue'));
+const attributeFont = defineAsyncComponent(() => import('@/components/attributeFont.vue'));
+const attributeTextFloat = defineAsyncComponent(
+  () => import('@/components/attributeTextFloat.vue')
+);
+const attributeColor = defineAsyncComponent(() => import('@/components/attributeColor.vue'));
+const attributeBarcode = defineAsyncComponent(() => import('@/components/attributeBarcode.vue'));
+const attributeQrCode = defineAsyncComponent(() => import('@/components/attributeQrCode.vue'));
+const cropperImg = defineAsyncComponent(() => import('@/components/cropperImg.vue'));
 // hooks
 import useSelectListen from '@/hooks/useSelectListen';
 

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 // 左侧组件
-import importTmpl from '@/components/importTmpl.vue';
-import fontStyle from '@/components/fontStyle.vue';
-import myMaterial from '@/components/myMaterial/index.vue';
-import tools from '@/components/tools.vue';
-import material from '@/components/material.vue';
-import layer from '@/components/layer.vue';
+import { defineAsyncComponent } from 'vue';
+
+const importTmpl = defineAsyncComponent(() => import('@/components/importTmpl.vue'));
+const fontStyle = defineAsyncComponent(() => import('@/components/fontStyle.vue'));
+const myMaterial = defineAsyncComponent(() => import('@/components/myMaterial/index.vue'));
+const tools = defineAsyncComponent(() => import('@/components/tools.vue'));
+const material = defineAsyncComponent(() => import('@/components/material.vue'));
+const layer = defineAsyncComponent(() => import('@/components/layer.vue'));
 import { useI18n } from 'vue-i18n';
 // 路由
 import { useRoute } from 'vue-router';

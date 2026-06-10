@@ -42,23 +42,23 @@
 </template>
 
 <script name="Top" setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import proIcon from '@/assets/icon/proIcon.png';
 // 导入元素
-import importJson from '@/components/importJSON.vue';
-import importFile from '@/components/importFile.vue';
-import batchGenerate from '@/components/batchGenerate.vue';
+const importJson = defineAsyncComponent(() => import('@/components/importJSON.vue'));
+const importFile = defineAsyncComponent(() => import('@/components/importFile.vue'));
+const batchGenerate = defineAsyncComponent(() => import('@/components/batchGenerate.vue'));
 
 // 顶部组件
-import logo from '@/components/logo.vue';
-import myTemplName from '@/components/myTemplName.vue';
-import previewCurrent from '@/components/previewCurrent';
-import save from '@/components/save.vue';
-import lang from '@/components/lang.vue';
-import waterMark from '@/components/waterMark.vue';
-import login from '@/components/login';
-import admin from '@/components/admin';
-import history from '@/components/history.vue';
+const logo = defineAsyncComponent(() => import('@/components/logo.vue'));
+const myTemplName = defineAsyncComponent(() => import('@/components/myTemplName.vue'));
+const previewCurrent = defineAsyncComponent(() => import('@/components/previewCurrent'));
+const save = defineAsyncComponent(() => import('@/components/save.vue'));
+const lang = defineAsyncComponent(() => import('@/components/lang.vue'));
+const waterMark = defineAsyncComponent(() => import('@/components/waterMark.vue'));
+const login = defineAsyncComponent(() => import('@/components/login'));
+const admin = defineAsyncComponent(() => import('@/components/admin'));
+const history = defineAsyncComponent(() => import('@/components/history.vue'));
 
 const props = defineProps(['ruler']);
 const emit = defineEmits(['update:ruler']);
