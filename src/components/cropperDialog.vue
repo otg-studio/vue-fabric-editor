@@ -3,16 +3,18 @@
     v-model="visible"
     @on-ok="onOk"
     @on-cancel="onCancel"
-    title="图片裁剪"
+    :title="$t('ui.cropImage')"
     width="80%"
     style="height: 80%"
   >
     <div class="main">
-      <Spin size="large" fix :show="loading">图片加载中...</Spin>
+      <Spin size="large" fix :show="loading">{{ $t('ui.imageLoading') }}</Spin>
       <div class="options">
-        <label>裁剪比例</label>
+        <label>{{ $t('ui.cropRatio') }}</label>
         <div class="flex mt-2 ratio-item-wrapper">
-          <div class="ratio-item" :class="{ active: !fixed }" @click="changeRatio()">自由</div>
+          <div class="ratio-item" :class="{ active: !fixed }" @click="changeRatio()">
+            {{ $t('ui.free') }}
+          </div>
           <div
             class="ratio-item"
             :class="{ active: fixed && fixedRatio[0] === 1 && fixedRatio[1] === 1 }"
@@ -75,7 +77,7 @@
             </div>
           </div>
         </div>
-        <label>当前尺寸</label>
+        <label>{{ $t('ui.currentSize') }}</label>
         <div class="flex mt-2">
           <Input
             v-model="cropperWidth"
@@ -115,7 +117,7 @@
           </div>
         </div>
 
-        <div class="title">预览</div>
+        <div class="title">{{ $t('ui.preview') }}</div>
       </div>
     </div>
   </Modal>

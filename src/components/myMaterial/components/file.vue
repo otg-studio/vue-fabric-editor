@@ -24,9 +24,9 @@
           </Button>
           <template #list>
             <DropdownMenu>
-              <DropdownItem name="reName">重命名</DropdownItem>
-              <DropdownItem name="delete">删除</DropdownItem>
-              <DropdownItem name="transfer">迁移目录</DropdownItem>
+              <DropdownItem name="reName">{{ $t('ui.rename') }}</DropdownItem>
+              <DropdownItem name="delete">{{ $t('ui.delete') }}</DropdownItem>
+              <DropdownItem name="transfer">{{ $t('ui.moveDir') }}</DropdownItem>
             </DropdownMenu>
           </template>
         </Dropdown>
@@ -34,7 +34,7 @@
     </div>
   </Tooltip>
   <!-- 迁移文件夹 -->
-  <Modal v-model="modalVisable" title="请选择迁移目录" @on-ok="transferRequest">
+  <Modal v-model="modalVisable" :title="$t('ui.moveDir')" @on-ok="transferRequest">
     <TreeSelect v-model="fileTypeId" :data="treeData" v-width="200" />
   </Modal>
   <!--  -->

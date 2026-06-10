@@ -22,7 +22,7 @@
         <polygonIcon width="26" height="26"></polygonIcon>
       </span>
       <!-- 插入圖片按鈕 -->
-      <span @click="insertImg" title="插入圖片">
+      <span @click="insertImg" :title="$t('ui.insertImage')">
         <Icon type="md-image" :size="24" />
       </span>
     </div>

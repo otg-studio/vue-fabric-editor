@@ -36,7 +36,7 @@
         </div>
       </Tooltip>
     </div>
-    <div class="tip" v-else>暂无素材</div>
+    <div class="tip" v-else>{{ $t('ui.noMaterial') }}</div>
   </div>
 </template>
 

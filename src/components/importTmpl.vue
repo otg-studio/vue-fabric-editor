@@ -10,8 +10,12 @@
   <div>
     <div style="margin-bottom: 10px; margin-top: 10px">
       <RadioGroup v-model="storageMode" type="button" @on-change="modeChange" style="width: 100%">
-        <Radio label="cloud" style="width: 50%; text-align: center">官方模板</Radio>
-        <Radio label="local" style="width: 50%; text-align: center">本機儲存</Radio>
+        <Radio label="cloud" style="width: 50%; text-align: center">
+          {{ $t('ui.officialTemplates') }}
+        </Radio>
+        <Radio label="local" style="width: 50%; text-align: center">
+          {{ $t('ui.localStorage') }}
+        </Radio>
       </RadioGroup>
     </div>
 
@@ -62,7 +66,7 @@
         </div>
         <Spin size="large" fix :show="pageLoading"></Spin>
 
-        <Divider plain v-if="isDownBottm">已经到底了</Divider>
+        <Divider plain v-if="isDownBottm">{{ $t('ui.bottomed') }}</Divider>
       </Scroll>
 
       <!-- 本機模板 -->
@@ -123,8 +127,8 @@
       </div>
     </div>
 
-    <Modal v-model="showRenameModal" title="重新命名模板" @on-ok="confirmRenameLocal">
-      <Input v-model="renameTargetName" placeholder="請輸入新名稱" autofocus />
+    <Modal v-model="showRenameModal" :title="$t('ui.renameTemplate')" @on-ok="confirmRenameLocal">
+      <Input v-model="renameTargetName" :placeholder="$t('ui.plsInput')" autofocus />
     </Modal>
   </div>
 </template>

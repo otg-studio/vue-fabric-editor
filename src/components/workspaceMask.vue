@@ -1,13 +1,13 @@
 <template>
   <div class="mask-wrap">
-    <div>开启背景蒙版</div>
+    <div>{{ $t('ui.openMask') }}</div>
 
     <iSwitch v-model="openMask" size="large" @on-change="onMaskChange">
       <template #open>
-        <span>开启</span>
+        <span>{{ $t('ui.open') }}</span>
       </template>
       <template #close>
-        <span>关闭</span>
+        <span>{{ $t('ui.close') }}</span>
       </template>
     </iSwitch>
   </div>

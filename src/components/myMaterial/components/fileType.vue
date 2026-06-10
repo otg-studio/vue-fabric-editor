@@ -18,8 +18,8 @@
         </Button>
         <template #list>
           <DropdownMenu>
-            <DropdownItem name="reName">重命名</DropdownItem>
-            <DropdownItem name="delete">删除</DropdownItem>
+            <DropdownItem name="reName">{{ $t('ui.rename') }}</DropdownItem>
+            <DropdownItem name="delete">{{ $t('ui.delete') }}</DropdownItem>
           </DropdownMenu>
         </template>
       </Dropdown>

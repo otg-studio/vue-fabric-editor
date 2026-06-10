@@ -22,7 +22,7 @@
         <DropdownMenu>
           <DropdownItem name="saveMyClould">{{ $t('save.save_my_spase') }}</DropdownItem>
           <DropdownItem name="saveLocal" divided>儲存本機 / 覆寫</DropdownItem>
-          <DropdownItem name="saveLocalNew">另存為本機新檔</DropdownItem>
+          <DropdownItem name="saveLocalNew">{{ $t('ui.saveAsNewLocal') }}</DropdownItem>
           <DropdownItem name="saveImg" divided>{{ $t('save.save_as_picture') }}</DropdownItem>
           <DropdownItem name="saveSvg">{{ $t('save.save_as_svg') }}</DropdownItem>
           <DropdownItem name="clipboard" divided>{{ $t('save.copy_to_clipboard') }}</DropdownItem>
@@ -31,8 +31,8 @@
         </DropdownMenu>
       </template>
     </Dropdown>
-    <Modal v-model="showNameModal" title="儲存本機模板" @on-ok="confirmSaveLocal">
-      <Input v-model="localTemplateName" placeholder="請輸入模板名稱..." autofocus />
+    <Modal v-model="showNameModal" :title="$t('ui.saveLocalTemplate')" @on-ok="confirmSaveLocal">
+      <Input v-model="localTemplateName" :placeholder="$t('ui.plsInput')" autofocus />
     </Modal>
   </div>
 </template>

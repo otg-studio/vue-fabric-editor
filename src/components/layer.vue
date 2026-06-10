@@ -46,7 +46,7 @@
       </div>
     </template>
     <template v-else>
-      <p class="empty-text">暂无图层</p>
+      <p class="empty-text">{{ $t('ui.noLayers') }}</p>
     </template>
   </div>
 </template>

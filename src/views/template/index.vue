@@ -14,11 +14,13 @@
           <logo></logo>
           <!-- 导入 -->
           <Divider type="vertical" />
-          在线设计工具
+          {{ $t('ui.onlineDesignTool') }}
         </div>
 
         <div class="right">
-          <Button type="primary" to="/" size="smail" target="_blank">新建设计</Button>
+          <Button type="primary" to="/" size="smail" target="_blank">
+            {{ $t('ui.createDesign') }}
+          </Button>
           <Divider type="vertical" />
           <!-- 预览 -->
           <login></login>
@@ -37,7 +39,7 @@
             search
             v-model="filters.name.$containsi"
             enter-button
-            placeholder="请输入关键词"
+            :placeholder="$t('ui.plsInputKeyword')"
             @on-search="search"
           />
           <TagSelect v-model="filters.templ_type.$in" @on-change="search">
@@ -73,14 +75,14 @@
         />
       </Content>
       <Footer class="layout-footer-center">
-        {{ year }} &copy; 北京迅单科技有限公司 京ICP备2022034407号-2
+        <div class="beian">{{ year }} &copy; 北京迅单科技有限公司 京ICP备2022034407号-2</div>
       </Footer>
     </Layout>
   </div>
 </template>
 
 <script name="Home" setup>
-import { toRaw } from 'vue';
+import { toRaw, ref, reactive, nextTick } from 'vue';
 import { Spin } from 'view-ui-plus';
 import qs from 'qs';
 

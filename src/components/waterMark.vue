@@ -60,8 +60,8 @@
 
       <div>
         <RadioGroup v-model="waterMarkState.isRotate">
-          <Radio :label="0">横向</Radio>
-          <Radio :label="1">倾斜</Radio>
+          <Radio :label="0">{{ $t('ui.horizontal') }}</Radio>
+          <Radio :label="1">{{ $t('ui.tilt') }}</Radio>
         </RadioGroup>
       </div>
     </div>

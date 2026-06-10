@@ -11,8 +11,12 @@
     <!-- 搜索组件 -->
     <div style="margin-bottom: 10px">
       <RadioGroup v-model="storageMode" type="button" @on-change="modeChange" style="width: 100%">
-        <Radio label="cloud" style="width: 50%; text-align: center">雲端模板</Radio>
-        <Radio label="local" style="width: 50%; text-align: center">本機模板</Radio>
+        <Radio label="cloud" style="width: 50%; text-align: center">
+          {{ $t('ui.cloudTemplates') }}
+        </Radio>
+        <Radio label="local" style="width: 50%; text-align: center">
+          {{ $t('ui.localTemplates') }}
+        </Radio>
       </RadioGroup>
     </div>
 
@@ -21,15 +25,15 @@
         <Button type="primary" icon="md-add"></Button>
         <template #list>
           <DropdownMenu>
-            <DropdownItem name="file">新建设计</DropdownItem>
-            <DropdownItem name="fileType">新建文件夹</DropdownItem>
+            <DropdownItem name="file">{{ $t('ui.createDesign') }}</DropdownItem>
+            <DropdownItem name="fileType">{{ $t('ui.newFolder') }}</DropdownItem>
           </DropdownMenu>
         </template>
       </Dropdown>
 
       <Input
         class="input"
-        placeholder="请输入关键词"
+        :placeholder="$t('ui.plsInputKeyword')"
         v-model="filters.name.$contains"
         search
         :disabled="pageLoading"
@@ -80,7 +84,7 @@
           ></file>
         </div>
         <Spin size="large" fix :show="pageLoading"></Spin>
-        <Divider plain v-if="isDownBottom">已经到底了</Divider>
+        <Divider plain v-if="isDownBottom">{{ $t('ui.bottomed') }}</Divider>
       </Scroll>
 
       <!-- 本機模板 -->
