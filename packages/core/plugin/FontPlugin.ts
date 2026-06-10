@@ -13,6 +13,8 @@ import axios from 'axios';
 import { downFile } from '../utils/utils';
 import type { IEditor, IPluginTempl } from '@kuaitu/core';
 
+import fontsData from '../../../src/assets/mockData/fonts.json';
+
 type IPlugin = Pick<FontPlugin, 'getFontList' | 'loadFont' | 'getFontJson' | 'downFontByJSON'>;
 
 declare module '@kuaitu/core' {
@@ -53,23 +55,11 @@ class FontPlugin implements IPluginTempl {
       return Promise.resolve(this.cacheList);
     }
     if (this.tempPromise) return this.tempPromise;
-    this.tempPromise = axios
-      .get(`${this.repoSrc}/api/fonts?populate=*&pagination[pageSize]=100`)
-      .then((res) => {
-        const list = res.data.data
-          .filter((item: any) => item.attributes.file?.data && item.attributes.img?.data)
-          .map((item: any) => {
-            return {
-              name: item.attributes.name,
-              type: item.attributes.type,
-              file: this.repoSrc + item.attributes.file.data.attributes.url,
-              img: this.repoSrc + item.attributes.img.data.attributes.url,
-            };
-          });
-        this.cacheList = list;
-        this.createFontCSS(list);
-        return list;
-      });
+    this.tempPromise = Promise.resolve(fontsData as FontSource[]).then((list) => {
+      this.cacheList = list;
+      this.createFontCSS(list);
+      return list;
+    });
     return this.tempPromise;
   }
 
@@ -123,23 +113,32 @@ class FontPlugin implements IPluginTempl {
   createFontCSS(arr: any[]) {
     let code = '';
     arr.forEach((item) => {
-      code =
-        code +
-        `
-    @font-face {
-      font-family: ${item.name};
-      src: url('${item.file}');
-    }
-    `;
+      if (item.file.includes('fonts.googleapis.com/css')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = item.file;
+        document.head.appendChild(link);
+      } else {
+        code =
+          code +
+          `
+      @font-face {
+        font-family: '${item.name}';
+        src: url('${item.file}');
+      }
+      `;
+      }
     });
-    const style = document.createElement('style');
-    try {
-      style.appendChild(document.createTextNode(code));
-    } catch (error) {
-      // style.styleSheet.cssText = code;
+    if (code) {
+      const style = document.createElement('style');
+      try {
+        style.appendChild(document.createTextNode(code));
+      } catch (error) {
+        // style.styleSheet.cssText = code;
+      }
+      const head = document.getElementsByTagName('head')[0];
+      head.appendChild(style);
     }
-    const head = document.getElementsByTagName('head')[0];
-    head.appendChild(style);
   }
 
   destroy() {
