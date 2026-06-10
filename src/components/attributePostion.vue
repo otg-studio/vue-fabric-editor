@@ -58,6 +58,7 @@ const baseType = [
   'text',
   'i-text',
   'textbox',
+  'vertical-textbox',
   'rect',
   'circle',
   'triangle',

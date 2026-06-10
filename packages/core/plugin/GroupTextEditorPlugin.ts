@@ -178,7 +178,7 @@ class GroupTextEditorPlugin implements IPluginTempl {
   }
 
   isText(obj: fabric.Object) {
-    return obj.type && ['i-text', 'text', 'textbox'].includes(obj.type);
+    return obj.type && ['i-text', 'text', 'textbox', 'vertical-textbox'].includes(obj.type);
   }
 
   destroy() {

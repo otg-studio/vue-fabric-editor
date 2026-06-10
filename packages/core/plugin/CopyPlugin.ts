@@ -189,8 +189,8 @@ class CopyPlugin implements IPluginTempl {
           // 如果是激活的文字把复制的内容插入到对应光标位置
           if (
             activeObject &&
-            (activeObject.type === 'textbox' || activeObject.type === 'i-text') &&
-            activeObject.text
+            (activeObject.type === 'textbox' || activeObject.type === 'i-text' || activeObject.type === 'vertical-textbox') &&
+            activeObject.isEditing
           ) {
             const cursorPosition = activeObject.selectionStart;
             const textBeforeCursorPosition = activeObject.text.substring(0, cursorPosition);

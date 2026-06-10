@@ -33,7 +33,7 @@ const baseAttr = reactive({
   verticalAlign: 'null',
 });
 
-const matchType = ['i-text', 'textbox', 'text'];
+const matchType = ['i-text', 'textbox', 'text', 'vertical-textbox'];
 const { isMatchType, canvasEditor, isOne } = useSelect(matchType);
 
 const getObjectAttr = (e) => {

@@ -82,6 +82,7 @@ const iconType = (type) => {
   const iconType = {
     group: groupIcon,
     textbox: textbox,
+    'vertical-textbox': textbox,
     'i-text': iText,
     image: imageIcon,
     rect: rectIcon,

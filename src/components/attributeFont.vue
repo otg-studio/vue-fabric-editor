@@ -53,6 +53,20 @@
 
       <div class="flex-view">
         <div class="flex-item">
+          <RadioGroup
+            class="button-group"
+            v-model="baseAttr.writingMode"
+            @on-change="changeWritingMode"
+            type="button"
+          >
+            <Radio label="horizontal">橫書</Radio>
+            <Radio label="vertical">直書</Radio>
+          </RadioGroup>
+        </div>
+      </div>
+
+      <div class="flex-view">
+        <div class="flex-item">
           <ButtonGroup class="button-group">
             <Button @click="changeFontWeight('fontWeight', baseAttr.fontWeight)">
               <fontWeight
@@ -138,7 +152,7 @@ import textAlignJustitfy from '@/assets/icon/attribute/textAlignJustitfy.svg?raw
 const update = getCurrentInstance();
 
 // 文字元素
-const textType = ['i-text', 'textbox', 'text'];
+const textType = ['i-text', 'textbox', 'text', 'vertical-textbox'];
 const { canvasEditor, isMatchType, isOne } = useSelect(textType);
 
 // 属性值
@@ -154,6 +168,7 @@ const baseAttr = reactive({
   underline: false,
   linethrough: false,
   overline: false,
+  writingMode: 'horizontal',
 });
 
 const fontsList = ref([]);
@@ -183,6 +198,7 @@ const getObjectAttr = (e) => {
     baseAttr.fontStyle = activeObject.get('fontStyle');
     baseAttr.textBackgroundColor = activeObject.get('textBackgroundColor');
     baseAttr.fontWeight = activeObject.get('fontWeight');
+    baseAttr.writingMode = activeObject.type === 'vertical-textbox' ? 'vertical' : 'horizontal';
   }
 };
 
@@ -237,6 +253,31 @@ const changeUnderline = (key, value) => {
   const activeObject = canvasEditor.canvas.getActiveObjects()[0];
   activeObject && activeObject.set(key, nValue);
   canvasEditor.canvas.renderAll();
+};
+
+const changeWritingMode = (value) => {
+  const activeObject = canvasEditor.canvas.getActiveObjects()[0];
+  if (!activeObject) return;
+
+  if (value === 'vertical' && activeObject.type !== 'vertical-textbox') {
+    if (window.fabric.VerticalTextbox && window.fabric.VerticalTextbox.fromTextbox) {
+      window.fabric.VerticalTextbox.fromTextbox(activeObject, (newObj) => {
+        canvasEditor.canvas.remove(activeObject);
+        canvasEditor.canvas.add(newObj);
+        canvasEditor.canvas.setActiveObject(newObj);
+        canvasEditor.canvas.requestRenderAll();
+      });
+    }
+  } else if (value === 'horizontal' && activeObject.type === 'vertical-textbox') {
+    if (activeObject.toTextbox) {
+      activeObject.toTextbox((newObj) => {
+        canvasEditor.canvas.remove(activeObject);
+        canvasEditor.canvas.add(newObj);
+        canvasEditor.canvas.setActiveObject(newObj);
+        canvasEditor.canvas.requestRenderAll();
+      });
+    }
+  }
 };
 
 onMounted(() => {
