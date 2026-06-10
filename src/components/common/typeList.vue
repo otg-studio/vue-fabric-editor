@@ -57,7 +57,7 @@ const getMaterialTypesHandler = async () => {
   const res = await props.typeApi();
   materialTypeList.value = res.data.data.map((item) => {
     return {
-      name: item.attributes.name,
+      name: item.name,
       id: item.id,
       list: [],
     };

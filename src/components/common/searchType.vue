@@ -63,7 +63,7 @@ onMounted(async () => {
     const list = res.data.data.map((item) => {
       return {
         value: item.id,
-        label: item.attributes.name,
+        label: item.name,
       };
     });
     typeList.value = [

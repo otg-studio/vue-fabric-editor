@@ -70,10 +70,11 @@ const formatData = (data) => {
   return data.map((item) => {
     return {
       id: item.id,
-      name: item.attributes.name,
-      desc: item.attributes.desc,
-      src: getMaterialInfoUrl(item.attributes.img),
-      previewSrc: getMaterialPreviewUrl(item.attributes.img),
+      name: item.name,
+      desc: item.desc,
+      json: item.json,
+      src: item.src,
+      previewSrc: item.previewSrc,
     };
   });
 };

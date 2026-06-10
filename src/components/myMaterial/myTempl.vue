@@ -124,12 +124,12 @@ const formatData = (data) => {
   return data.map((item) => {
     return {
       id: item.id,
-      name: item.attributes.name,
-      type: item.attributes.type || 'file',
-      desc: item.attributes.desc,
-      json: item.attributes.json,
-      src: getMaterialInfoUrl(item.attributes.img),
-      previewSrc: getMaterialPreviewUrl(item.attributes.img),
+      name: item.name,
+      type: item.type || 'file',
+      desc: item.desc,
+      json: item.json,
+      src: item.src,
+      previewSrc: item.previewSrc,
     };
   });
 };
