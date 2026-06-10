@@ -21,6 +21,8 @@
       <span @click="() => addPolygon()" :draggable="true" @dragend="addPolygon">
         <polygonIcon width="26" height="26"></polygonIcon>
       </span>
+    </div>
+    <div class="tool-box" style="padding-top: 5px">
       <!-- 插入圖片按鈕 -->
       <span @click="insertImg" :title="$t('ui.insertImage')">
         <Icon type="md-image" :size="24" />
