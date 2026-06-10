@@ -122,23 +122,27 @@ const generateBatch = async () => {
 
           if (propName === 'repeat') {
             const repeatCount = parseInt(val, 10);
-            if (!isNaN(repeatCount) && repeatCount > 1) {
-              const gapValue = 10;
-              let currentLeft = obj.left + obj.getScaledWidth();
-              const keys = canvasEditor.getExtensionKey ? canvasEditor.getExtensionKey() : [];
+            if (!isNaN(repeatCount)) {
+              if (repeatCount <= 0) {
+                canvasEditor.canvas.remove(obj);
+              } else if (repeatCount > 1) {
+                const gapValue = 10;
+                let currentLeft = obj.left + obj.getScaledWidth();
+                const keys = canvasEditor.getExtensionKey ? canvasEditor.getExtensionKey() : [];
 
-              for (let c = 1; c < repeatCount; c++) {
-                await new Promise((resolveClone) => {
-                  obj.clone((cloned) => {
-                    cloned.set({
-                      left: currentLeft + gapValue,
-                      top: obj.top,
-                    });
-                    canvasEditor.canvas.add(cloned);
-                    currentLeft = cloned.left + cloned.getScaledWidth();
-                    resolveClone();
-                  }, keys);
-                });
+                for (let c = 1; c < repeatCount; c++) {
+                  await new Promise((resolveClone) => {
+                    obj.clone((cloned) => {
+                      cloned.set({
+                        left: currentLeft + gapValue,
+                        top: obj.top,
+                      });
+                      canvasEditor.canvas.add(cloned);
+                      currentLeft = cloned.left + cloned.getScaledWidth();
+                      resolveClone();
+                    }, keys);
+                  });
+                }
               }
             }
           } else if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
