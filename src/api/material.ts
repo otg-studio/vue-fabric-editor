@@ -17,12 +17,28 @@ export const getMaterialTypes = () =>
   Promise.resolve({ data: { data: getMockDataAll('material-types') } });
 
 // 获取素材列表
-export const getMaterials = (data: any) =>
-  Promise.resolve({ data: { data: getMockDataAll('materials') } });
+export const getMaterials = (data: any) => {
+  const keyword = data?.filters?.name?.$contains;
+  const all = getMockDataAll('materials');
+  if (keyword) {
+    return Promise.resolve({
+      data: { data: all.filter((item: any) => item.name.includes(keyword)) },
+    });
+  }
+  return Promise.resolve({ data: { data: all } });
+};
 
 // 获取根据分类获取素材
-export const getMaterialsByType = (data: any) =>
-  Promise.resolve({ data: { data: getMockDataAll('materials') } });
+export const getMaterialsByType = (data: any) => {
+  const typeId = data?.filters?.material_type?.$eq;
+  const all = getMockDataAll('materials');
+  if (typeId) {
+    return Promise.resolve({
+      data: { data: all.filter((item: any) => String(item.typeId) === String(typeId)) },
+    });
+  }
+  return Promise.resolve({ data: { data: all } });
+};
 
 // 获取字体分类分类
 export const getFontStyleTypes = () =>
