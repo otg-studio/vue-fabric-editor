@@ -99,6 +99,13 @@
                 <Button
                   type="text"
                   size="small"
+                  icon="md-create"
+                  @click.stop="renameLocal(info)"
+                  style="color: white"
+                ></Button>
+                <Button
+                  type="text"
+                  size="small"
                   icon="md-trash"
                   @click.stop="deleteLocal(info.id)"
                   style="color: white"
@@ -115,6 +122,10 @@
         </div>
       </div>
     </div>
+
+    <Modal v-model="showRenameModal" title="重新命名模板" @on-ok="confirmRenameLocal">
+      <Input v-model="renameTargetName" placeholder="請輸入新名稱" autofocus />
+    </Modal>
   </div>
 </template>
 
@@ -201,6 +212,10 @@ const getTemplInfo = async () => {
 const storageMode = ref('cloud');
 const localTemplates = ref([]);
 
+const showRenameModal = ref(false);
+const renameTargetId = ref('');
+const renameTargetName = ref('');
+
 const loadLocal = async () => {
   const { getLocalTemplates } = await import('@/utils/localDB');
   localTemplates.value = await getLocalTemplates();
@@ -220,9 +235,35 @@ const beforeClearLocalTip = (info) => {
     cancelText: t('cancel'),
     onOk: () => {
       Spin.show({ render: (h) => h('div', t('alert.loading_data')) });
+      router.replace('/?localId=' + info.id);
       canvasEditor.loadJSON(info.json, Spin.hide);
     },
   });
+};
+
+const renameLocal = (info) => {
+  renameTargetId.value = info.id;
+  renameTargetName.value = info.name;
+  showRenameModal.value = true;
+};
+
+import { Message } from 'view-ui-plus';
+
+const confirmRenameLocal = async () => {
+  if (!renameTargetName.value.trim()) {
+    Message.warning('名稱不能為空');
+    return;
+  }
+  const { getLocalTemplates, saveLocalTemplate } = await import('@/utils/localDB');
+  const list = await getLocalTemplates();
+  const existing = list.find((item) => item.id === renameTargetId.value);
+  if (existing) {
+    existing.name = renameTargetName.value.trim();
+    existing.updatedAt = Date.now();
+    await saveLocalTemplate(existing);
+    loadLocal();
+    Message.success('重新命名成功');
+  }
 };
 
 const deleteLocal = async (id) => {

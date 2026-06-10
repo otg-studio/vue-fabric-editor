@@ -21,7 +21,8 @@
       <template #list>
         <DropdownMenu>
           <DropdownItem name="saveMyClould">{{ $t('save.save_my_spase') }}</DropdownItem>
-          <DropdownItem name="saveLocal" divided>儲存至本機瀏覽器</DropdownItem>
+          <DropdownItem name="saveLocal" divided>儲存本機 / 覆寫</DropdownItem>
+          <DropdownItem name="saveLocalNew">另存為本機新檔</DropdownItem>
           <DropdownItem name="saveImg" divided>{{ $t('save.save_as_picture') }}</DropdownItem>
           <DropdownItem name="saveSvg">{{ $t('save.save_as_svg') }}</DropdownItem>
           <DropdownItem name="clipboard" divided>{{ $t('save.copy_to_clipboard') }}</DropdownItem>
@@ -30,6 +31,9 @@
         </DropdownMenu>
       </template>
     </Dropdown>
+    <Modal v-model="showNameModal" title="儲存本機模板" @on-ok="confirmSaveLocal">
+      <Input v-model="localTemplateName" placeholder="請輸入模板名稱..." autofocus />
+    </Modal>
   </div>
 </template>
 
@@ -40,9 +44,14 @@ import useMaterial from '@/hooks/useMaterial';
 import { debounce } from 'lodash-es';
 import { useI18n } from 'vue-i18n';
 import { Spin } from 'view-ui-plus';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { Message } from 'view-ui-plus';
+import { ref } from 'vue';
 const route = useRoute();
+const router = useRouter();
+
+const showNameModal = ref(false);
+const localTemplateName = ref('');
 
 const { createTmplByCommon, updataTemplInfo, routerToId } = useMaterial();
 
@@ -91,25 +100,69 @@ const cbMap = {
   },
   async saveLocal() {
     try {
-      Spin.show();
-      const json = canvasEditor.getJson();
-      const thumbnail = canvasEditor.canvas.toDataURL({ format: 'jpeg', quality: 0.2 });
-      const id = route?.query?.id || Date.now().toString();
-      const { saveLocalTemplate } = await import('@/utils/localDB');
-      await saveLocalTemplate({
-        id,
-        name: '本機設計_' + new Date().toLocaleString(),
-        json: JSON.stringify(json),
-        thumbnail,
-        updatedAt: Date.now(),
-      });
-      Message.success('儲存至本機瀏覽器成功！');
+      const localId = route?.query?.localId;
+      if (localId) {
+        Spin.show();
+        const json = canvasEditor.getJson();
+        const thumbnail = canvasEditor.canvas.toDataURL({ format: 'jpeg', quality: 0.2 });
+        const { getLocalTemplates, saveLocalTemplate } = await import('@/utils/localDB');
+        const list = await getLocalTemplates();
+        const existing = list.find((item) => item.id === localId);
+        const name = existing ? existing.name : '本機設計_' + new Date().toLocaleString();
+
+        await saveLocalTemplate({
+          id: localId,
+          name,
+          json: JSON.stringify(json),
+          thumbnail,
+          updatedAt: Date.now(),
+        });
+        Message.success('成功覆寫本機模板：' + name);
+        Spin.hide();
+      } else {
+        localTemplateName.value = '本機設計_' + new Date().toLocaleString();
+        showNameModal.value = true;
+      }
     } catch (error) {
       console.error(error);
       Message.error('儲存本機失敗');
+      Spin.hide();
     }
-    Spin.hide();
   },
+  saveLocalNew() {
+    localTemplateName.value = '本機設計_' + new Date().toLocaleString() + ' (複製)';
+    showNameModal.value = true;
+  },
+};
+
+const confirmSaveLocal = async () => {
+  try {
+    if (!localTemplateName.value.trim()) {
+      Message.warning('模板名稱不能為空');
+      return;
+    }
+    Spin.show();
+    const json = canvasEditor.getJson();
+    const thumbnail = canvasEditor.canvas.toDataURL({ format: 'jpeg', quality: 0.2 });
+    const { saveLocalTemplate } = await import('@/utils/localDB');
+
+    const newId = Date.now().toString();
+    await saveLocalTemplate({
+      id: newId,
+      name: localTemplateName.value.trim(),
+      json: JSON.stringify(json),
+      thumbnail,
+      updatedAt: Date.now(),
+    });
+
+    router.replace('/?localId=' + newId);
+    Message.success('成功建立本機模板！');
+  } catch (error) {
+    console.error(error);
+    Message.error('儲存本機失敗');
+  } finally {
+    Spin.hide();
+  }
 };
 
 const saveWith = debounce(function (type) {
