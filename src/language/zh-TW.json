@@ -1,0 +1,263 @@
+{
+  "bgSeting": {
+    "size": "尺寸",
+    "color": "顏色",
+    "colorMacthing": "配色",
+    "width": "寬度",
+    "height": "高度"
+  },
+  "flip": {
+    "x": "水平翻轉",
+    "y": "垂直翻轉"
+  },
+  "attrSeting": {
+    "group": "成組",
+    "unGroup": "拆分組",
+    "flip": {
+      "name": "翻轉",
+      "x": "水平翻轉",
+      "y": "垂直翻轉"
+    },
+    "align": {
+      "name": "對齊",
+      "left": "左對齊",
+      "centerX": "水平居中對齊",
+      "right": "右對齊",
+      "top": "上對齊",
+      "bottom": "下對齊",
+      "centerY": "垂直居中對齊",
+      "averageX": "水平分布",
+      "averageY": "垂直分布"
+    },
+    "centerAlign": {
+      "name": "居中",
+      "centerX": "水平居中",
+      "center": "水平垂直居中",
+      "centerY": "垂直居中"
+    }
+  },
+  "color": "顏色",
+  "textFloat": "小數",
+  "templates": "模板",
+  "elements": "元素",
+  "font_style": "文字",
+  "background": "背景",
+  "grid": "網格",
+  "placeholder": "請輸入",
+  "common_elements": "基礎要素",
+  "draw_elements": "繪製元素",
+  "code_img": "條碼圖片",
+  "background_texture": "背景紋理",
+  "picture": "圖片",
+  "everything_is_fine": "萬事大吉",
+  "everything_goes_well": "諸事順遂",
+  "cartoon": "卡通",
+  "default_size": "預設尺寸",
+  "preview": "預覽",
+  "save": {
+    "empty": "清空",
+    "down": "下載",
+    "save_my_spase": "儲存到我的空間",
+    "save_as_picture": "PNG圖片",
+    "save_as_svg": "SVG圖片",
+    "copy_to_clipboard": "複製到剪貼簿",
+    "copy_to_clipboardstr": "複製字串剪貼簿",
+    "save_as_json": "儲存為JSON"
+  },
+  "layers": "圖層",
+  "my_spase": {
+    "remove_templ": "刪除模板",
+    "remove_templTip": "確認刪除模板嗎？",
+    "remove_file_type": "確認刪除資料夾嗎？",
+    "remove_file_type_Tip": "確認刪除模板嗎？"
+  },
+  "title_template": "標題模板",
+  "insert_svg": "插入SVG元素",
+  "select_svg": "選擇SVG檔案",
+  "please_choose": "請選擇",
+  "string": "字串",
+  "file": "檔案",
+  "importFiles": {
+    "file": "檔案",
+    "createDesign": {
+      "title": "建立設計",
+      "customSize": "自訂尺寸",
+      "systemSize": "系統推薦尺寸",
+      "width": "寬度",
+      "height": "高度",
+      "create": "確定"
+    },
+    "importFiles": "匯入檔案"
+  },
+  "select_json": "選擇JSON檔案",
+  "repleaceImg": "替換圖片",
+  "cropperImg": "裁剪圖片",
+  "createClip": "新增裁切",
+  "removeClip": "移除裁切",
+  "polygonClip": "多邊形",
+  "rectClip": "矩形",
+  "circleClip": "圓",
+  "triangleClip": "三角形",
+  "polygonClipInverted": "多邊形【反】",
+  "rectClipInverted": "矩形【反】",
+  "circleClipInverted": "圓【反】",
+  "triangleClipInverted": "三角形【反】",
+  "waterMark": {
+    "text": "浮水印",
+    "modalTitle": "配置浮水印",
+    "setting": {
+      "name": "浮水印名稱",
+      "size": "浮水印大小",
+      "color": "浮水印顏色",
+      "angle": "浮水印角度",
+      "position": {
+        "label": "浮水印位置",
+        "lt": "左上角",
+        "rt": "右上角",
+        "lb": "左下角",
+        "rb": "右下角",
+        "full": "平鋪"
+      }
+    }
+  },
+  "material": {
+    "cartoon": "素材"
+  },
+  "filters": {
+    "simple": "簡單濾鏡",
+    "complex": "複雜濾鏡",
+    "Invert": "反向",
+    "Sepia": "烏黑",
+    "BlackWhite": "黑白",
+    "Brownie": "巧克力",
+    "Vintage": "復古",
+    "Kodachrome": "底片",
+    "technicolor": "鮮豔",
+    "Polaroid": "高光",
+    "Grayscale": "灰度",
+    "GrayscaleList": {
+      "average": "一般",
+      "lightness": "中度",
+      "luminosity": "明亮"
+    },
+    "RemoveColor": "去除顏色",
+    "Brightness": "亮度",
+    "Contrast": "對比度",
+    "Saturation": "飽和度",
+    "Vibrance": "振動",
+    "HueRotation": "色調",
+    "Noise": "噪音",
+    "Pixelate": "像素化",
+    "Blur": "模糊",
+    "Gamma": "調整"
+  },
+  "quick": {
+    "del": "刪除",
+    "copy": "複製",
+    "lock": "鎖定",
+    "unlock": "解鎖",
+    "hide": "隱藏",
+    "editPoly": "編輯多邊形"
+  },
+  "insertFile": {
+    "insert": "插入",
+    "insert_picture": "插入圖片",
+    "insert_SVG": "插入SVG元素",
+    "insert_SVGStr": "插入SVG字串",
+    "insert_PSD": "插入PSD",
+    "insert_SVGStr_placeholder": "請輸入SVG字串",
+    "modal_tittle": "請輸入"
+  },
+  "history": {
+    "revocation": "撤銷",
+    "redo": "重做"
+  },
+  "upload_background": "上傳背景",
+  "mouseMenu": {
+    "layer": "圖層管理",
+    "copy": "複製",
+    "delete": "刪除",
+    "group": "組合",
+    "unGroup": "取消組合",
+    "up": "上移一層",
+    "down": "下移一層",
+    "upTop": "移到頂部",
+    "downTop": "移到底部",
+    "center": "水平垂直居中"
+  },
+  "alert": {
+    "loading_fonts": "正在載入字型，請您耐心等候...",
+    "loading_fonts_failed": "字型載入失敗，請重試！",
+    "loading_fonts_success": "字型載入成功！",
+    "loading_data": "載入資料中...",
+    "select_image": "請選擇背景圖片",
+    "select_file": "請選擇檔案",
+    "copied_sucessful": "複製成功",
+    "fail_copy": "複製失敗"
+  },
+  "scenary_x": "方案 {number}",
+  "red_book_vertical": "紅書直式",
+  "red_book_horizontal": "紅書橫式",
+  "phone_wallpaper": "手機桌布",
+  "attributes": {
+    "id": "標識",
+    "linkData": "關聯",
+    "font": "字型",
+    "align": "對齊",
+    "bold": "加粗:",
+    "italic": "斜體:",
+    "underline": "底線:",
+    "stroke": "邊框",
+    "swipe_up": "上劃:",
+    "line_height": "行高",
+    "char_spacing": "間距",
+    "exterior": "外觀",
+    "angle": "旋轉",
+    "left": "X軸",
+    "top": "Y軸",
+    "opacity": "透明",
+    "shadow": "陰影",
+    "blur": "模糊",
+    "offset_x": "X軸",
+    "offset_y": "Y軸",
+    "borderRadiusX": "圓角水平半徑",
+    "borderRadiusY": "圓角垂直半徑",
+    "rx_ry": "半徑"
+  },
+  "setSizeTip": "調整畫布尺寸",
+  "tip": "提示",
+  "clearTip": "確定要清空嗎？",
+  "replaceTip": "確定要加到畫布中嗎？",
+  "ok": "確認",
+  "cancel": "取消",
+  "cleanUp": "清除",
+  "login": {
+    "title": "歡迎使用",
+    "welcome": "歡迎使用快圖",
+    "login": "登入",
+    "register": "註冊",
+    "identifier": "使用者名稱",
+    "username": "使用者名稱",
+    "password": "密碼",
+    "email": "信箱",
+    "identifierValidate": "請輸入使用者名稱",
+    "passwordValidate": "請輸入6位以上的密碼",
+    "emailValidate": "請輸入正確的信箱地址",
+    "logoutTip": "確定要登出嗎？",
+    "logoutSuccessTip": "登出成功"
+  },
+  "myMaterial": {
+    "uploadBtn": "上傳素材"
+  },
+  "admin": {
+    "btnTitle": "管理",
+    "setToken": "設定Token",
+    "save": "儲存",
+    "create": "新增",
+    "addTempl": "新增模板",
+    "addTemplPlaceholder": "請輸入模板名稱",
+    "addTemplCheckTip": "模板名稱不能為空"
+  },
+  "mine": "我的",
+  "batch": "批量"
+}

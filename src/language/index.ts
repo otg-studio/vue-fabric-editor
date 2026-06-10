@@ -10,12 +10,14 @@ import zh from 'view-ui-plus/dist/locale/zh-CN';
 import en from 'view-ui-plus/dist/locale/en-US'; //新版本把'iview'改成'view-design'
 import US from './en.json';
 import CN from './zh.json';
+import TW from './zh-TW.json';
 import { getLocal, setLocal } from '@/utils/local';
 import { LANG } from '@/config/constants/app';
 
 const messages = {
   en: Object.assign(US, en), //将自己的英文包和iview提供的结合
   zh: Object.assign(CN, zh), //将自己的中文包和iview提供的结合
+  'zh-TW': Object.assign(TW, zh), // 暂用iview自带的简中以防某些组件缺失
 };
 
 function getLocalLang() {

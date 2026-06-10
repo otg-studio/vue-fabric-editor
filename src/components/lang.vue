@@ -30,7 +30,8 @@ import { useI18n } from 'vue-i18n';
 const { locale } = useI18n();
 
 const LANGMAP = {
-  zh: '中文',
+  zh: '简体中文',
+  'zh-TW': '繁體中文',
   en: 'En',
 };
 
