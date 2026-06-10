@@ -6,7 +6,7 @@
  * @Description: 通用属性hook
  */
 
-import { inject, computed, reactive, onMounted, onBeforeMount } from 'vue';
+import { inject, computed, reactive, onMounted, onBeforeMount, markRaw } from 'vue';
 
 import Editor, { EventType } from '@kuaitu/core';
 const { SelectMode, SelectEvent } = EventType;
@@ -29,7 +29,7 @@ export default function useSelect(matchType?: Array<string>) {
     state.mSelectMode = SelectMode.ONE;
     const [item] = arr;
     if (item) {
-      state.mSelectActive = [item];
+      state.mSelectActive = [markRaw(item)];
       state.mSelectId = item.id;
       state.mSelectOneType = item.type;
       state.mSelectIds = [item.id];

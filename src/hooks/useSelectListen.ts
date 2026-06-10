@@ -19,6 +19,8 @@ export interface Selector {
   mSelectActive: unknown[];
 }
 
+import { markRaw } from 'vue';
+
 export default function useSelectListen(canvasEditor: Editor) {
   const state = reactive<Selector>({
     mSelectMode: SelectMode.EMPTY,
@@ -30,7 +32,7 @@ export default function useSelectListen(canvasEditor: Editor) {
 
   const selectOne = (e: [fabric.Object]) => {
     state.mSelectMode = SelectMode.ONE;
-    state.mSelectActive = e;
+    state.mSelectActive = e.map((item) => markRaw(item));
     if (e[0] && get(e[0], 'clip')) {
       selectCancel();
       // state.mSelectId = get(e[0], 'targetId');
