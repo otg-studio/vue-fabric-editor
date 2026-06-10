@@ -6,7 +6,8 @@
   <Modal v-model="visible" title="批次產圖 (Batch Generate)" :width="800">
     <div style="margin-bottom: 15px">
       <p v-if="variables.length === 0" style="color: red">
-        畫布中未偵測到變數！請選取畫布上的文字或圖片，在「資料 -> id」填入變數名稱。
+        畫布中未偵測到變數！請選取畫布上的文字或圖片，在「資料 -> 變數名稱 (linkData
+        第二格)」填入變數。
       </p>
       <p v-else>
         已偵測變數：
@@ -65,13 +66,11 @@ const colSpan = computed(() => {
 });
 
 const open = () => {
-  // 找出畫布中所有設定了 id 的物件（扣掉 workspace 背景）
-  const objs = canvasEditor.canvas
-    .getObjects()
-    .filter((item) => item.id && item.id !== 'workspace');
+  // 找出畫布中所有設定了 linkData[1] (變數名稱) 的物件
+  const objs = canvasEditor.canvas.getObjects().filter((item) => item.linkData && item.linkData[1]);
   const vars = new Set();
   objs.forEach((obj) => {
-    vars.add(obj.id);
+    vars.add(obj.linkData[1]);
   });
   variables.value = Array.from(vars);
 
@@ -117,16 +116,75 @@ const generateBatch = async () => {
       // 替換變數
       const objs = canvasEditor.canvas.getObjects();
       for (const obj of objs) {
-        if (obj.id && rowData[obj.id] !== undefined) {
-          const val = rowData[obj.id];
+        if (obj.linkData && obj.linkData[1] && rowData[obj.linkData[1]] !== undefined) {
+          const val = rowData[obj.linkData[1]];
+          const propName = obj.linkData[0] || (obj.type.includes('text') ? 'text' : 'src');
+
           if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
-            obj.set('text', val);
+            obj.set(propName, val);
           } else if (obj.type === 'image') {
             if (val && (val.startsWith('http') || val.startsWith('data:image'))) {
+              // 記下原始的顯示尺寸
+              const pw = obj.width * obj.scaleX;
+              const ph = obj.height * obj.scaleY;
+
               await new Promise((resolve) => {
                 obj.setSrc(
                   val,
-                  () => {
+                  (img) => {
+                    // 算出 cover 的縮放比例
+                    const s = Math.max(pw / img.width, ph / img.height);
+
+                    // 裁切圖片，使其等比例填滿原佔位框
+                    img.set({
+                      scaleX: s,
+                      scaleY: s,
+                      width: pw / s,
+                      height: ph / s,
+                      cropX: (img.width - pw / s) / 2,
+                      cropY: (img.height - ph / s) / 2,
+                    });
+
+                    // 若原圖片有設定圓角，必須重新計算 clipPath
+                    if (img.roundValue && img.roundValue > 0) {
+                      const scaleX = img.get('scaleX') || 1;
+                      const scaleY = img.get('scaleY') || 1;
+
+                      const w = img.width;
+                      const h = img.height;
+                      const rx = Math.max(0, Math.round(Number(img.roundValue) / scaleX));
+                      const ry = Math.max(0, Math.round(Number(img.roundValue) / scaleY));
+
+                      const x = -w / 2;
+                      const y = -h / 2;
+                      const r1 = Math.min(rx, w / 2);
+                      const r2 = Math.min(ry, h / 2);
+
+                      const pathString = `
+                        M ${x + r1} ${y}
+                        L ${x + w - r1} ${y}
+                        A ${r1} ${r2} 0 0 1 ${x + w} ${y + r2}
+                        L ${x + w} ${y + h - r2}
+                        A ${r1} ${r2} 0 0 1 ${x + w - r1} ${y + h}
+                        L ${x + r1} ${y + h}
+                        A ${r1} ${r2} 0 0 1 ${x} ${y + h - r2}
+                        L ${x} ${y + r2}
+                        A ${r1} ${r2} 0 0 1 ${x + r1} ${y}
+                        Z
+                      `
+                        .trim()
+                        .replace(/\s+/g, ' ');
+
+                      const rect = new fabric.Path(pathString, {
+                        originX: 'center',
+                        originY: 'center',
+                        left: 0,
+                        top: 0,
+                        fill: '#000000',
+                        absolutePositioned: false,
+                      });
+                      img.set('clipPath', rect);
+                    }
                     resolve();
                   },
                   { crossOrigin: 'anonymous' }
