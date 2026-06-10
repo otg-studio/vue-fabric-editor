@@ -62,13 +62,12 @@ const modal = ref(false);
 const width = ref(null);
 const height = ref(null);
 const sizeList = ref([]);
+import sizeData from '@/assets/mockData/sizes.json';
+
 const showSetSize = (w, h) => {
   width.value = w || null;
   height.value = h || null;
-  // 获取素材
-  canvasEditor.getSizeList().then((res) => {
-    sizeList.value = res;
-  });
+  sizeList.value = sizeData;
   modal.value = true;
 };
 const setSize = (itemString) => {
