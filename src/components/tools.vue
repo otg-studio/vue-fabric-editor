@@ -25,6 +25,15 @@
       <span @click="insertImg" :title="$t('ui.insertImage')">
         <Icon type="md-image" :size="24" />
       </span>
+      <!-- 插入 Sample SVG 佔位圖按鈕 -->
+      <span
+        @click="() => addSampleSvg()"
+        :draggable="true"
+        @dragend="addSampleSvg"
+        title="插入 SVG 佔位圖 (Sample SVG)"
+      >
+        <Icon type="md-qr-scanner" :size="24" />
+      </span>
     </div>
     <Divider plain orientation="left">{{ $t('draw_elements') }}</Divider>
     <div class="tool-box">
@@ -219,6 +228,25 @@ const addRect = (event) => {
   });
 
   canvasEditor.addBaseType(rect, { center: true, event });
+};
+
+const addSampleSvg = (event) => {
+  cancelDraw();
+  // 5x5 的輕量級 SVG 作為圖片佔位符
+  const svg5x5 = `<svg width="5" height="5" xmlns="http://www.w3.org/2000/svg"><rect width="5" height="5" fill="#EAEAEA"/></svg>`;
+  const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svg5x5)}`;
+
+  fabric.Image.fromURL(dataUrl, (img) => {
+    img.set({
+      ...defaultPosition,
+      width: 5,
+      height: 5,
+      scaleX: 200 / 5, // 顯示為 200x200 大小
+      scaleY: 200 / 5,
+      name: 'Sample SVG',
+    });
+    canvasEditor.addBaseType(img, { center: true, event });
+  });
 };
 const drawPolygon = () => {
   const onEnd = () => {
