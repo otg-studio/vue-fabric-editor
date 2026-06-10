@@ -21,7 +21,6 @@ const imgStroke = defineAsyncComponent(() => import('@/components/imgStroke.vue'
 // const elementData = defineAsyncComponent(() => import('@/components/elementData.vue'));
 // const attribute = defineAsyncComponent(() => import('@/components/attribute.vue'));
 const attributePostion = defineAsyncComponent(() => import('@/components/attributePostion.vue'));
-const attributeArray = defineAsyncComponent(() => import('@/components/attributeArray.vue'));
 const attributeId = defineAsyncComponent(() => import('@/components/attributeId.vue'));
 const attributeShadow = defineAsyncComponent(() => import('@/components/attributeShadow.vue'));
 const attributeBorder = defineAsyncComponent(() => import('@/components/attributeBorder.vue'));
@@ -117,8 +116,6 @@ const switchAttrBar = () => {
         <attribute-text-content></attribute-text-content>
         <!-- 位置信息 -->
         <attributePostion></attributePostion>
-        <!-- 陣列複製 -->
-        <attributeArray></attributeArray>
         <!-- 阴影 -->
         <attributeShadow></attributeShadow>
         <!-- 边框 -->
