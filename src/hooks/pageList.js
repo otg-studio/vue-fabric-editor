@@ -7,6 +7,7 @@
  */
 
 import { getMockData, getMockDataAll } from '@/assets/mockData';
+import { ref, nextTick } from 'vue';
 
 // 分类API
 const typeApi = (url) => {
@@ -130,9 +131,12 @@ export default function usePageList({
   const showScroll = ref(false);
   const scrollHeight = ref(0);
   const startPage = async () => {
+    await nextTick();
     // 滚动
     const myTemplBox = document.querySelector(scrollElement);
-    scrollHeight.value = myTemplBox.offsetHeight;
+    if (myTemplBox) {
+      scrollHeight.value = myTemplBox.offsetHeight;
+    }
     showScroll.value = true;
 
     await getTypeList();
