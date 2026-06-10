@@ -33,7 +33,9 @@ const getValue = (item: any) => {
         newData[key + 'Id'] = itemId;
       }
       if (itemUrl) {
-        newData[key + 'Url'] = baseURL + itemUrl;
+        newData[key + 'Url'] = itemUrl.startsWith('http')
+          ? itemUrl.replace('http//', 'http://').replace('https//', 'https://')
+          : baseURL + itemUrl;
       }
       if (itemImgFormats) {
         addImgFormat(newData, key, itemImgFormats);
@@ -45,7 +47,10 @@ const getValue = (item: any) => {
 
 const addImgFormat = (data: any, key: string, item: any) => {
   Object.keys(item).forEach((imgKey) => {
-    data[key + 'Url' + _.capitalize(imgKey)] = baseURL + item[imgKey].url;
+    const url = item[imgKey].url;
+    data[key + 'Url' + _.capitalize(imgKey)] = url.startsWith('http')
+      ? url.replace('http//', 'http://').replace('https//', 'https://')
+      : baseURL + url;
   });
 };
 

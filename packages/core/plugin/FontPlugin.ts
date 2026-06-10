@@ -56,14 +56,16 @@ class FontPlugin implements IPluginTempl {
     this.tempPromise = axios
       .get(`${this.repoSrc}/api/fonts?populate=*&pagination[pageSize]=100`)
       .then((res) => {
-        const list = res.data.data.map((item: any) => {
-          return {
-            name: item.attributes.name,
-            type: item.attributes.type,
-            file: this.repoSrc + item.attributes.file.data.attributes.url,
-            img: this.repoSrc + item.attributes.img.data.attributes.url,
-          };
-        });
+        const list = res.data.data
+          .filter((item: any) => item.attributes.file?.data && item.attributes.img?.data)
+          .map((item: any) => {
+            return {
+              name: item.attributes.name,
+              type: item.attributes.type,
+              file: this.repoSrc + item.attributes.file.data.attributes.url,
+              img: this.repoSrc + item.attributes.img.data.attributes.url,
+            };
+          });
         this.cacheList = list;
         this.createFontCSS(list);
         return list;

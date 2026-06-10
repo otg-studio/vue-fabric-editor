@@ -66,12 +66,18 @@ function getPageParams(
 
 function getMaterialInfoUrl(info) {
   const imgUrl = info?.data?.attributes?.url || '';
-  return repoSrc + imgUrl;
+  if (!imgUrl) return '';
+  return imgUrl.startsWith('http')
+    ? imgUrl.replace('http//', 'http://').replace('https//', 'https://')
+    : repoSrc + imgUrl;
 }
 
 function getMaterialPreviewUrl(info) {
   const imgUrl = info?.data?.attributes?.formats?.small?.url || info?.data?.attributes?.url || '';
-  return repoSrc + imgUrl;
+  if (!imgUrl) return '';
+  return imgUrl.startsWith('http')
+    ? imgUrl.replace('http//', 'http://').replace('https//', 'https://')
+    : repoSrc + imgUrl;
 }
 
 export default function usePageList({
