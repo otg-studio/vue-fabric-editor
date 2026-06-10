@@ -31,6 +31,7 @@
         >
           <Option value="src"></Option>
           <Option value="text"></Option>
+          <Option value="repeat" label="陣列複製(repeat)"></Option>
         </Select>
       </Col>
       <Col flex="1">

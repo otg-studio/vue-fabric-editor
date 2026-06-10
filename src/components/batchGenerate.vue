@@ -114,13 +114,34 @@ const generateBatch = async () => {
       });
 
       // 替換變數
-      const objs = canvasEditor.canvas.getObjects();
+      const objs = [...canvasEditor.canvas.getObjects()];
       for (const obj of objs) {
         if (obj.linkData && obj.linkData[1] && rowData[obj.linkData[1]] !== undefined) {
           const val = rowData[obj.linkData[1]];
           const propName = obj.linkData[0] || (obj.type.includes('text') ? 'text' : 'src');
 
-          if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
+          if (propName === 'repeat') {
+            const repeatCount = parseInt(val, 10);
+            if (!isNaN(repeatCount) && repeatCount > 1) {
+              const gapValue = 10;
+              let currentLeft = obj.left + obj.getScaledWidth();
+              const keys = canvasEditor.getExtensionKey ? canvasEditor.getExtensionKey() : [];
+
+              for (let c = 1; c < repeatCount; c++) {
+                await new Promise((resolveClone) => {
+                  obj.clone((cloned) => {
+                    cloned.set({
+                      left: currentLeft + gapValue,
+                      top: obj.top,
+                    });
+                    canvasEditor.canvas.add(cloned);
+                    currentLeft = cloned.left + cloned.getScaledWidth();
+                    resolveClone();
+                  }, keys);
+                });
+              }
+            }
+          } else if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
             obj.set(propName, val);
           } else if (obj.type === 'image') {
             if (val && (val.startsWith('http') || val.startsWith('data:image'))) {
