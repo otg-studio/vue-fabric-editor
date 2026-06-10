@@ -29,6 +29,7 @@ interface Font {
 
 interface FontSource {
   name: string;
+  displayName?: string;
   type: string;
   file: string;
   img: string;

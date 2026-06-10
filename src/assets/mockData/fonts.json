@@ -1,17 +1,20 @@
 [
   {
+    "displayName": "源柔ゴシック",
     "name": "Genjyuu Gothic",
     "type": "text",
     "file": "https://cdn.jsdelivr.net/npm/@fontsource/genjyuu-gothic@5.2.5/400.css",
     "img": "/fonts/genjyuu.png"
   },
   {
+    "displayName": "思源黑體",
     "name": "Noto Sans TC",
     "type": "text",
     "file": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap",
     "img": "/fonts/noto_sans.png"
   },
   {
+    "displayName": "思源宋體",
     "name": "Noto Serif TC",
     "type": "text",
     "file": "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap",
