@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "typeId": "1",
+    "name": "大標題",
+    "desc": "基礎文字設計",
+    "src": "https://placehold.co/200x100?text=Title",
+    "previewSrc": "https://placehold.co/200x100?text=Title",
+    "json": { "type": "textbox", "version": "5.3.0", "originX": "center", "originY": "center", "left": 400, "top": 400, "width": 200, "height": 50, "text": "雙擊編輯", "fontSize": 40, "fontFamily": "Roboto", "fill": "#000000" }
+  }
+]

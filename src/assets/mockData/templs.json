@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "typeId": "1",
+    "name": "測試模板",
+    "desc": "測試用的海報模板",
+    "src": "https://placehold.co/200x300?text=Poster",
+    "previewSrc": "https://placehold.co/200x300?text=Poster",
+    "json": { "version": "5.3.0", "objects": [{ "type": "textbox", "version": "5.3.0", "originX": "center", "originY": "center", "left": 400, "top": 400, "width": 200, "height": 50, "text": "模板內容", "fontSize": 40, "fontFamily": "Roboto", "fill": "#000000" }] }
+  }
+]
