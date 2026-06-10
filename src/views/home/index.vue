@@ -92,8 +92,9 @@ onMounted(() => {
     fireRightClick: true, // 启用右键，button的数字为3
     stopContextMenu: true, // 禁止默认右键菜单
     controlsAboveOverlay: true, // 超出clipPath后仍然展示控制条
-    // imageSmoothingEnabled: false, // 解决文字导出后不清晰问题
     preserveObjectStacking: true, // 当选择画布中的对象时，让对象不在顶层。
+    uniformScaling: false, // 預設取消等比例縮放
+    uniScaleKey: 'shiftKey', // 按住 shift 時啟用等比例縮放
   });
 
   // 初始化编辑器
