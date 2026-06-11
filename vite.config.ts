@@ -134,6 +134,9 @@ const config = ({ mode }) => {
     preview: {
       port: 5000,
     },
+    esbuild: {
+      drop: ['console', 'debugger'],
+    },
   };
 };
 
