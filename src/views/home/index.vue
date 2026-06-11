@@ -162,7 +162,7 @@ provide('fabric', fabric);
 provide('canvasEditor', canvasEditor);
 
 // 啟用 URL 參數資料匯入支援
-useUrlData();
+useUrlData(canvasEditor);
 // provide('mixinState', mixinState);
 </script>
 

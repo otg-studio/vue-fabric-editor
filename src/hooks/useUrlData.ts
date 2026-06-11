@@ -1,11 +1,10 @@
-import { inject, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import LZString from 'lz-string';
 import { getLocalTemplates } from '@/utils/localDB';
 
-export default function useUrlData() {
+export default function useUrlData(canvasEditor: any) {
   const route = useRoute();
-  const canvasEditor: any = inject('canvasEditor');
 
   onMounted(async () => {
     if (!canvasEditor) return;
