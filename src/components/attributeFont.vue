@@ -127,7 +127,7 @@
         <div class="flex-item">
           <span class="label">{{ $t('background') }}</span>
           <div class="content">
-            <ColorPicker
+            <ColorPickerDrop
               v-model="baseAttr.textBackgroundColor"
               @on-change="(value) => changeCommon('textBackgroundColor', value)"
               alpha

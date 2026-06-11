@@ -47,7 +47,7 @@
         <div class="flex-item">
           <span class="label">散点</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.dotsColor" @on-change="changeCommon" alpha />
+            <ColorPickerDrop v-model="baseAttr.dotsColor" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
@@ -66,7 +66,11 @@
         <div class="flex-item">
           <span class="label">外角</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.cornersSquareColor" @on-change="changeCommon" alpha />
+            <ColorPickerDrop
+              v-model="baseAttr.cornersSquareColor"
+              @on-change="changeCommon"
+              alpha
+            />
           </div>
         </div>
         <div class="flex-item">
@@ -88,7 +92,7 @@
         <div class="flex-item">
           <span class="label">内角</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.cornersDotColor" @on-change="changeCommon" alpha />
+            <ColorPickerDrop v-model="baseAttr.cornersDotColor" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
@@ -107,7 +111,7 @@
         <div class="flex-item">
           <span class="label">背景</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.background" @on-change="changeCommon" alpha />
+            <ColorPickerDrop v-model="baseAttr.background" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">

@@ -16,7 +16,7 @@
           <div class="ivu-col__box">
             <span class="label">{{ $t('color') }}</span>
             <div class="content">
-              <ColorPicker
+              <ColorPickerDrop
                 v-model="baseAttr.stroke"
                 @on-change="(value) => changeCommon('stroke', value)"
                 alpha

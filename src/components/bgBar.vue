@@ -7,7 +7,7 @@
       </Divider>
       <Form :label-width="0">
         <FormItem prop="name">
-          <ColorPicker v-model="color" @on-change="setThisColor" alpha />
+          <ColorPickerDrop v-model="color" @on-change="setThisColor" alpha />
         </FormItem>
       </Form>
       <!-- <Divider plain></Divider> -->

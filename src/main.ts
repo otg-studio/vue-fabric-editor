@@ -11,6 +11,7 @@ import VueLazyLoad from 'vue3-lazyload';
 import { VueMasonryPlugin } from 'vue-masonry';
 
 import i18n from './language/index';
+import ColorPickerDrop from '@/components/ColorPickerDrop.vue';
 
 import { fabric } from 'fabric';
 
@@ -46,6 +47,10 @@ async function bootstrap() {
   app.use(i18n);
   app.use(VueLazyLoad, {});
   app.use(ViewUiPlus);
+
+  // Register globally
+  app.component('ColorPickerDrop', ColorPickerDrop);
+
   await router.isReady();
   app.mount('#app');
 }

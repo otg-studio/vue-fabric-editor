@@ -65,7 +65,7 @@
                     ></Slider>
                   </div>
                   <div v-if="info.uiType === uiType.COLOR">
-                    <ColorPicker
+                    <ColorPickerDrop
                       v-model="info.value"
                       alpha
                       size="small"

@@ -52,7 +52,7 @@
         </div>
 
         <div>
-          <ColorPicker v-model="strokeColor" @on-change="onColorChange" placement="left" />
+          <ColorPickerDrop v-model="strokeColor" @on-change="onColorChange" placement="left" />
         </div>
       </div>
     </template>

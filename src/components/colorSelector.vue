@@ -31,7 +31,7 @@
     </div>
 
     <!-- 纯色选择器 -->
-    <ColorPicker v-show="!isGradient" v-model="fill" @on-change="changePureColor" alpha />
+    <ColorPickerDrop v-show="!isGradient" v-model="fill" @on-change="changePureColor" alpha />
   </div>
 </template>
 

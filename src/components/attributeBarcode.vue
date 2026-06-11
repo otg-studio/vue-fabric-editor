@@ -66,7 +66,7 @@
         <div class="flex-item">
           <span class="label">条码</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.lineColor" @on-change="changeCommon" alpha />
+            <ColorPickerDrop v-model="baseAttr.lineColor" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item" v-if="baseAttr.displayValue">
@@ -84,7 +84,7 @@
         <div class="flex-item">
           <span class="label">背景</span>
           <div class="content">
-            <ColorPicker v-model="baseAttr.background" @on-change="changeCommon" alpha />
+            <ColorPickerDrop v-model="baseAttr.background" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
