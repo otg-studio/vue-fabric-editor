@@ -113,55 +113,32 @@
           />
         </div>
         <div class="list-box">
-          <Tooltip
-            :content="info.name"
+          <Dropdown
             v-for="info in localTemplates"
             :key="info.id"
-            placement="top"
+            trigger="contextMenu"
+            @on-click="(name) => handleLocalContextClick(name, info)"
           >
-            <div class="tmpl-img-box" style="position: relative; margin-bottom: 10px">
-              <Image
-                lazy
-                :src="info.thumbnail"
-                fit="contain"
-                height="100%"
-                :alt="info.name"
-                @click="beforeClearLocalTip(info)"
-              />
-              <div
-                style="
-                  position: absolute;
-                  top: 0;
-                  right: 0;
-                  background: rgba(0, 0, 0, 0.5);
-                  border-radius: 0 5px 0 5px;
-                  z-index: 10;
-                "
-              >
-                <Button
-                  type="text"
-                  size="small"
-                  icon="md-copy"
-                  @click.stop="copyId(info.id)"
-                  style="color: white; padding: 0 4px"
-                ></Button>
-                <Button
-                  type="text"
-                  size="small"
-                  icon="md-create"
-                  @click.stop="renameLocal(info)"
-                  style="color: white; padding: 0 4px"
-                ></Button>
-                <Button
-                  type="text"
-                  size="small"
-                  icon="md-trash"
-                  @click.stop="deleteLocal(info.id)"
-                  style="color: white; padding: 0 4px"
-                ></Button>
+            <Tooltip :content="info.name" placement="top">
+              <div class="tmpl-img-box" style="position: relative; margin-bottom: 10px">
+                <Image
+                  lazy
+                  :src="info.thumbnail"
+                  fit="contain"
+                  height="100%"
+                  :alt="info.name"
+                  @click="beforeClearLocalTip(info)"
+                />
               </div>
-            </div>
-          </Tooltip>
+            </Tooltip>
+            <template #list>
+              <DropdownMenu>
+                <DropdownItem name="copy">複製 ID</DropdownItem>
+                <DropdownItem name="rename">重新命名</DropdownItem>
+                <DropdownItem name="delete" style="color: #ed4014">刪除</DropdownItem>
+              </DropdownMenu>
+            </template>
+          </Dropdown>
         </div>
         <div
           v-if="localTemplates.length === 0"
@@ -331,6 +308,16 @@ const deleteLocal = async (id) => {
       loadLocal();
     },
   });
+};
+
+const handleLocalContextClick = (name, info) => {
+  if (name === 'copy') {
+    copyId(info.id);
+  } else if (name === 'rename') {
+    renameLocal(info);
+  } else if (name === 'delete') {
+    deleteLocal(info.id);
+  }
 };
 
 import { saveAs } from 'file-saver';
