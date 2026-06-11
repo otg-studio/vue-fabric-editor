@@ -39,7 +39,7 @@
 </template>
 
 <script name="Top" setup lang="ts">
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, inject, onMounted, onBeforeUnmount } from 'vue';
 // 导入元素
 const importJson = defineAsyncComponent(() => import('@/components/importJSON.vue'));
 const importFile = defineAsyncComponent(() => import('@/components/importFile.vue'));
@@ -70,14 +70,21 @@ const toggleModel = computed({
   },
 });
 
-import { inject, onMounted } from 'vue';
 const canvasEditor: any = inject('canvasEditor');
+
+const handleOpenBatchGenerate = (data: any) => {
+  batchGenerateRef.value?.open(data);
+};
 
 onMounted(() => {
   if (canvasEditor) {
-    canvasEditor.on('openBatchGenerate', (data: any) => {
-      batchGenerateRef.value?.open(data);
-    });
+    canvasEditor.on('openBatchGenerate', handleOpenBatchGenerate);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (canvasEditor) {
+    canvasEditor.off('openBatchGenerate', handleOpenBatchGenerate);
   }
 });
 </script>

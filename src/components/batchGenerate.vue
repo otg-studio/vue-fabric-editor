@@ -74,7 +74,7 @@
 </template>
 
 <script setup name="batchGenerate">
-import { ref, computed } from 'vue';
+import { ref, computed, h } from 'vue';
 import { Message, Spin } from 'view-ui-plus';
 import useSelect from '@/hooks/select';
 import JSZip from 'jszip';
@@ -253,7 +253,7 @@ const previewRow = async (index) => {
   visible.value = false;
   const rowData = tableData.value[index];
 
-  Spin.show({ render: (h) => h('div', '載入預覽中...') });
+  Spin.show({ render: () => h('div', '載入預覽中...') });
   try {
     if (rowData.customJson) {
       // 載入之前微調過的版本
@@ -277,7 +277,7 @@ const previewRow = async (index) => {
 };
 
 const restoreAndReopen = async () => {
-  Spin.show({ render: (h) => h('div', '復原預覽中...') });
+  Spin.show({ render: () => h('div', '復原預覽中...') });
   try {
     await new Promise((resolve) => {
       canvasEditor.loadJSON(baseTemplateJson.value, resolve);
@@ -305,7 +305,7 @@ const cancelTweak = async () => {
 const generateBatch = async () => {
   if (tableData.value.length === 0) return;
   isGenerating.value = true;
-  Spin.show({ render: (h) => h('div', '批次產圖中，這可能需要一點時間...') });
+  Spin.show({ render: () => h('div', '批次產圖中，這可能需要一點時間...') });
 
   try {
     const zip = new JSZip();

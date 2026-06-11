@@ -155,9 +155,11 @@ export default function useUrlData(canvasEditor: any) {
         // 因為 localId 上方是用 await 等待載入完成，如果是 localId 我們其實已經載入了
         // 為了安全起見，如果有 tempId 我們監聽 loadJson，否則可以直接執行。
         if (route.query.tempId) {
-          canvasEditor.on('loadJson', () => {
+          const handleLoadJson = () => {
             injectData();
-          });
+            canvasEditor.off('loadJson', handleLoadJson);
+          };
+          canvasEditor.on('loadJson', handleLoadJson);
         } else {
           // 對於 localId 或沒有指定模板 (在當下畫布操作)，直接執行注入
           injectData();
