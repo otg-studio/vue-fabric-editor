@@ -9,10 +9,10 @@
 <template>
   <div style="display: inline-block">
     <Dropdown @on-click="clickHandler">
-      <a href="javascript:void(0)">
+      <Button type="text">
         {{ $t('importFiles.file') }}
         <Icon type="ios-arrow-down"></Icon>
-      </a>
+      </Button>
       <template #list>
         <DropdownMenu>
           <DropdownItem name="createDesign">

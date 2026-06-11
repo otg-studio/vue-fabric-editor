@@ -9,10 +9,10 @@
 <template>
   <div style="display: inline-block">
     <Dropdown transfer-class-name="fix" @on-click="insertTypeHand">
-      <a href="javascript:void(0)">
+      <Button type="text">
         {{ $t('insertFile.insert') }}
         <Icon type="ios-arrow-down"></Icon>
-      </a>
+      </Button>
       <template #list>
         <DropdownMenu>
           <!-- 图片 -->
