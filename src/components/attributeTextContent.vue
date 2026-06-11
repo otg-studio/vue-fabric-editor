@@ -58,7 +58,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="box attr-item-box" v-if="isOne && isMatchType">
     <!-- <h3>数据</h3> -->
-    <Divider plain orientation="left"><h4>文本内容</h4></Divider>
+    <Divider plain orientation="left">
+      <h4>{{ $t('attributes.textContent') }}</h4>
+    </Divider>
 
     <Form :label-width="40" class="form-wrap">
       <FormItem :label="$t('attributes.id')">
@@ -72,7 +74,9 @@ onBeforeUnmount(() => {
 
     <template v-if="baseAttr.showPathAttr">
       <!-- <h3>数据</h3> -->
-      <Divider plain orientation="left"><h4>文本路径</h4></Divider>
+      <Divider plain orientation="left">
+        <h4>{{ $t('attributes.textPath') }}</h4>
+      </Divider>
       <div>
         <Row :gutter="12">
           <Col flex="1">

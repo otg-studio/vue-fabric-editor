@@ -40,7 +40,8 @@
     "setting": {
       "name": "Mark Name",
       "size": "Mark Size",
-      "color": "Color",
+      "color": "BgColor",
+      "mask": "Mask",
       "angle": "Mark Angle",
       "position": {
         "label": "Mark Position",
@@ -56,6 +57,7 @@
     "cartoon": "cartoon"
   },
   "filters": {
+    "title": "Filters",
     "simple": "Simple Filter",
     "complex": "Complex Filter",
     "Invert": "Invert",
@@ -182,7 +184,16 @@
     "offset_y": "Y",
     "borderRadiusX": "radiusX",
     "borderRadiusY": "radiusY",
-    "rx_ry": "Rounded"
+    "rx_ry": "Radius",
+    "textContent": "Text Content",
+    "textPath": "Text Path",
+    "qrcode": "QR Code",
+    "position": "Position",
+    "data": "Data",
+    "fontProperties": "Font Properties",
+    "color": "Color",
+    "barcode": "Barcode",
+    "rounded": "Rounded"
   },
   "setSizeTip": "Resize canvas",
   "tip": "tip",

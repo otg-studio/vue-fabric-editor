@@ -9,7 +9,9 @@
 <template>
   <div class="box attr-item-box" v-if="isOne && isMatchType && isQrcode">
     <!-- <h3>字体属性</h3> -->
-    <Divider plain orientation="left"><h4>二位码属性</h4></Divider>
+    <Divider plain orientation="left">
+      <h4>{{ $t('attributes.qrcode') }}</h4>
+    </Divider>
     <div>
       <div class="flex-view">
         <div class="flex-item">

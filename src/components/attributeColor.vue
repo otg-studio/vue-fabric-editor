@@ -8,7 +8,9 @@
 
 <template>
   <div class="box attr-item-box" v-if="isOne && selectType !== 'image' && selectType !== 'group'">
-    <Divider plain orientation="left"><h4>颜色</h4></Divider>
+    <Divider plain orientation="left">
+      <h4>{{ $t('attributes.color') }}</h4>
+    </Divider>
     <!-- 通用属性 -->
     <div class="bg-item">
       <Tooltip placement="top" theme="light">

@@ -124,6 +124,7 @@
     "cartoon": "素材"
   },
   "filters": {
+    "title": "图片滤镜",
     "simple": "简单滤镜",
     "complex": "复杂滤镜",
     "Invert": "反向",
@@ -222,7 +223,16 @@
     "offset_y": "Y轴",
     "borderRadiusX": "圆角水平半径",
     "borderRadiusY": "圆角垂直半径",
-    "rx_ry": "半径"
+    "rx_ry": "半径",
+    "textContent": "文本内容",
+    "textPath": "文本路径",
+    "qrcode": "二维码属性",
+    "position": "位置信息",
+    "data": "数据",
+    "fontProperties": "字体属性",
+    "color": "颜色",
+    "barcode": "条形码属性",
+    "rounded": "圆角"
   },
   "setSizeTip": "调整画布尺寸",
   "tip": "提示",

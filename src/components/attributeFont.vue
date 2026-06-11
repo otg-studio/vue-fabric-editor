@@ -9,7 +9,9 @@
 <template>
   <div class="box attr-item-box" v-if="isOne && isMatchType">
     <!-- <h3>字体属性</h3> -->
-    <Divider plain orientation="left"><h4>字体属性</h4></Divider>
+    <Divider plain orientation="left">
+      <h4>{{ $t('attributes.fontProperties') }}</h4>
+    </Divider>
     <div>
       <!-- <Divider plain orientation="left">{{ $t('attributes.font') }}</Divider> -->
       <div class="flex-view">
