@@ -51,9 +51,9 @@ class BarCodePlugin implements IPluginTempl {
 
   _defaultBarcodeOption() {
     return {
-      value: '123456',
+      value: 'https://www.instagram.com/ota_test_group/',
       format: CodeType.CODE128,
-      text: 'hi kuaitu',
+      text: 'ota_test_group',
       textAlign: 'left',
       textPosition: 'bottom',
       fontSize: 12,
