@@ -1,1 +1,0 @@
-import{a as o}from"./index.e32e0de9.js";import{o as s,c as a,a7 as t,a8 as c,A as _}from"./fabric.0e8df321.js";const d={},n=e=>(t("data-v-43e1e3da"),e=e(),c(),e),r={class:"logo"},p=n(()=>_("span",null,"Vue Fabric Editor",-1)),i=[p];function l(e,u){return s(),a("div",r,i)}const m=o(d,[["render",l],["__scopeId","data-v-43e1e3da"]]);export{m as default};
