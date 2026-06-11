@@ -479,17 +479,18 @@ const changeSelectType = debounce(() => {
 }
 
 .list-box {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .tmpl-img-box {
-  width: 140px;
+  width: 100%;
   cursor: pointer;
   border-radius: 5px;
   overflow: hidden;
+  background-color: #f6f7f9;
+  border: 1px solid #eef2f8;
   &:hover {
     :deep(.ivu-image-img) {
       opacity: 0.8;
