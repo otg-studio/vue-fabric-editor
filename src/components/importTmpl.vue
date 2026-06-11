@@ -112,7 +112,7 @@
             @change="handleImportLocal"
           />
         </div>
-        <div class="list-box">
+        <div class="list-box" @contextmenu.capture="closeAllContextMenus">
           <Dropdown
             v-for="info in localTemplates"
             :key="info.id"
@@ -318,6 +318,11 @@ const handleLocalContextClick = (name, info) => {
   } else if (name === 'delete') {
     deleteLocal(info.id);
   }
+};
+
+const closeAllContextMenus = () => {
+  // 模擬點擊 document 來觸發所有 Dropdown 的 clickoutside，藉此自動關閉上一個選單
+  document.dispatchEvent(new Event('click'));
 };
 
 import { saveAs } from 'file-saver';
