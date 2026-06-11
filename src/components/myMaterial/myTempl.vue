@@ -122,7 +122,6 @@
 </template>
 
 <script setup name="ImportTmpl">
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Input } from 'view-ui-plus';
 import { Spin, Modal, Message } from 'view-ui-plus';
 
@@ -135,7 +134,7 @@ import modalSzie from '@/components/common/modalSzie';
 import { getTmplList, getFileTypeTree } from '@/api/user';
 // 素材与分页
 import useMaterial from '@/hooks/useMaterial';
-import usePageList, { getMaterialInfoUrl, getMaterialPreviewUrl } from '@/hooks/usePageList';
+import usePageList from '@/hooks/usePageList';
 // 路由
 import { useRoute } from 'vue-router';
 import { ref, reactive } from 'vue';

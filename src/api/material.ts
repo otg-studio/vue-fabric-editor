@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Author: 秦少卫
  * @Date: 2024-04-24 14:07:06
@@ -46,11 +45,11 @@ export const getFontStyleTypes = () =>
   Promise.resolve({ data: { data: getMockDataAll('font-style-types') } });
 
 // 获取字体素材列表
-export const getFontStyles = (data: any) =>
+export const getFontStyles = () =>
   Promise.resolve({ data: { data: getMockDataAll('font-styles') } });
 
 // 获取根据分类获取字体样式列表
-export const getFontStyleListByType = (data: any) =>
+export const getFontStyleListByType = () =>
   Promise.resolve({ data: { data: getMockDataAll('font-styles') } });
 
 // 获取模板分类
@@ -58,8 +57,7 @@ export const getTmplTypes = () =>
   Promise.resolve({ data: { data: getMockDataAll('templ-types') } });
 
 // 获取模板列表
-export const getTmplList = (data: any) =>
-  Promise.resolve({ data: { data: getMockDataAll('templs') } });
+export const getTmplList = () => Promise.resolve({ data: { data: getMockDataAll('templs') } });
 
 // 新版 API---------------------
 // 获取模板列表

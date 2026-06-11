@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Author: 秦少卫
  * @Date: 2024-05-17 11:00:14
@@ -21,19 +19,11 @@ const pageApi = (url, filters, pagination) => {
   return Promise.resolve({ data: getMockData(url, filters, pagination) });
 };
 
-const getInfo = (id) => {
+const getInfo = () => {
   // Not used deeply in pageList.js, dummy implementation
   return Promise.resolve({ data: { data: {} } });
 };
-export default function usePageList({
-  typeUrl,
-  listUrl,
-  searchTypeKey,
-  searchWordKey,
-  scrollElement,
-  pageSize,
-  fields = [],
-}) {
+export default function usePageList({ typeUrl, listUrl, scrollElement, pageSize }) {
   const pageLoading = ref(false);
 
   // 关键词

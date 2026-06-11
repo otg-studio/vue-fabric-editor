@@ -162,7 +162,6 @@
 </template>
 
 <script setup name="ImportTmpl">
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import useSelect from '@/hooks/select';
 import usePageList from '@/hooks/pageList';
 import { Spin, Modal } from 'view-ui-plus';
@@ -177,7 +176,6 @@ const { t } = useI18n();
 const { canvasEditor } = useSelect();
 
 const {
-  startPage,
   typeValue,
   typeText,
   typeList,
@@ -259,12 +257,6 @@ const renameTargetName = ref('');
 const loadLocal = async () => {
   const { getLocalTemplates } = await import('@/utils/localDB');
   localTemplates.value = await getLocalTemplates();
-};
-
-const modeChange = (val) => {
-  if (val === 'local') {
-    loadLocal();
-  }
 };
 
 const beforeClearLocalTip = (info) => {

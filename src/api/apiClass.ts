@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Author: 秦少卫
  * @Date: 2024-10-07 17:00:17
@@ -9,45 +8,37 @@
 
 import { getMockDataAll } from '@/assets/mockData';
 
-interface IPageParams {
-  [key: string]: any;
-  pagination?: {
-    page: number;
-    pageSize: number;
-  };
-}
-
 export default class ServerApi {
   apiPath: string;
-  constructor(path: string, hasToken?: boolean) {
+  constructor(path: string) {
     this.apiPath = path.replace('/api/', '');
   }
 
   // 查询详情
-  get(id: string | number, data = {}) {
+  get() {
     return Promise.resolve({ data: {} });
   }
   // 添加
-  add(data = {}) {
+  add() {
     return Promise.resolve({ data: {} });
   }
   // 删除
-  del(id: string | number) {
+  del() {
     return Promise.resolve({ data: {} });
   }
   // 查找
-  find(data = {} as IPageParams, pageSize?: number) {
+  find() {
     return Promise.resolve({ data: { data: getMockDataAll(this.apiPath) } });
   }
   // 更新
-  update(id: string, data = {}) {
+  update() {
     return Promise.resolve({ data: {} });
   }
 
-  IGet(data = {}, skip = true) {
+  IGet() {
     return Promise.resolve({ data: { data: getMockDataAll(this.apiPath) } });
   }
-  IPost(data = {}, skip = true) {
+  IPost() {
     return Promise.resolve({ data: {} });
   }
 }

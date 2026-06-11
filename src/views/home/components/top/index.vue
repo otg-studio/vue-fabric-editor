@@ -38,7 +38,6 @@
 </template>
 
 <script name="Top" setup lang="ts">
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ref,
   computed,
@@ -61,7 +60,6 @@ const previewCurrent = defineAsyncComponent(() => import('@/components/previewCu
 const save = defineAsyncComponent(() => import('@/components/save.vue'));
 const lang = defineAsyncComponent(() => import('@/components/lang.vue'));
 const waterMark = defineAsyncComponent(() => import('@/components/waterMark.vue'));
-const login = defineAsyncComponent(() => import('@/components/login'));
 const admin = defineAsyncComponent(() => import('@/components/admin'));
 const history = defineAsyncComponent(() => import('@/components/history.vue'));
 
