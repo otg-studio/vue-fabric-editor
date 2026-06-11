@@ -21,21 +21,41 @@
 <style scoped lang="less">
 .color-picker-full {
   flex: 1;
-  :deep(.ivu-select-dropdown) {
-    /* ensure dropdown is normal */
-  }
+  width: 100%;
+  display: block;
+
   :deep(.ivu-color-picker-rel) {
     width: 100%;
+    display: block;
   }
-  :deep(.ivu-color-picker-color) {
+
+  :deep(.ivu-input-wrapper) {
+    width: 100%;
+  }
+
+  :deep(.ivu-input) {
     width: 100%;
     height: 32px;
+    padding: 0 4px;
+    cursor: pointer;
+  }
+
+  :deep(.ivu-color-picker-color) {
+    width: calc(100% - 8px); /* Fill the box tightly */
+    height: 24px;
     display: block;
+    margin-top: 3px;
+    margin-left: 4px;
     div {
       width: 100%;
       height: 100%;
-      border-radius: 4px;
+      border-radius: 2px;
     }
+  }
+
+  /* Hide the dropdown arrow to make it look like a pure color block */
+  :deep(.ivu-icon-ios-arrow-down) {
+    display: none;
   }
 }
 </style>
