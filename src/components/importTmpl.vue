@@ -94,6 +94,24 @@
         v-if="storageMode === 'local'"
         style="overflow-y: auto; height: 100%; padding-bottom: 20px"
       >
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 10px">
+          <Button
+            size="small"
+            type="primary"
+            @click="exportLocalTemplates"
+            style="margin-right: 8px"
+          >
+            匯出全部
+          </Button>
+          <Button size="small" type="success" @click="triggerImport">匯入</Button>
+          <input
+            type="file"
+            ref="importInputRef"
+            style="display: none"
+            accept=".json"
+            @change="handleImportLocal"
+          />
+        </div>
         <div class="list-box">
           <Tooltip
             :content="info.name"
@@ -313,6 +331,62 @@ const deleteLocal = async (id) => {
       loadLocal();
     },
   });
+};
+
+import { saveAs } from 'file-saver';
+
+const importInputRef = ref(null);
+
+const exportLocalTemplates = async () => {
+  const { getLocalTemplates } = await import('@/utils/localDB');
+  const list = await getLocalTemplates();
+  if (!list || list.length === 0) {
+    Message.warning('目前沒有本機模板可以匯出');
+    return;
+  }
+  const blob = new Blob([JSON.stringify(list, null, 2)], { type: 'application/json' });
+  saveAs(blob, `local_templates_${new Date().toISOString().split('T')[0]}.json`);
+};
+
+const triggerImport = () => {
+  if (importInputRef.value) {
+    importInputRef.value.click();
+  }
+};
+
+const handleImportLocal = async (event) => {
+  const target = event.target;
+  const file = target.files && target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target && e.target.result);
+      if (!Array.isArray(data)) {
+        Message.error('檔案格式錯誤：必須為陣列');
+        return;
+      }
+      const { saveLocalTemplate } = await import('@/utils/localDB');
+      let successCount = 0;
+      for (const item of data) {
+        if (item.id && item.json && item.thumbnail && item.name) {
+          await saveLocalTemplate(item);
+          successCount++;
+        }
+      }
+      Message.success(`成功匯入 ${successCount} 個模板`);
+      loadLocal();
+    } catch (err) {
+      console.error(err);
+      Message.error('解析 JSON 檔案失敗');
+    } finally {
+      if (importInputRef.value) {
+        importInputRef.value.value = '';
+      }
+    }
+  };
+  reader.readAsText(file);
 };
 
 const changeSelectType = debounce(() => {
