@@ -1,0 +1,12 @@
+import{u as M}from"./index.2647de74.js";import{a as w}from"./index.e32e0de9.js";import{s as I,ar as N,G as B,y as R,z as S,r as i,B as d,o as k,c as D,a as u,j as m,A as h,D as F,k as L}from"./fabric.0e8df321.js";const P={key:0,class:"box attr-item-box"},U=I({name:"AttrBute"}),X=Object.assign(U,{setup(Y){const v=N(),{canvasEditor:a,isOne:y,isMatchType:C,fabric:A}=M(["rect","image"]),p=B({roundValue:0}),f=o=>{const e=a.canvas.getActiveObject();o&&o.target&&o.target!==e||e&&(p.roundValue=e.get("roundValue"))},V=o=>{const e=a.canvas.getActiveObjects()[0];if(e){if(e.type==="image")if(e.set("roundValue",o),o>0){const $=e.get("scaleX")||1,b=e.get("scaleY")||1,r=e.width,c=e.height,_=Math.max(0,Math.round(Number(o)/$)),g=Math.max(0,Math.round(Number(o)/b)),n=-r/2,t=-c/2,s=Math.min(_,r/2),l=Math.min(g,c/2),O=`
+          M ${n+s} ${t}
+          L ${n+r-s} ${t}
+          A ${s} ${l} 0 0 1 ${n+r} ${t+l}
+          L ${n+r} ${t+c-l}
+          A ${s} ${l} 0 0 1 ${n+r-s} ${t+c}
+          L ${n+s} ${t+c}
+          A ${s} ${l} 0 0 1 ${n} ${t+c-l}
+          L ${n} ${t+l}
+          A ${s} ${l} 0 0 1 ${n+s} ${t}
+          Z
+        `.trim().replace(/\s+/g," "),j=new A.Path(O,{originX:"center",originY:"center",left:0,top:0,fill:"#000000",absolutePositioned:!1});e.set("clipPath",j),e.set("dirty",!0)}else e.set("clipPath",null);else e.set("ry",o),e.set("rx",o),e.set("roundValue",o);a.canvas.requestRenderAll()}},x=()=>{v?.proxy?.$forceUpdate()};return R(()=>{f(),a.on("selectCancel",x),a.on("selectOne",f),a.canvas.on("object:modified",f)}),S(()=>{a.off("selectCancel",x),a.off("selectOne",f),a.canvas.off("object:modified",f)}),(o,e)=>{const $=i("Divider"),b=i("Slider"),r=i("FormItem"),c=i("Form"),_=i("Col"),g=i("InputNumber"),n=i("Row");return d(y)&&d(C)?(k(),D("div",P,[u($,{plain:"",orientation:"left"},{default:m(()=>[h("h4",null,F(o.$t("attributes.rounded")),1)]),_:1}),h("div",null,[u(n,{gutter:10},{default:m(()=>[u(_,{span:18,flex:"1"},{default:m(()=>[u(c,{"label-width":40,class:"form-wrap"},{default:m(()=>[u(r,{label:o.$t("attributes.rx_ry")},{default:m(()=>[u(b,{modelValue:d(p).roundValue,"onUpdate:modelValue":e[0]||(e[0]=t=>d(p).roundValue=t),max:300,onOnInput:e[1]||(e[1]=t=>V(t))},null,8,["modelValue"])]),_:1},8,["label"])]),_:1})]),_:1}),u(_,{span:6,flex:"1"},{default:m(()=>[u(g,{modelValue:d(p).roundValue,"onUpdate:modelValue":e[2]||(e[2]=t=>d(p).roundValue=t),min:0,max:300,onOnChange:e[3]||(e[3]=t=>V(t))},null,8,["modelValue"])]),_:1})]),_:1})])])):L("",!0)}}}),G=w(X,[["__scopeId","data-v-cc81399d"]]);export{G as default};
