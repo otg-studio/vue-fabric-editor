@@ -1,16 +1,44 @@
 <template>
-  <div style="display: inline-flex; align-items: center; gap: 4px">
-    <ColorPicker v-model="internalValue" v-bind="$attrs" transfer @on-change="handleChange" />
+  <div style="display: flex; align-items: center; gap: 8px; width: 100%">
+    <ColorPicker
+      v-model="internalValue"
+      v-bind="$attrs"
+      transfer
+      @on-change="handleChange"
+      class="color-picker-full"
+    />
     <Tooltip content="吸管取色" v-if="hasEyeDrop" placement="top" transfer>
       <Icon
         type="md-color-filter"
-        size="18"
+        size="20"
         style="cursor: pointer; color: #666; vertical-align: middle"
         @click="openEyeDropper"
       />
     </Tooltip>
   </div>
 </template>
+
+<style scoped lang="less">
+.color-picker-full {
+  flex: 1;
+  :deep(.ivu-select-dropdown) {
+    /* ensure dropdown is normal */
+  }
+  :deep(.ivu-color-picker-rel) {
+    width: 100%;
+  }
+  :deep(.ivu-color-picker-color) {
+    width: 100%;
+    height: 32px;
+    display: block;
+    div {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+}
+</style>
 
 <script setup>
 import { ref, watch, computed } from 'vue';
