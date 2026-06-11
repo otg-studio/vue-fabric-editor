@@ -9,6 +9,8 @@
       <Divider type="vertical" />
       <import-file></import-file>
       <Divider type="vertical" />
+      <local-save></local-save>
+      <Divider type="vertical" />
       <Button type="text" @click="batchGenerateRef?.open()">{{ $t('ui.batchGenerate') }}</Button>
       <Divider type="vertical" />
 
@@ -48,6 +50,7 @@ import {
 // 导入元素
 const importJson = defineAsyncComponent(() => import('@/components/importJSON.vue'));
 const importFile = defineAsyncComponent(() => import('@/components/importFile.vue'));
+const localSave = defineAsyncComponent(() => import('@/components/localSave.vue'));
 const batchGenerate = defineAsyncComponent(() => import('@/components/batchGenerate.vue'));
 
 // 顶部组件
