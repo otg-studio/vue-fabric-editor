@@ -231,6 +231,7 @@
     "data": "数据",
     "fontProperties": "字体属性",
     "color": "颜色",
+    "size": "大小",
     "barcode": "条形码属性",
     "rounded": "圆角"
   },

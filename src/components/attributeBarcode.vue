@@ -76,7 +76,7 @@
             <InputNumber
               v-model="baseAttr.fontSize"
               @on-change="changeCommon"
-              append="字号"
+              :append="$t('attributes.size')"
               :min="1"
             ></InputNumber>
           </div>

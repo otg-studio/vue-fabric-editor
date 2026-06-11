@@ -192,6 +192,7 @@
     "data": "Data",
     "fontProperties": "Font Properties",
     "color": "Color",
+    "size": "Size",
     "barcode": "Barcode",
     "rounded": "Rounded"
   },
