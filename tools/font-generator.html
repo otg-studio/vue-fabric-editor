@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Font Thumbnail Generator</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f0f2f5; }
+    h1 { margin-bottom: 20px; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    .btn { background: #2d8cf0; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; }
+    .btn:hover { background: #57a3f3; }
+    .row { display: flex; align-items: center; gap: 20px; margin-top: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+    .row img { border: 1px solid #ddd; border-radius: 4px; background: white; }
+    .status { color: #888; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Font Thumbnail Generator</h1>
+    <p>This tool reads your fonts.json and generates 200x50 PNG thumbnails.</p>
+    <button class="btn" onclick="generateAll()">Generate & Download All</button>
+  </div>
+  <div class="card" id="output"></div>
+
+  <script>
+    const fonts = [
+      {
+        "displayName": "jf open 粉圓",
+        "name": "JF Open Huninn",
+        "file": "https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-1.1.ttf",
+        "img": "/fonts/jf_huninn.png"
+      },
+      {
+        "displayName": "Inter",
+        "name": "Inter",
+        "type": "text",
+        "file": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap",
+        "img": "/fonts/inter.png"
+      },  
+      {
+    "displayName": "Roboto",
+    "name": "Roboto",
+    "type": "text",
+    "file": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+    "img": "/fonts/roboto.png"
+  },
+{
+    "displayName": "Open Sans",
+    "name": "Open Sans",
+    "type": "text",
+    "file": "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
+    "img": "/fonts/open_sans.png"
+  },
+{
+    "displayName": "Montserrat",
+    "name": "Montserrat",
+    "type": "text",
+    "file": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+    "img": "/fonts/montserrat.png"
+  },
+  {
+    "displayName": "Playfair Display",
+    "name": "Playfair Display",
+    "type": "text",
+    "file": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
+    "img": "/fonts/playfair.png"
+  }
+    ];
+
+    const loadFont = (font) => {
+      return new Promise((resolve, reject) => {
+        if (font.file.endsWith('.css') || font.file.includes('css2?')) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = font.file;
+          link.onload = resolve;
+          link.onerror = reject;
+          document.head.appendChild(link);
+        } else {
+          const f = new FontFace(font.name, `url(${font.file})`);
+          f.load().then((loadedFace) => {
+            document.fonts.add(loadedFace);
+            resolve();
+          }).catch(reject);
+        }
+      });
+    };
+
+    async function generateAll() {
+      const output = document.getElementById('output');
+      output.innerHTML = '<h3>Generating...</h3>';
+
+      for (const font of fonts) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        output.appendChild(row);
+
+        try {
+          // Load font
+          await loadFont(font);
+          await document.fonts.ready;
+          // Small delay to ensure rendering is ready
+          await new Promise(r => setTimeout(r, 500));
+
+          // Draw on canvas
+          const canvas = document.createElement('canvas');
+          canvas.width = 200;
+          canvas.height = 50;
+          const ctx = canvas.getContext('2d');
+
+          // Transparent background
+          ctx.clearRect(0, 0, 200, 50);
+
+          // Draw Text
+          ctx.fillStyle = '#000000';
+          // Use a reasonable font size, fallback to sans-serif
+          ctx.font = `20px "${font.name}", sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(font.displayName, 100, 25); // Center of 200x50
+
+          // Create Image
+          const img = document.createElement('img');
+          img.src = canvas.toDataURL('image/png');
+          
+          // Create Download Link
+          const filename = font.img.split('/').pop() || 'font.png';
+          const download = document.createElement('a');
+          download.href = img.src;
+          download.download = filename;
+          download.textContent = `Download ${filename}`;
+          download.className = 'btn';
+          
+          row.innerHTML = `
+            <div style="width: 150px"><strong>${font.displayName}</strong></div>
+          `;
+          row.appendChild(img);
+          row.appendChild(download);
+
+          // Auto trigger download
+          download.click();
+
+        } catch (err) {
+          row.innerHTML = `<div style="color: red;">Failed to generate ${font.displayName}: ${err.message}</div>`;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
