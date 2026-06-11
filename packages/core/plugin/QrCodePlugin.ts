@@ -70,7 +70,7 @@ class QrCodePlugin implements IPluginTempl {
 
   _defaultBarcodeOption() {
     return {
-      data: 'https://www.instagram.com/ota_test_group/',
+      data: ' ',
       width: 300,
       margin: 10,
       errorCorrectionLevel: 'M',
