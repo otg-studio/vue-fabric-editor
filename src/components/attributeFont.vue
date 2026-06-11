@@ -178,9 +178,17 @@ const baseAttr = reactive({
   writingMode: 'horizontal',
 });
 
+const resolveUrl = (path) => {
+  if (!path || path.startsWith('http') || path.startsWith('data:')) return path;
+  return import.meta.env.BASE_URL + path.replace(/^\//, '');
+};
+
 const fontsList = ref([]);
 canvasEditor.getFontList().then((list) => {
-  fontsList.value = list;
+  fontsList.value = list.map((item) => ({
+    ...item,
+    img: resolveUrl(item.img),
+  }));
 });
 
 // 字体对齐方式

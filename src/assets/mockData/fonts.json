@@ -4,62 +4,62 @@
         "name": "Genjyuu Gothic",
         "type": "text",
         "file": "https://cdn.jsdelivr.net/npm/@fontsource/genjyuu-gothic@5.2.5/400.css",
-        "img": "./fonts/genjyuu.png"
+        "img": "fonts/genjyuu.png"
     },
     {
         "displayName": "思源黑體",
         "name": "Noto Sans TC",
         "type": "text",
         "file": "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-tc@5.0.14/400.css",
-        "img": "./fonts/noto_sans.png"
+        "img": "fonts/noto_sans.png"
     },
     {
         "displayName": "思源宋體",
         "name": "Noto Serif TC",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap",
-        "img": "./fonts/noto_serif.png"
+        "img": "fonts/noto_serif.png"
     },
     {
         "displayName": "jf open 粉圓",
         "name": "JF Open Huninn",
         "type": "text",
         "file": "https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-1.1.ttf",
-        "img": "./fonts/jf_huninn.png"
+        "img": "fonts/jf_huninn.png"
     },
     {
         "displayName": "Inter",
         "name": "Inter",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap",
-        "img": "./fonts/inter.png"
+        "img": "fonts/inter.png"
     },
     {
         "displayName": "Roboto",
         "name": "Roboto",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
-        "img": "./fonts/roboto.png"
+        "img": "fonts/roboto.png"
     },
     {
         "displayName": "Open Sans",
         "name": "Open Sans",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
-        "img": "./fonts/open_sans.png"
+        "img": "fonts/open_sans.png"
     },
     {
         "displayName": "Montserrat",
         "name": "Montserrat",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
-        "img": "./fonts/montserrat.png"
+        "img": "fonts/montserrat.png"
     },
     {
         "displayName": "Playfair Display",
         "name": "Playfair Display",
         "type": "text",
         "file": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
-        "img": "./fonts/playfair.png"
+        "img": "fonts/playfair.png"
     }
 ]

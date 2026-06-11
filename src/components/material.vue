@@ -65,6 +65,12 @@ const filters = reactive({
   },
 });
 
+// 解析靜態資源路徑
+const resolveUrl = (path) => {
+  if (!path || path.startsWith('http') || path.startsWith('data:')) return path;
+  return import.meta.env.BASE_URL + path.replace(/^\//, '');
+};
+
 // 分页格式化
 const formatData = (data) => {
   return data.map((item) => {
@@ -73,8 +79,8 @@ const formatData = (data) => {
       name: item.name,
       desc: item.desc,
       json: item.json,
-      src: item.src,
-      previewSrc: item.previewSrc,
+      src: resolveUrl(item.src),
+      previewSrc: resolveUrl(item.previewSrc),
     };
   });
 };
