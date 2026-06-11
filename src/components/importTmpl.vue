@@ -94,14 +94,17 @@
         v-if="storageMode === 'local'"
         style="overflow-y: auto; height: 100%; padding-bottom: 20px"
       >
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 10px">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 10px; gap: 8px">
           <Button
+            v-if="localTemplates.length > 0"
             size="small"
-            type="primary"
-            @click="exportLocalTemplates"
-            style="margin-right: 8px"
+            type="default"
+            @click="toggleSelectAll"
           >
-            匯出全部
+            {{ selectedLocalIds.length === localTemplates.length ? '取消全選' : '全選' }}
+          </Button>
+          <Button size="small" type="primary" @click="exportLocalTemplates">
+            {{ selectedLocalIds.length > 0 ? `匯出選取 (${selectedLocalIds.length})` : '匯出全部' }}
           </Button>
           <Button size="small" type="success" @click="triggerImport">匯入</Button>
           <input
@@ -112,34 +115,42 @@
             @change="handleImportLocal"
           />
         </div>
-        <div class="list-box" @contextmenu.capture="closeAllContextMenus">
-          <Dropdown
-            v-for="info in localTemplates"
-            :key="info.id"
-            trigger="contextMenu"
-            @on-click="(name) => handleLocalContextClick(name, info)"
-          >
-            <Tooltip :content="info.name" placement="top">
-              <div class="tmpl-img-box" style="position: relative; margin-bottom: 10px">
-                <Image
-                  lazy
-                  :src="info.thumbnail"
-                  fit="contain"
-                  height="100%"
-                  :alt="info.name"
-                  @click="beforeClearLocalTip(info)"
-                />
-              </div>
-            </Tooltip>
-            <template #list>
-              <DropdownMenu>
-                <DropdownItem name="copy">複製 ID</DropdownItem>
-                <DropdownItem name="rename">重新命名</DropdownItem>
-                <DropdownItem name="delete" style="color: #ed4014">刪除</DropdownItem>
-              </DropdownMenu>
-            </template>
-          </Dropdown>
-        </div>
+        <CheckboxGroup v-model="selectedLocalIds">
+          <div class="list-box" @contextmenu.capture="closeAllContextMenus">
+            <Dropdown
+              v-for="info in localTemplates"
+              :key="info.id"
+              trigger="contextMenu"
+              @on-click="(name) => handleLocalContextClick(name, info)"
+            >
+              <Tooltip :content="info.name" placement="top">
+                <div class="tmpl-img-box" style="position: relative; margin-bottom: 10px">
+                  <Checkbox
+                    :label="info.id"
+                    style="position: absolute; top: 5px; left: 5px; z-index: 10"
+                  >
+                    <span style="display: none"></span>
+                  </Checkbox>
+                  <Image
+                    lazy
+                    :src="info.thumbnail"
+                    fit="contain"
+                    height="100%"
+                    :alt="info.name"
+                    @click="beforeClearLocalTip(info)"
+                  />
+                </div>
+              </Tooltip>
+              <template #list>
+                <DropdownMenu>
+                  <DropdownItem name="copy">複製 ID</DropdownItem>
+                  <DropdownItem name="rename">重新命名</DropdownItem>
+                  <DropdownItem name="delete" style="color: #ed4014">刪除</DropdownItem>
+                </DropdownMenu>
+              </template>
+            </Dropdown>
+          </div>
+        </CheckboxGroup>
         <div
           v-if="localTemplates.length === 0"
           style="text-align: center; width: 100%; margin-top: 50px; color: #999"
@@ -328,6 +339,15 @@ const closeAllContextMenus = () => {
 import { saveAs } from 'file-saver';
 
 const importInputRef = ref(null);
+const selectedLocalIds = ref([]);
+
+const toggleSelectAll = () => {
+  if (selectedLocalIds.value.length === localTemplates.value.length) {
+    selectedLocalIds.value = [];
+  } else {
+    selectedLocalIds.value = localTemplates.value.map((item) => item.id);
+  }
+};
 
 const exportLocalTemplates = async () => {
   const { getLocalTemplates } = await import('@/utils/localDB');
@@ -336,7 +356,13 @@ const exportLocalTemplates = async () => {
     Message.warning('目前沒有本機模板可以匯出');
     return;
   }
-  const blob = new Blob([JSON.stringify(list, null, 2)], { type: 'application/json' });
+
+  let exportList = list;
+  if (selectedLocalIds.value.length > 0) {
+    exportList = list.filter((item) => selectedLocalIds.value.includes(item.id));
+  }
+
+  const blob = new Blob([JSON.stringify(exportList, null, 2)], { type: 'application/json' });
   saveAs(blob, `local_templates_${new Date().toISOString().split('T')[0]}.json`);
 };
 
