@@ -45,6 +45,7 @@ const saveLocal = async () => {
         thumbnail,
         updatedAt: Date.now(),
       });
+      window.dispatchEvent(new CustomEvent('localTemplateSaved'));
       Message.success('成功覆寫本機模板：' + name);
       Spin.hide();
     } else {
@@ -83,6 +84,7 @@ const confirmSaveLocal = async () => {
       updatedAt: Date.now(),
     });
 
+    window.dispatchEvent(new CustomEvent('localTemplateSaved'));
     router.replace('/?localId=' + newId);
     Message.success('成功建立本機模板！');
   } catch (error) {

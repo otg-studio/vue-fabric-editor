@@ -171,6 +171,7 @@ import useSelect from '@/hooks/select';
 import usePageList from '@/hooks/pageList';
 import { Spin, Modal } from 'view-ui-plus';
 import { debounce } from 'lodash-es';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -219,6 +220,11 @@ const beforeClearTip = (info) => {
 onMounted(() => {
   startPage();
   getTemplInfo();
+  window.addEventListener('localTemplateSaved', loadLocal);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('localTemplateSaved', loadLocal);
 });
 
 // 获取模板数据
