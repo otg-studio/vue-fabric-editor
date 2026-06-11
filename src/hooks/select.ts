@@ -6,7 +6,7 @@
  * @Description: 通用属性hook
  */
 
-import { inject, computed, reactive, onMounted, onBeforeMount, markRaw } from 'vue';
+import { inject, computed, reactive, onMounted, onBeforeUnmount, markRaw } from 'vue';
 
 import Editor, { EventType } from '@kuaitu/core';
 const { SelectMode, SelectEvent } = EventType;
@@ -64,7 +64,7 @@ export default function useSelect(matchType?: Array<string>) {
     canvasEditor.on(SelectEvent.CANCEL, selectCancel);
   });
 
-  onBeforeMount(() => {
+  onBeforeUnmount(() => {
     canvasEditor.off(SelectEvent.ONE, selectOne);
     canvasEditor.off(SelectEvent.MULTI, selectMulti);
     canvasEditor.off(SelectEvent.CANCEL, selectCancel);

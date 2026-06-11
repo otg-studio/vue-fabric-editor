@@ -66,7 +66,7 @@ export default function useSelectListen(canvasEditor: Editor) {
     canvasEditor.on(SelectEvent.CANCEL, selectCancel);
   });
 
-  onBeforeMount(() => {
+  onBeforeUnmount(() => {
     canvasEditor.off(SelectEvent.ONE, selectOne);
     canvasEditor.off(SelectEvent.MULTI, selectMulti);
     canvasEditor.off(SelectEvent.CANCEL, selectCancel);
