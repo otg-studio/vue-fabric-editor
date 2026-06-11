@@ -138,8 +138,8 @@
                 <DropdownMenu>
                   <DropdownItem name="copy">複製 ID</DropdownItem>
                   <DropdownItem name="rename">重新命名</DropdownItem>
-                  <DropdownItem name="exportSingle" divided>輸出單筆變數 JSON</DropdownItem>
-                  <DropdownItem name="exportMulti">輸出多筆變數 JSON</DropdownItem>
+                  <DropdownItem name="exportSingle" divided>匯出變數範例 (單筆)</DropdownItem>
+                  <DropdownItem name="exportMulti">匯出變數範例 (多筆)</DropdownItem>
                   <DropdownItem name="delete" style="color: #ed4014" divided>刪除</DropdownItem>
                 </DropdownMenu>
               </template>
