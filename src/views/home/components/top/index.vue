@@ -39,7 +39,15 @@
 </template>
 
 <script name="Top" setup lang="ts">
-import { ref, computed, defineAsyncComponent, inject, onMounted, onBeforeUnmount } from 'vue';
+import {
+  ref,
+  computed,
+  defineAsyncComponent,
+  inject,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+} from 'vue';
 // 导入元素
 const importJson = defineAsyncComponent(() => import('@/components/importJSON.vue'));
 const importFile = defineAsyncComponent(() => import('@/components/importFile.vue'));
@@ -76,15 +84,13 @@ const handleOpenBatchGenerate = (data: any) => {
   if (batchGenerateRef.value) {
     batchGenerateRef.value.open(data);
   } else {
-    // 異步元件可能尚未加載完成，等待它加載
-    const checkInterval = setInterval(() => {
-      if (batchGenerateRef.value) {
-        batchGenerateRef.value.open(data);
-        clearInterval(checkInterval);
+    // 透過 Vue 原生的 watch 完美監聽非同步元件的載入，不使用任何 timeout 寫死時間
+    const unwatch = watch(batchGenerateRef, (newVal) => {
+      if (newVal) {
+        newVal.open(data);
+        unwatch(); // 執行完就立刻解除監聽
       }
-    }, 100);
-    // 最多等待 5 秒
-    setTimeout(() => clearInterval(checkInterval), 5000);
+    });
   }
 };
 
