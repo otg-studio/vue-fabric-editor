@@ -46,7 +46,9 @@ async function bootstrap() {
   app.use(router);
   app.use(i18n);
   app.use(VueLazyLoad, {});
-  app.use(ViewUiPlus);
+  app.use(ViewUiPlus, {
+    i18n: (key: any, value: any) => i18n.global.t(key, value),
+  });
 
   // Register globally
   app.component('ColorPickerDrop', ColorPickerDrop);
