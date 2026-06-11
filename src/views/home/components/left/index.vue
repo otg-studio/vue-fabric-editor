@@ -3,7 +3,6 @@
 import { defineAsyncComponent } from 'vue';
 
 const importTmpl = defineAsyncComponent(() => import('@/components/importTmpl.vue'));
-const fontStyle = defineAsyncComponent(() => import('@/components/fontStyle.vue'));
 const tools = defineAsyncComponent(() => import('@/components/tools.vue'));
 const material = defineAsyncComponent(() => import('@/components/material.vue'));
 const layer = defineAsyncComponent(() => import('@/components/layer.vue'));
@@ -23,7 +22,6 @@ const leftBarComponent = {
   importTmpl,
   tools,
   material,
-  fontStyle,
   layer,
 };
 
@@ -41,12 +39,6 @@ const leftBar = reactive([
     key: 'tools',
     name: computed(() => t('elements')),
     icon: 'md-images',
-  },
-  {
-    //字体样式
-    key: 'fontStyle',
-    name: computed(() => t('font_style')),
-    icon: 'ios-pulse',
   },
   {
     // 图片元素
