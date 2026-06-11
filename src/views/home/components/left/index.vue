@@ -4,7 +4,6 @@ import { defineAsyncComponent } from 'vue';
 
 const importTmpl = defineAsyncComponent(() => import('@/components/importTmpl.vue'));
 const fontStyle = defineAsyncComponent(() => import('@/components/fontStyle.vue'));
-const myMaterial = defineAsyncComponent(() => import('@/components/myMaterial/index.vue'));
 const tools = defineAsyncComponent(() => import('@/components/tools.vue'));
 const material = defineAsyncComponent(() => import('@/components/material.vue'));
 const layer = defineAsyncComponent(() => import('@/components/layer.vue'));
@@ -26,7 +25,6 @@ const leftBarComponent = {
   material,
   fontStyle,
   layer,
-  myMaterial,
 };
 
 // fix: 修复vue-i18n function "t" not reactive inside ref object
@@ -74,11 +72,7 @@ const showToolsBar = (val) => {
 };
 
 onMounted(() => {
-  // 有ID时，打开作品面板
-  const route = useRoute();
-  if (route?.query?.id) {
-    menuActive.value = 'myMaterial';
-  }
+  // 移除 myMaterial 後，不再處理 route?.query?.id 打開作品面板的邏輯
 });
 </script>
 
