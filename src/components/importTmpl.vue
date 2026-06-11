@@ -8,15 +8,8 @@
 
 <template>
   <div>
-    <div style="margin-bottom: 10px; margin-top: 10px">
-      <RadioGroup v-model="storageMode" type="button" @on-change="modeChange" style="width: 100%">
-        <Radio label="cloud" style="width: 50%; text-align: center">
-          {{ $t('ui.officialTemplates') }}
-        </Radio>
-        <Radio label="local" style="width: 50%; text-align: center">
-          {{ $t('ui.localStorage') }}
-        </Radio>
-      </RadioGroup>
+    <div style="margin-bottom: 10px; margin-top: 10px; display: none">
+      <!-- Removed RadioGroup as only local storage is supported now -->
     </div>
 
     <!-- 搜索组件 -->
@@ -218,7 +211,8 @@ const beforeClearTip = (info) => {
 };
 
 onMounted(() => {
-  startPage();
+  // 移除官方範本的載入，改為載入本機範本
+  loadLocal();
   getTemplInfo();
   window.addEventListener('localTemplateSaved', loadLocal);
 });
@@ -252,7 +246,7 @@ const getTemplInfo = async () => {
   }
 };
 
-const storageMode = ref('cloud');
+const storageMode = ref('local');
 const localTemplates = ref([]);
 
 const showRenameModal = ref(false);
