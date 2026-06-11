@@ -334,12 +334,13 @@ const generateBatch = async () => {
       // 觸發重新渲染
       canvasEditor.canvas.requestRenderAll();
 
-      // 取得畫布圖片的 base64
-      const dataUrl = await canvasEditor.preview();
-      const base64Data = dataUrl.replace(/^data:image\/(png|jpeg);base64,/, '');
+      // 取得畫布圖片的原生 Blob (不經過 Base64 轉換)
+      const blob = await canvasEditor.previewBlob();
 
-      // 加入 ZIP
-      zip.file(`batch_${i + 1}.png`, base64Data, { base64: true });
+      if (blob) {
+        // 直接將 Blob 塞進 ZIP 裡，大幅節省記憶體與 Base64 轉換開銷
+        zip.file(`batch_${i + 1}.png`, blob);
+      }
     }
 
     // 復原原本的畫布

@@ -24,6 +24,7 @@ type IPlugin = Pick<
   | 'saveImg'
   | 'clear'
   | 'preview'
+  | 'previewBlob'
   | 'getSelectMode'
   | 'getExtensionKey'
 >;
@@ -281,6 +282,24 @@ class ServersPlugin implements IPluginTempl {
         this.editor.hooksEntity.hookSaveAfter.callAsync(dataUrl, () => {
           resolve(dataUrl);
         });
+      });
+    });
+  }
+
+  previewBlob() {
+    return new Promise<Blob | null>((resolve) => {
+      this.editor.hooksEntity.hookSaveBefore.callAsync('', () => {
+        const option = this._getSaveOption();
+        this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+        this.canvas.renderAll();
+
+        // 取得含有截切與縮放效果的 HTML 原生 Canvas
+        const canvasEl = this.canvas.toCanvasElement(option.multiplier, option);
+        canvasEl.toBlob((blob) => {
+          this.editor.hooksEntity.hookSaveAfter.callAsync(blob, () => {
+            resolve(blob);
+          });
+        }, 'image/png');
       });
     });
   }
