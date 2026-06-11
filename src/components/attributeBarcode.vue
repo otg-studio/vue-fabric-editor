@@ -15,7 +15,7 @@
     <div>
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">代码</span>
+          <span class="label">{{ $t('attributes.code') }}</span>
           <div class="content">
             <Input v-model="baseAttr.value" @on-change="changeCommon" />
           </div>
@@ -24,7 +24,7 @@
 
       <div class="flex-view" v-if="baseAttr.displayValue">
         <div class="flex-item">
-          <span class="label">文字</span>
+          <span class="label">{{ $t('attributes.text') }}</span>
           <div class="content">
             <Input v-model="baseAttr.text" @on-change="changeCommon" />
           </div>
@@ -33,13 +33,13 @@
 
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">显示</span>
+          <span class="label">{{ $t('attributes.display') }}</span>
           <div class="content">
             <Switch v-model="baseAttr.displayValue" @on-change="changeCommon" />
           </div>
         </div>
         <div class="flex-item" v-if="baseAttr.displayValue">
-          <span class="label">垂直</span>
+          <span class="label">{{ $t('attributes.vertical') }}</span>
           <div class="content">
             <Select v-model="baseAttr.textPosition" @on-change="changeCommon">
               <Option value="bottom">bottom</Option>
@@ -66,7 +66,7 @@
 
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">条码</span>
+          <span class="label">{{ $t('attributes.barcode') }}</span>
           <div class="content">
             <ColorPickerDrop v-model="baseAttr.lineColor" @on-change="changeCommon" alpha />
           </div>
@@ -84,13 +84,13 @@
       </div>
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">背景</span>
+          <span class="label">{{ $t('background') }}</span>
           <div class="content">
             <ColorPickerDrop v-model="baseAttr.background" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
-          <span class="label" style="margin-left: 10px">类型</span>
+          <span class="label" style="margin-left: 10px">{{ $t('attributes.type') }}</span>
           <div class="content">
             <Select v-model="baseAttr.format" @on-change="changeCommon" style="width: 90px">
               <Option v-for="item in barcodeTypeList" :value="item" :key="item">

@@ -15,7 +15,7 @@
     <div>
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">内容</span>
+          <span class="label">{{ $t('attributes.content') }}</span>
           <div class="content">
             <Input v-model="baseAttr.data" @on-change="changeCommon" />
           </div>
@@ -28,7 +28,7 @@
             <InputNumber
               v-model="baseAttr.width"
               @on-change="changeCommon"
-              append="宽度"
+              :append="$t('attributes.width')"
               :min="1"
             ></InputNumber>
           </div>
@@ -38,7 +38,7 @@
             <InputNumber
               v-model="baseAttr.margin"
               @on-change="changeCommon"
-              append="边距"
+              :append="$t('attributes.margin')"
               :min="1"
             ></InputNumber>
           </div>
@@ -47,13 +47,13 @@
 
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">散点</span>
+          <span class="label">{{ $t('attributes.dots') }}</span>
           <div class="content">
             <ColorPickerDrop v-model="baseAttr.dotsColor" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
-          <span class="label" style="margin-left: 10px">类型</span>
+          <span class="label" style="margin-left: 10px">{{ $t('attributes.type') }}</span>
           <div class="content">
             <Select v-model="baseAttr.dotsType" @on-change="changeCommon" style="width: 90px">
               <Option v-for="item in optionsList.DotsType" :value="item" :key="item">
@@ -66,7 +66,7 @@
 
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">外角</span>
+          <span class="label">{{ $t('attributes.outer_corner') }}</span>
           <div class="content">
             <ColorPickerDrop
               v-model="baseAttr.cornersSquareColor"
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="flex-item">
-          <span class="label" style="margin-left: 10px">类型</span>
+          <span class="label" style="margin-left: 10px">{{ $t('attributes.type') }}</span>
           <div class="content">
             <Select
               v-model="baseAttr.cornersSquareType"
@@ -92,13 +92,13 @@
       </div>
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">内角</span>
+          <span class="label">{{ $t('attributes.inner_corner') }}</span>
           <div class="content">
             <ColorPickerDrop v-model="baseAttr.cornersDotColor" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
-          <span class="label" style="margin-left: 10px">类型</span>
+          <span class="label" style="margin-left: 10px">{{ $t('attributes.type') }}</span>
           <div class="content">
             <Select v-model="baseAttr.cornersDotType" @on-change="changeCommon" style="width: 90px">
               <Option v-for="item in optionsList.cornersDotType" :value="item" :key="item">
@@ -111,13 +111,15 @@
 
       <div class="flex-view">
         <div class="flex-item">
-          <span class="label">背景</span>
+          <span class="label">{{ $t('background') }}</span>
           <div class="content">
             <ColorPickerDrop v-model="baseAttr.background" @on-change="changeCommon" alpha />
           </div>
         </div>
         <div class="flex-item">
-          <span class="label" style="margin-left: 10px">容错</span>
+          <span class="label" style="margin-left: 10px">
+            {{ $t('attributes.error_correction') }}
+          </span>
           <div class="content">
             <Select
               v-model="baseAttr.errorCorrectionLevel"
