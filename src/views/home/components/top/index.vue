@@ -73,7 +73,19 @@ const toggleModel = computed({
 const canvasEditor: any = inject('canvasEditor');
 
 const handleOpenBatchGenerate = (data: any) => {
-  batchGenerateRef.value?.open(data);
+  if (batchGenerateRef.value) {
+    batchGenerateRef.value.open(data);
+  } else {
+    // 異步元件可能尚未加載完成，等待它加載
+    const checkInterval = setInterval(() => {
+      if (batchGenerateRef.value) {
+        batchGenerateRef.value.open(data);
+        clearInterval(checkInterval);
+      }
+    }, 100);
+    // 最多等待 5 秒
+    setTimeout(() => clearInterval(checkInterval), 5000);
+  }
 };
 
 onMounted(() => {
