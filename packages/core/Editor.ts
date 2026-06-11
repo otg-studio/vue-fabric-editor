@@ -16,7 +16,10 @@ import Utils from './utils/utils';
 class Editor extends EventEmitter {
   constructor() {
     super();
-    this.setMaxListeners(50);
+    // 編輯器使用了非常多個零散的屬性元件 (attributeXXX.vue) 組合而成右側面板，
+    // 每個元件和 useSelect hook 都會各自監聽 selectOne 事件，因此很容易超過 50 個。
+    // 這裡調高上限避免拋出 MaxListenersExceededWarning 記憶體洩漏警告。
+    this.setMaxListeners(150);
   }
   private canvas: fabric.Canvas | null = null;
   contextMenu: ContextMenu | null = null;
