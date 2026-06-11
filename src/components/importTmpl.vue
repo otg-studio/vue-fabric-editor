@@ -138,7 +138,9 @@
                 <DropdownMenu>
                   <DropdownItem name="copy">複製 ID</DropdownItem>
                   <DropdownItem name="rename">重新命名</DropdownItem>
-                  <DropdownItem name="delete" style="color: #ed4014">刪除</DropdownItem>
+                  <DropdownItem name="exportSingle" divided>輸出單筆變數 JSON</DropdownItem>
+                  <DropdownItem name="exportMulti">輸出多筆變數 JSON</DropdownItem>
+                  <DropdownItem name="delete" style="color: #ed4014" divided>刪除</DropdownItem>
                 </DropdownMenu>
               </template>
             </Dropdown>
@@ -321,11 +323,59 @@ const deleteLocal = async (id) => {
   });
 };
 
+const extractVariables = (info) => {
+  const vars = new Set();
+  try {
+    const data = typeof info.json === 'string' ? JSON.parse(info.json) : info.json;
+    if (data.objects) {
+      data.objects.forEach((obj) => {
+        if (obj.linkData && obj.linkData[1]) {
+          vars.add(obj.linkData[1]);
+        }
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return Array.from(vars);
+};
+
+const generateMockData = (vars, type) => {
+  const row = {};
+  vars.forEach((v) => {
+    row[v] = `test_${v}_1`;
+  });
+  if (type === 'single') {
+    return row;
+  } else {
+    const row2 = {};
+    vars.forEach((v) => {
+      row2[v] = `test_${v}_2`;
+    });
+    return [row, row2];
+  }
+};
+
+const handleExportJson = (info, type) => {
+  const vars = extractVariables(info);
+  if (vars.length === 0) {
+    Message.warning('此模板沒有設定任何變數 (linkData)');
+    return;
+  }
+  const data = generateMockData(vars, type);
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  saveAs(blob, `${info.name}_${type}_mock.json`);
+};
+
 const handleLocalContextClick = (name, info) => {
   if (name === 'copy') {
     copyId(info.id);
   } else if (name === 'rename') {
     renameLocal(info);
+  } else if (name === 'exportSingle') {
+    handleExportJson(info, 'single');
+  } else if (name === 'exportMulti') {
+    handleExportJson(info, 'multi');
   } else if (name === 'delete') {
     deleteLocal(info.id);
   }
