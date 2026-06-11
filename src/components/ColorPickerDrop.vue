@@ -18,44 +18,43 @@
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .color-picker-full {
   flex: 1;
-  width: 100%;
-  display: block;
+  width: 100% !important;
+  display: block !important;
 
-  :deep(.ivu-color-picker-rel) {
-    width: 100%;
-    display: block;
+  .ivu-color-picker-rel {
+    width: 100% !important;
+    display: block !important;
   }
 
-  :deep(.ivu-input-wrapper) {
-    width: 100%;
+  .ivu-input-wrapper {
+    width: 100% !important;
   }
 
-  :deep(.ivu-input) {
-    width: 100%;
-    height: 32px;
-    padding: 0 4px;
-    cursor: pointer;
+  .ivu-input {
+    width: 100% !important;
+    height: 32px !important;
+    padding: 0 4px !important;
+    cursor: pointer !important;
   }
 
-  :deep(.ivu-color-picker-color) {
-    width: calc(100% - 8px); /* Fill the box tightly */
-    height: 24px;
-    display: block;
-    margin-top: 3px;
-    margin-left: 4px;
+  .ivu-color-picker-color {
+    width: calc(100% - 8px) !important;
+    height: 24px !important;
+    display: block !important;
+    margin-top: 3px !important;
+    margin-left: 4px !important;
     div {
-      width: 100%;
-      height: 100%;
-      border-radius: 2px;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 2px !important;
     }
   }
 
-  /* Hide the dropdown arrow to make it look like a pure color block */
-  :deep(.ivu-icon-ios-arrow-down) {
-    display: none;
+  .ivu-icon-ios-arrow-down {
+    display: none !important;
   }
 }
 </style>
