@@ -9,8 +9,6 @@
       <Divider type="vertical" />
       <import-file></import-file>
       <Divider type="vertical" />
-      <!-- <Button type="text" to="/template" target="_blank">{{ $t('ui.allTemplates') }}</Button>
-      <Divider type="vertical" /> -->
       <Button type="text" @click="batchGenerateRef?.open()">{{ $t('ui.batchGenerate') }}</Button>
       <Divider type="vertical" />
 
@@ -30,7 +28,6 @@
       <previewCurrent />
       <waterMark />
       <save></save>
-      <!-- <login></login> -->
       <lang></lang>
     </div>
 
