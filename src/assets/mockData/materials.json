@@ -4,47 +4,47 @@
     "typeId": "1",
     "name": "星星",
     "desc": "星星圖案",
-    "src": "/material/star.svg",
-    "previewSrc": "/material/star.svg"
+    "src": "./material/star.svg",
+    "previewSrc": "./material/star.svg"
   },
   {
     "id": "2",
     "typeId": "2",
     "name": "7-Eleven",
     "desc": "7-Eleven Logo",
-    "src": "/brands/7-eleven_logo.svg",
-    "previewSrc": "/brands/7-eleven_logo.svg"
+    "src": "./brands/7-eleven_logo.svg",
+    "previewSrc": "./brands/7-eleven_logo.svg"
   },
   {
     "id": "3",
     "typeId": "2",
     "name": "FamilyMart",
     "desc": "全家 Logo",
-    "src": "/brands/family-mark_logo.png",
-    "previewSrc": "/brands/family-mark_logo.png"
+    "src": "./brands/family-mark_logo.png",
+    "previewSrc": "./brands/family-mark_logo.png"
   },
   {
     "id": "4",
     "typeId": "2",
     "name": "OTA Try",
     "desc": "OTA Try",
-    "src": "/brands/ota_try.png",
-    "previewSrc": "/brands/ota_try.png"
+    "src": "./brands/ota_try.png",
+    "previewSrc": "./brands/ota_try.png"
   },
   {
     "id": "5",
     "typeId": "2",
     "name": "OTA Try 30",
     "desc": "OTA Try 30",
-    "src": "/brands/ota_try30.png",
-    "previewSrc": "/brands/ota_try30.png"
+    "src": "./brands/ota_try30.png",
+    "previewSrc": "./brands/ota_try30.png"
   },
   {
     "id": "6",
     "typeId": "2",
     "name": "OTA Try 50",
     "desc": "OTA Try 50",
-    "src": "/brands/ota_try50.png",
-    "previewSrc": "/brands/ota_try50.png"
+    "src": "./brands/ota_try50.png",
+    "previewSrc": "./brands/ota_try50.png"
   }
 ]
