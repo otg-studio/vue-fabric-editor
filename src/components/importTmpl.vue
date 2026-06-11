@@ -8,8 +8,8 @@
 
 <template>
   <div>
-    <div style="margin-bottom: 10px; margin-top: 10px; display: none">
-      <!-- Removed RadioGroup as only local storage is supported now -->
+    <div style="margin-bottom: 15px; margin-top: 10px">
+      <Divider plain>本機儲存模板</Divider>
     </div>
 
     <!-- 搜索组件 -->
