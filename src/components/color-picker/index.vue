@@ -88,6 +88,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import './index.css';
 export default {
   name: 'ColorPicker',

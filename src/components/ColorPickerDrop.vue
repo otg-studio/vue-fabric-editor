@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
   modelValue: {

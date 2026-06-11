@@ -46,9 +46,7 @@
 </template>
 
 <script name="ImportJson" setup>
-import useSelect from '@/hooks/select';
 import { Message } from 'view-ui-plus';
-const { canvasEditor } = useSelect();
 const emit = defineEmits(['set']);
 
 const props = defineProps({

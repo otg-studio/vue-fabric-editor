@@ -122,6 +122,7 @@
 </template>
 
 <script setup name="ImportTmpl">
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Input } from 'view-ui-plus';
 import { Spin, Modal, Message } from 'view-ui-plus';
 

@@ -162,6 +162,7 @@
 </template>
 
 <script setup name="ImportTmpl">
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useSelect from '@/hooks/select';
 import usePageList from '@/hooks/pageList';
 import { Spin, Modal } from 'view-ui-plus';

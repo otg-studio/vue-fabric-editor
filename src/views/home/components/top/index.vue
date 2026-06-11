@@ -38,6 +38,7 @@
 </template>
 
 <script name="Top" setup lang="ts">
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ref,
   computed,

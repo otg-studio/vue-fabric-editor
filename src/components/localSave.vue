@@ -13,7 +13,7 @@
 <script setup>
 import { Modal } from 'view-ui-plus';
 import useSelect from '@/hooks/select';
-import { useI18n } from 'vue-i18n';
+
 import { Spin } from 'view-ui-plus';
 import { useRoute, useRouter } from 'vue-router';
 import { Message } from 'view-ui-plus';
@@ -23,7 +23,6 @@ const route = useRoute();
 const router = useRouter();
 const showNameModal = ref(false);
 const localTemplateName = ref('');
-const { t } = useI18n();
 const { canvasEditor } = useSelect();
 
 const saveLocal = async () => {

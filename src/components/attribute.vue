@@ -31,7 +31,6 @@ import { getPolygonVertices } from '@/utils/math';
 import InputNumber from '@/components/inputNumber';
 
 // 通用元素
-const isText = ['i-text', 'textbox', 'text', 'vertical-textbox'];
 
 const baseType = [
   'text',

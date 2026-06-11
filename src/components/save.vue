@@ -32,6 +32,7 @@
 </template>
 
 <script setup name="save-bar">
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Modal } from 'view-ui-plus';
 import useSelect from '@/hooks/select';
 import useMaterial from '@/hooks/useMaterial';
@@ -40,9 +41,7 @@ import { useI18n } from 'vue-i18n';
 import { Spin } from 'view-ui-plus';
 import { useRoute, useRouter } from 'vue-router';
 import { Message } from 'view-ui-plus';
-import { ref } from 'vue';
 const route = useRoute();
-const router = useRouter();
 
 const { createTmplByCommon, updataTemplInfo, routerToId } = useMaterial();
 

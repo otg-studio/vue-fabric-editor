@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Author: 秦少卫
  * @Date: 2024-04-24 14:07:06
