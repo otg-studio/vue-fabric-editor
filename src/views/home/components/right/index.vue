@@ -143,9 +143,9 @@ const switchAttrBar = () => {
 <style lang="less" scoped>
 // 右侧容器
 .right-bar {
-  width: 304px;
+  width: 360px;
   height: 100%;
-  padding: 10px;
+  padding: 15px;
   overflow-y: auto;
   background: #fff;
 }
@@ -153,9 +153,9 @@ const switchAttrBar = () => {
 // 属性面板样式
 :deep(.attr-item) {
   position: relative;
-  margin-bottom: 12px;
-  height: 40px;
-  padding: 0 10px;
+  margin-bottom: 16px;
+  height: 48px;
+  padding: 0 16px;
   background: #f6f7f9;
   border: none;
   border-radius: 4px;
@@ -190,7 +190,7 @@ const switchAttrBar = () => {
 
   &.right-btn-open {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAACACAMAAABOb9vcAAAAhFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAADHx8cODg50dHTx8fF2dnZ1dXWWlpZHR0c4ODhQpkZ5AAAAIXRSTlMA9t+/upkRAnPq5NXDfDEsKQjMeGlRThkMsquljTwzIWhBHpjgAAABJElEQVRYw+3YyW7CQBCEYbxig8ELGJyQkJRJyPb+75dj3zy/lD7kMH3+ZEuzSFO1mlZwhjOE2uwhVHJYMygNVwilhz2EUvNaMigledUFoE1anKYAtA9nVRuANpviOQBt0t2ZQSnZ9QxK6Qih9LSGUHkJobYlhGp6CPW4hlAVhckLhMop1InCjEK1FBYU1hSqo/BI4YXCjMIthTWFijDCCB3g7fuO4O1t/rkvQXPz/LUIzX0oAM0tQHOfCkBzC9DcuwLQXACao9Dv1yb9lsek2xaaxMcMH1x6Ff79dY0wwgj/DGv3p2tG4cX9wd55h4rCO/hk3uEs9w6QlXPIbXrfIJ6XrmVBOtJCA1YkXqVLkh1aUgyNk1fV1BxLxzpsuNLKzrME/AWr0ywwvyj83AAAAABJRU5ErkJggg==);
-    right: 304px;
+    right: 360px;
   }
 }
 </style>

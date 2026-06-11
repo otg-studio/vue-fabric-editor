@@ -111,14 +111,14 @@ onMounted(() => {
   position: relative;
 
   &.show-tools-bar {
-    width: 380px;
+    width: 420px;
   }
 }
 .ivu-menu-vertical .menu-item {
   text-align: center;
-  padding: 10px 2px;
+  padding: 16px 4px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 15px;
 
   & > i {
     margin: 0;
