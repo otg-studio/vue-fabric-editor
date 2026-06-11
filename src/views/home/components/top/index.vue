@@ -1,5 +1,5 @@
 <template>
-  <Header>
+  <Header class="header-container">
     <div class="left">
       <logo></logo>
       <Divider type="vertical" />
@@ -108,13 +108,27 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="less" scoped>
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+}
 .left,
 .right {
   display: flex;
   align-items: center;
+  gap: 8px;
+
+  :deep(button),
+  :deep(.ivu-btn) {
+    font-size: 15px;
+    padding: 6px 12px;
+  }
+
   img {
     display: block;
-    margin-right: 10px;
   }
 }
 </style>

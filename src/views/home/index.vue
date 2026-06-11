@@ -168,7 +168,7 @@ useUrlData(canvasEditor);
 
 <style lang="less" scoped>
 :deep(.ivu-layout-header) {
-  --height: 45px;
+  --height: 60px;
   padding: 0 0px;
   border-bottom: 1px solid #eef2f8;
   background: #fff;
