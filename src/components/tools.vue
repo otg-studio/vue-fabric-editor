@@ -234,17 +234,17 @@ const addRect = (event) => {
 
 const addSampleSvg = (event) => {
   cancelDraw();
-  // 5x5 的輕量級 SVG 作為圖片佔位符
-  const svg5x5 = `<svg width="5" height="5" xmlns="http://www.w3.org/2000/svg"><rect width="5" height="5" fill="#EAEAEA"/></svg>`;
-  const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svg5x5)}`;
+  // 輕量級 SVG 作為圖片佔位符 (原始尺寸設為 200x200，避免縮放比例過大導致圓角計算失準)
+  const svgPlaceholder = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#EAEAEA"/></svg>`;
+  const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgPlaceholder)}`;
 
   fabric.Image.fromURL(dataUrl, (img) => {
     img.set({
       ...defaultPosition,
-      width: 5,
-      height: 5,
-      scaleX: 200 / 5, // 顯示為 200x200 大小
-      scaleY: 200 / 5,
+      width: 200,
+      height: 200,
+      scaleX: 1, // 維持 1:1 縮放
+      scaleY: 1,
       name: 'Sample SVG',
     });
     canvasEditor.addBaseType(img, { center: true, event });
