@@ -46,7 +46,7 @@ import typeList from '@/components/common/typeList.vue';
 import pageList from '@/components/common/pageList.vue';
 import useSelect from '@/hooks/select';
 import useCalculate from '@/hooks/useCalculate';
-import { getMaterialInfoUrl, getMaterialPreviewUrl } from '@/hooks/usePageList';
+
 import { getFontStyleTypes, getFontStyleListByType, getFontStyles } from '@/api/material';
 import { fabric } from 'fabric';
 import { v4 as uuid } from 'uuid';

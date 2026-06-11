@@ -45,7 +45,7 @@ import searchType from '@/components/common/searchType';
 import typeList from '@/components/common/typeList.vue';
 import pageList from '@/components/common/pageList.vue';
 import useSelect from '@/hooks/select';
-import { getMaterialInfoUrl, getMaterialPreviewUrl } from '@/hooks/usePageList';
+
 import { getMaterialTypes, getMaterialsByType, getMaterials } from '@/api/material';
 import useCalculate from '@/hooks/useCalculate';
 import { useRoute } from 'vue-router';

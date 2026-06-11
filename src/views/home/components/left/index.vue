@@ -8,7 +8,6 @@ const material = defineAsyncComponent(() => import('@/components/material.vue'))
 const layer = defineAsyncComponent(() => import('@/components/layer.vue'));
 import { useI18n } from 'vue-i18n';
 // 路由
-import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
 
