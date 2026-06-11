@@ -14,10 +14,6 @@ import type {
 import Utils from './utils/utils';
 
 class Editor extends EventEmitter {
-  constructor() {
-    super();
-    this.setMaxListeners(50);
-  }
   private canvas: fabric.Canvas | null = null;
   contextMenu: ContextMenu | null = null;
   [key: string]: any;
