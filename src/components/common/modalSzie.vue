@@ -47,7 +47,9 @@
 
 <script name="ImportJson" setup>
 import { Message } from 'view-ui-plus';
+import { useI18n } from 'vue-i18n';
 const emit = defineEmits(['set']);
+const { t } = useI18n();
 
 const props = defineProps({
   title: {
@@ -79,7 +81,7 @@ const customSizeCreate = async () => {
     emit('set', width.value, height.value);
     modal.value = false;
   } else {
-    Message.warning('请检查尺寸');
+    Message.warning(t('plsCheckSize'));
   }
 };
 

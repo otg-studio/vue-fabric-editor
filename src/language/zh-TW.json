@@ -327,5 +327,10 @@
     "noLayers": "暫無圖層",
     "insertImage": "插入圖片",
     "imageLoading": "圖片載入中..."
-  }
+  },
+  "plsInputFileName": "請輸入檔案名稱",
+  "plsInputFolderName": "請輸入資料夾名稱",
+  "plsCheckPolygon": "請檢查選擇的 polygon",
+  "plsCheckSize": "請檢查尺寸",
+  "plsInputVariableName": "請輸入變數名稱"
 }

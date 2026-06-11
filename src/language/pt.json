@@ -47,17 +47,17 @@
     "text": "WaterMark",
     "modalTitle": "WaterMark Setting",
     "setting": {
-        "name": "Mark Name",
-        "size": "MarK Size",
-        "angle": "Mark Angle",
-        "position": {
-            "label": "Mark Position",
-            "lt": "Left Top",
-            "rt": "Right Top",
-            "lb": "Left Bottom",
-            "rb": "Right Bottom",
-            "full": "Full"
-        }
+      "name": "Mark Name",
+      "size": "MarK Size",
+      "angle": "Mark Angle",
+      "position": {
+        "label": "Mark Position",
+        "lt": "Left Top",
+        "rt": "Right Top",
+        "lb": "Left Bottom",
+        "rb": "Right Bottom",
+        "full": "Full"
+      }
     }
   },
   "upload_background": "Carregar plano de fundo",
@@ -124,5 +124,11 @@
     "offset_y": "Y",
     "rx_ry": "Rounded",
     "picture_filter": "Filtro"
-  }
+  },
+  "plsInputFileName": "Por favor, insira o nome do arquivo",
+  "plsInputFolderName": "Por favor, insira o nome da pasta",
+  "plsCheckPolygon": "Por favor, verifique o polígono selecionado",
+  "plsCheckSize": "Por favor, verifique o tamanho",
+  "plsInputVariableName": "Por favor, insira o nome da variável",
+  "plsLogin": "Por favor, faça o login primeiro"
 }

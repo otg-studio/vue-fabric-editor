@@ -10,7 +10,7 @@
   <div style="display: inline-block" v-if="route?.query?.id">
     <Input
       v-model="fileName"
-      placeholder="请输入文件名称"
+      :placeholder="$t('plsInputFileName')"
       style="width: 190px"
       size="small"
       @on-change="changeFileName"

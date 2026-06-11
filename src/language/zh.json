@@ -327,5 +327,10 @@
     "noLayers": "暂无图层",
     "insertImage": "插入图片",
     "imageLoading": "图片加载中..."
-  }
+  },
+  "plsInputFileName": "请输入文件名称",
+  "plsInputFolderName": "请输入文件夹名称",
+  "plsCheckPolygon": "请检查选择polygon",
+  "plsCheckSize": "请检查尺寸",
+  "plsInputVariableName": "请输入变量名称"
 }

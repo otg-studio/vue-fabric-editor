@@ -34,6 +34,8 @@ import useMaterial from '@/hooks/useMaterial';
 const { reNameFileType, removeFileType } = useMaterial();
 
 import { Modal, Input, Message } from 'view-ui-plus';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const props = defineProps({
   name: {
@@ -66,7 +68,7 @@ const reNameFile = () => {
         size: 'large',
         modelValue: fileName,
         autofocus: true,
-        placeholder: '请输入文件夹名称',
+        placeholder: t('plsInputFolderName'),
       });
     },
     onOk: async () => {

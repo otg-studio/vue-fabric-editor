@@ -17,7 +17,7 @@
       </TabPane>
     </Tabs>
   </div>
-  <div class="tip" v-else>请先登录</div>
+  <div class="tip" v-else>{{ $t('plsLogin') }}</div>
 </template>
 
 <script setup name="ImportTmpl">

@@ -215,5 +215,11 @@
   "ok": "ok",
   "cancel": "cancel",
   "cleanUp": "cleanUp",
-  "mine": "Mine"
+  "mine": "Mine",
+  "plsInputFileName": "Please enter file name",
+  "plsInputFolderName": "Please enter folder name",
+  "plsCheckPolygon": "Please check the selected polygon",
+  "plsCheckSize": "Please check the size",
+  "plsInputVariableName": "Please enter variable name",
+  "plsLogin": "Please login first"
 }

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import useSelect from '@/hooks/select';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const { isMatchType, canvasEditor } = useSelect(['polygon']);
 import { Message } from 'view-ui-plus';
 const onEditPolygon = () => {
@@ -7,7 +9,7 @@ const onEditPolygon = () => {
   if (obj && obj.type === 'polygon') {
     canvasEditor.activeEdit();
   } else {
-    Message.warning('请检查选择polygon');
+    Message.warning(t('plsCheckPolygon'));
   }
 };
 </script>

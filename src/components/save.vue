@@ -82,7 +82,7 @@ const cbMap = {
         routerToId(res.data.data.id);
       }
     } catch (error) {
-      Message.warning('请登录');
+      Message.warning(t('plsLogin'));
     }
     Spin.hide();
   },

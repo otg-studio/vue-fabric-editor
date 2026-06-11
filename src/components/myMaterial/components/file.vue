@@ -103,7 +103,7 @@ const reNameFile = () => {
         size: 'large',
         modelValue: fileName,
         autofocus: true,
-        placeholder: '请输入文件名称',
+        placeholder: t('plsInputFileName'),
       });
     },
     onOk: async () => {

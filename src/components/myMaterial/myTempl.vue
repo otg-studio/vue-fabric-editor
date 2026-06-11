@@ -138,6 +138,8 @@ import usePageList from '@/hooks/usePageList';
 // 路由
 import { useRoute } from 'vue-router';
 import { ref, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const route = useRoute();
 
@@ -226,7 +228,7 @@ const createType = (type) => {
           size: 'large',
           modelValue: fileTypeName,
           autofocus: true,
-          placeholder: '请输入文件夹名称',
+          placeholder: t('plsInputFolderName'),
         });
       },
       onOk: async () => {

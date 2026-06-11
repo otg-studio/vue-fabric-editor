@@ -39,7 +39,7 @@
       <Col flex="1">
         <Input
           v-model="baseAttr.linkData[1]"
-          placeholder="请输入變數名稱"
+          :placeholder="$t('plsInputVariableName')"
           @on-change="changeCommon('linkData', baseAttr.linkData)"
         />
       </Col>
