@@ -96,8 +96,8 @@ const colSpan = computed(() => {
 });
 
 const open = () => {
-  // 取得當下畫布 JSON 作為基礎模板
-  baseTemplateJson.value = canvasEditor.getJson();
+  // 取得當下畫布 JSON 作為基礎模板並轉成字串，避免 Vue 深層響應式造成嚴重卡頓
+  baseTemplateJson.value = JSON.stringify(canvasEditor.getJson());
 
   // 找出畫布中所有設定了 linkData[1] (變數名稱) 的物件
   const objs = canvasEditor.canvas.getObjects().filter((item) => item.linkData && item.linkData[1]);
@@ -245,12 +245,12 @@ const previewRow = async (index) => {
     if (rowData.customJson) {
       // 載入之前微調過的版本
       await new Promise((resolve) => {
-        canvasEditor.loadJSON(JSON.stringify(rowData.customJson), resolve);
+        canvasEditor.loadJSON(rowData.customJson, resolve);
       });
     } else {
       // 載入基礎模板
       await new Promise((resolve) => {
-        canvasEditor.loadJSON(JSON.stringify(baseTemplateJson.value), resolve);
+        canvasEditor.loadJSON(baseTemplateJson.value, resolve);
       });
       // 套用資料
       await applyVariablesToCanvas(rowData);
@@ -267,7 +267,7 @@ const restoreAndReopen = async () => {
   Spin.show({ render: (h) => h('div', '復原預覽中...') });
   try {
     await new Promise((resolve) => {
-      canvasEditor.loadJSON(JSON.stringify(baseTemplateJson.value), resolve);
+      canvasEditor.loadJSON(baseTemplateJson.value, resolve);
     });
     editingRowIndex.value = -1;
     visible.value = true;
@@ -280,7 +280,7 @@ const restoreAndReopen = async () => {
 
 const saveTweak = async () => {
   if (editingRowIndex.value !== -1) {
-    tableData.value[editingRowIndex.value].customJson = canvasEditor.getJson();
+    tableData.value[editingRowIndex.value].customJson = JSON.stringify(canvasEditor.getJson());
   }
   await restoreAndReopen();
 };
@@ -297,8 +297,8 @@ const generateBatch = async () => {
   try {
     const zip = new JSZip();
 
-    // 取得原始畫布 JSON 備份 (或使用 open 時抓的 baseTemplateJson)
-    const originalJson = baseTemplateJson.value || canvasEditor.getJson();
+    // 取得原始畫布 JSON 備份 (字串)
+    const originalJsonStr = baseTemplateJson.value || JSON.stringify(canvasEditor.getJson());
 
     // 為了安全起見，我們使用主畫布進行替換後拍照，因為有文字字型載入的問題
     for (let i = 0; i < tableData.value.length; i++) {
@@ -307,12 +307,12 @@ const generateBatch = async () => {
       if (rowData.customJson) {
         // 若有微調版，直接載入
         await new Promise((resolve) => {
-          canvasEditor.loadJSON(JSON.stringify(rowData.customJson), resolve);
+          canvasEditor.loadJSON(rowData.customJson, resolve);
         });
       } else {
         // 載入原始畫布狀態
         await new Promise((resolve) => {
-          canvasEditor.loadJSON(JSON.stringify(originalJson), resolve);
+          canvasEditor.loadJSON(originalJsonStr, resolve);
         });
         // 替換變數
         await applyVariablesToCanvas(rowData);
@@ -331,7 +331,7 @@ const generateBatch = async () => {
 
     // 復原原本的畫布
     await new Promise((resolve) => {
-      canvasEditor.loadJSON(JSON.stringify(originalJson), resolve);
+      canvasEditor.loadJSON(originalJsonStr, resolve);
     });
 
     // 打包與下載
