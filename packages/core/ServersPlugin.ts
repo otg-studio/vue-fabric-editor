@@ -60,6 +60,7 @@ class ServersPlugin implements IPluginTempl {
     'saveImg',
     'clear',
     'preview',
+    'previewBlob',
     'getSelectMode',
     'getExtensionKey',
   ];
