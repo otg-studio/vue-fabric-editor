@@ -95,7 +95,7 @@ const colSpan = computed(() => {
   return Math.max(4, Math.floor(24 / variables.value.length));
 });
 
-const open = () => {
+const open = (initialData) => {
   // 取得當下畫布 JSON 作為基礎模板並轉成字串，避免 Vue 深層響應式造成嚴重卡頓
   baseTemplateJson.value = JSON.stringify(canvasEditor.getJson());
 
@@ -108,9 +108,22 @@ const open = () => {
   variables.value = Array.from(vars);
 
   tableData.value = [];
-  if (variables.value.length > 0) {
+
+  // 如果有傳入初始資料 (從 URL 匯入的批次資料)
+  if (initialData && Array.isArray(initialData) && initialData.length > 0) {
+    // 收集所有在 initialData 中出現過的 Key，並把沒被加入 variables 的也加進去
+    initialData.forEach((row) => {
+      Object.keys(row).forEach((k) => {
+        if (!variables.value.includes(k) && k !== 'customJson') {
+          variables.value.push(k);
+        }
+      });
+      tableData.value.push({ ...row, customJson: null });
+    });
+  } else if (variables.value.length > 0) {
     addRow();
   }
+
   visible.value = true;
 };
 

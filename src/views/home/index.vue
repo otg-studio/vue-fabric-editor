@@ -38,6 +38,8 @@ import dragMode from '@/components/dragMode.vue';
 // 功能组件
 import { fabric } from 'fabric';
 
+import useUrlData from '@/hooks/useUrlData';
+
 import Editor, {
   IEditor,
   DringPlugin,
@@ -158,6 +160,9 @@ const rulerSwitch = (val) => {
 
 provide('fabric', fabric);
 provide('canvasEditor', canvasEditor);
+
+// 啟用 URL 參數資料匯入支援
+useUrlData();
 // provide('mixinState', mixinState);
 </script>
 

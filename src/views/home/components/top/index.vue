@@ -69,6 +69,17 @@ const toggleModel = computed({
     emit('update:ruler', value);
   },
 });
+
+import { inject, onMounted } from 'vue';
+const canvasEditor: any = inject('canvasEditor');
+
+onMounted(() => {
+  if (canvasEditor) {
+    canvasEditor.on('openBatchGenerate', (data: any) => {
+      batchGenerateRef.value?.open(data);
+    });
+  }
+});
 </script>
 
 <style lang="less" scoped>

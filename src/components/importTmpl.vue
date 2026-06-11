@@ -52,7 +52,7 @@
         <!-- 列表 -->
         <div class="list-box">
           <Tooltip :content="info.name" v-for="info in pageData" :key="info.src" placement="top">
-            <div class="tmpl-img-box">
+            <div class="tmpl-img-box" style="position: relative">
               <Image
                 lazy
                 :src="info.previewSrc"
@@ -61,6 +61,26 @@
                 :alt="info.name"
                 @click="beforeClearTip(info)"
               />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  background: rgba(0, 0, 0, 0.5);
+                  border-radius: 0 5px 0 5px;
+                  z-index: 10;
+                  display: none;
+                "
+                class="hover-show-btn"
+              >
+                <Button
+                  type="text"
+                  size="small"
+                  icon="md-copy"
+                  @click.stop="copyId(info.id)"
+                  style="color: white; padding: 0 4px"
+                ></Button>
+              </div>
             </div>
           </Tooltip>
         </div>
@@ -103,16 +123,23 @@
                 <Button
                   type="text"
                   size="small"
+                  icon="md-copy"
+                  @click.stop="copyId(info.id)"
+                  style="color: white; padding: 0 4px"
+                ></Button>
+                <Button
+                  type="text"
+                  size="small"
                   icon="md-create"
                   @click.stop="renameLocal(info)"
-                  style="color: white"
+                  style="color: white; padding: 0 4px"
                 ></Button>
                 <Button
                   type="text"
                   size="small"
                   icon="md-trash"
                   @click.stop="deleteLocal(info.id)"
-                  style="color: white"
+                  style="color: white; padding: 0 4px"
                 ></Button>
               </div>
             </div>
@@ -251,6 +278,12 @@ const renameLocal = (info) => {
   showRenameModal.value = true;
 };
 
+const copyId = (id) => {
+  navigator.clipboard.writeText(id).then(() => {
+    Message.success(`已複製模板 ID: ${id}`);
+  });
+};
+
 import { Message } from 'view-ui-plus';
 
 const confirmRenameLocal = async () => {
@@ -288,6 +321,9 @@ const changeSelectType = debounce(() => {
 </script>
 
 <style scoped lang="less">
+.tmpl-img-box:hover .hover-show-btn {
+  display: block !important;
+}
 .search-box {
   padding-top: 10px;
   padding-bottom: 10px;
