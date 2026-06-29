@@ -13,7 +13,7 @@
       <div class="layer-box">
         <div
           v-for="item in list"
-          @click="select(item.id)"
+          @click="select(item.id, $event)"
           :key="item.id"
           :class="isSelect(item) && 'active'"
         >
@@ -109,10 +109,34 @@ const textType = (type, item) => {
   return typeText[type] || '默认元素';
 };
 // 选中元素
-const select = (id) => {
+const select = (id, e) => {
   const info = canvasEditor.canvas.getObjects().find((item) => item.id === id);
-  canvasEditor.canvas.discardActiveObject();
-  canvasEditor.canvas.setActiveObject(info);
+  if (!info) return;
+
+  if (e && e.shiftKey) {
+    let activeObjects = canvasEditor.canvas.getActiveObjects();
+    if (activeObjects.includes(info)) {
+      // 移除已選中的元素
+      activeObjects = activeObjects.filter((item) => item !== info);
+    } else {
+      // 加入新選中的元素
+      activeObjects.push(info);
+    }
+
+    canvasEditor.canvas.discardActiveObject();
+
+    if (activeObjects.length > 1) {
+      const sel = new fabric.ActiveSelection(activeObjects, {
+        canvas: canvasEditor.canvas,
+      });
+      canvasEditor.canvas.setActiveObject(sel);
+    } else if (activeObjects.length === 1) {
+      canvasEditor.canvas.setActiveObject(activeObjects[0]);
+    }
+  } else {
+    canvasEditor.canvas.discardActiveObject();
+    canvasEditor.canvas.setActiveObject(info);
+  }
   canvasEditor.canvas.requestRenderAll();
 };
 
