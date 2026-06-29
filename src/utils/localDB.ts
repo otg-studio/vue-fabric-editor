@@ -56,3 +56,20 @@ export const deleteLocalTemplate = async (id: string): Promise<void> => {
     request.onerror = () => reject(request.error);
   });
 };
+
+export const batchDeleteLocalTemplates = async (ids: string[]): Promise<void> => {
+  if (!ids || ids.length === 0) return;
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    const count = 0;
+
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+
+    for (const id of ids) {
+      store.delete(id);
+    }
+  });
+};

@@ -457,10 +457,8 @@ const deleteSelectedLocalTemplates = async () => {
     title: '刪除提示',
     content: `<p>確定要刪除選取的 ${selectedLocalIds.value.length} 個本機模板嗎？</p>`,
     onOk: async () => {
-      const { deleteLocalTemplate } = await import('@/utils/localDB');
-      for (const id of selectedLocalIds.value) {
-        await deleteLocalTemplate(id);
-      }
+      const { batchDeleteLocalTemplates } = await import('@/utils/localDB');
+      await batchDeleteLocalTemplates(selectedLocalIds.value);
       selectedLocalIds.value = [];
       loadLocal();
       Message.success('批次刪除成功');
