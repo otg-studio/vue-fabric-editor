@@ -149,11 +149,15 @@ const removeRow = (index) => {
 
 const applyVariablesToCanvas = async (rowData) => {
   const processObjs = async (objs, parentGroup = null) => {
+    let hasChanges = false;
     for (const obj of objs) {
       if (obj.type === 'group' && obj.getObjects) {
-        await processObjs([...obj.getObjects()], obj);
-        obj.addWithUpdate();
-        obj.dirty = true;
+        const childChanged = await processObjs([...obj.getObjects()], obj);
+        if (childChanged) {
+          obj.addWithUpdate();
+          obj.dirty = true;
+          hasChanges = true;
+        }
       }
 
       if (obj.linkData && obj.linkData[1] && rowData[obj.linkData[1]] !== undefined) {
@@ -166,6 +170,7 @@ const applyVariablesToCanvas = async (rowData) => {
             if (repeatCount <= 0) {
               if (parentGroup) {
                 parentGroup.removeWithUpdate(obj);
+                hasChanges = true;
               } else {
                 canvasEditor.canvas.remove(obj);
               }
@@ -191,10 +196,12 @@ const applyVariablesToCanvas = async (rowData) => {
                   }, keys);
                 });
               }
+              hasChanges = true;
             }
           }
         } else if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
           obj.set(propName, val);
+          hasChanges = true;
         } else if (obj.type === 'image') {
           if (val && (val.startsWith('http') || val.startsWith('data:image'))) {
             // 記下原始的顯示尺寸
@@ -263,6 +270,7 @@ const applyVariablesToCanvas = async (rowData) => {
                     parentGroup.addWithUpdate(img);
                     parentGroup.dirty = true;
                   }
+                  hasChanges = true;
                   resolve();
                 },
                 { crossOrigin: 'anonymous' }
@@ -272,6 +280,7 @@ const applyVariablesToCanvas = async (rowData) => {
         }
       }
     }
+    return hasChanges;
   };
 
   await processObjs([...canvasEditor.canvas.getObjects()]);
