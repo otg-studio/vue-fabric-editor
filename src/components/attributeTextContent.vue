@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
     </Divider>
 
     <Form :label-width="40" class="form-wrap">
-      <FormItem :label="$t('attributes.id')">
+      <FormItem :label="$t('attributes.content')">
         <Input
           v-model="baseAttr.text"
           @on-change="changeCommon('text', baseAttr.text)"
