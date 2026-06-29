@@ -99,12 +99,19 @@ const open = (initialData) => {
   // 取得當下畫布 JSON 作為基礎模板並轉成字串，避免 Vue 深層響應式造成嚴重卡頓
   baseTemplateJson.value = JSON.stringify(canvasEditor.getJson());
 
-  // 找出畫布中所有設定了 linkData[1] (變數名稱) 的物件
-  const objs = canvasEditor.canvas.getObjects().filter((item) => item.linkData && item.linkData[1]);
+  // 找出畫布中所有設定了 linkData[1] (變數名稱) 的物件，支援群組內遞迴尋找
   const vars = new Set();
-  objs.forEach((obj) => {
-    vars.add(obj.linkData[1]);
-  });
+  const collectVars = (objs) => {
+    objs.forEach((obj) => {
+      if (obj.linkData && obj.linkData[1]) {
+        vars.add(obj.linkData[1]);
+      }
+      if (obj.type === 'group' && obj.getObjects) {
+        collectVars(obj.getObjects());
+      }
+    });
+  };
+  collectVars(canvasEditor.canvas.getObjects());
   variables.value = Array.from(vars);
 
   tableData.value = [];
@@ -141,111 +148,133 @@ const removeRow = (index) => {
 };
 
 const applyVariablesToCanvas = async (rowData) => {
-  const objs = [...canvasEditor.canvas.getObjects()];
-  for (const obj of objs) {
-    if (obj.linkData && obj.linkData[1] && rowData[obj.linkData[1]] !== undefined) {
-      const val = rowData[obj.linkData[1]];
-      const propName = obj.linkData[0] || (obj.type.includes('text') ? 'text' : 'src');
+  const processObjs = async (objs, parentGroup = null) => {
+    for (const obj of objs) {
+      if (obj.type === 'group' && obj.getObjects) {
+        await processObjs([...obj.getObjects()], obj);
+        obj.addWithUpdate();
+        obj.dirty = true;
+      }
 
-      if (propName === 'repeat') {
-        const repeatCount = parseInt(val, 10);
-        if (!isNaN(repeatCount)) {
-          if (repeatCount <= 0) {
-            canvasEditor.canvas.remove(obj);
-          } else if (repeatCount > 1) {
-            const gapValue = 10;
-            let currentLeft = obj.left + obj.getScaledWidth();
-            const keys = canvasEditor.getExtensionKey ? canvasEditor.getExtensionKey() : [];
+      if (obj.linkData && obj.linkData[1] && rowData[obj.linkData[1]] !== undefined) {
+        const val = rowData[obj.linkData[1]];
+        const propName = obj.linkData[0] || (obj.type.includes('text') ? 'text' : 'src');
 
-            for (let c = 1; c < repeatCount; c++) {
-              await new Promise((resolveClone) => {
-                obj.clone((cloned) => {
-                  cloned.set({
-                    left: currentLeft + gapValue,
-                    top: obj.top,
-                  });
-                  canvasEditor.canvas.add(cloned);
-                  currentLeft = cloned.left + cloned.getScaledWidth();
-                  resolveClone();
-                }, keys);
-              });
+        if (propName === 'repeat') {
+          const repeatCount = parseInt(val, 10);
+          if (!isNaN(repeatCount)) {
+            if (repeatCount <= 0) {
+              if (parentGroup) {
+                parentGroup.removeWithUpdate(obj);
+              } else {
+                canvasEditor.canvas.remove(obj);
+              }
+            } else if (repeatCount > 1) {
+              const gapValue = 10;
+              let currentLeft = obj.left + obj.getScaledWidth();
+              const keys = canvasEditor.getExtensionKey ? canvasEditor.getExtensionKey() : [];
+
+              for (let c = 1; c < repeatCount; c++) {
+                await new Promise((resolveClone) => {
+                  obj.clone((cloned) => {
+                    cloned.set({
+                      left: currentLeft + gapValue,
+                      top: obj.top,
+                    });
+                    if (parentGroup) {
+                      parentGroup.addWithUpdate(cloned);
+                    } else {
+                      canvasEditor.canvas.add(cloned);
+                    }
+                    currentLeft = cloned.left + cloned.getScaledWidth();
+                    resolveClone();
+                  }, keys);
+                });
+              }
             }
           }
-        }
-      } else if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
-        obj.set(propName, val);
-      } else if (obj.type === 'image') {
-        if (val && (val.startsWith('http') || val.startsWith('data:image'))) {
-          // 記下原始的顯示尺寸
-          const pw = obj.width * obj.scaleX;
-          const ph = obj.height * obj.scaleY;
+        } else if (['i-text', 'textbox', 'text', 'vertical-textbox'].includes(obj.type)) {
+          obj.set(propName, val);
+        } else if (obj.type === 'image') {
+          if (val && (val.startsWith('http') || val.startsWith('data:image'))) {
+            // 記下原始的顯示尺寸
+            const pw = obj.width * obj.scaleX;
+            const ph = obj.height * obj.scaleY;
 
-          await new Promise((resolve) => {
-            obj.setSrc(
-              val,
-              (img) => {
-                // 算出 cover 的縮放比例
-                const s = Math.max(pw / img.width, ph / img.height);
+            await new Promise((resolve) => {
+              obj.setSrc(
+                val,
+                (img) => {
+                  // 算出 cover 的縮放比例
+                  const s = Math.max(pw / img.width, ph / img.height);
 
-                // 裁切圖片，使其等比例填滿原佔位框
-                img.set({
-                  scaleX: s,
-                  scaleY: s,
-                  width: pw / s,
-                  height: ph / s,
-                  cropX: (img.width - pw / s) / 2,
-                  cropY: (img.height - ph / s) / 2,
-                });
-
-                // 若原圖片有設定圓角，必須重新計算 clipPath
-                if (img.roundValue && img.roundValue > 0) {
-                  const scaleX = img.get('scaleX') || 1;
-                  const scaleY = img.get('scaleY') || 1;
-
-                  const w = img.width;
-                  const h = img.height;
-                  const rx = Math.max(0, Math.round(Number(img.roundValue) / scaleX));
-                  const ry = Math.max(0, Math.round(Number(img.roundValue) / scaleY));
-
-                  const x = -w / 2;
-                  const y = -h / 2;
-                  const r1 = Math.min(rx, w / 2);
-                  const r2 = Math.min(ry, h / 2);
-
-                  const pathString = `
-                    M ${x + r1} ${y}
-                    L ${x + w - r1} ${y}
-                    A ${r1} ${r2} 0 0 1 ${x + w} ${y + r2}
-                    L ${x + w} ${y + h - r2}
-                    A ${r1} ${r2} 0 0 1 ${x + w - r1} ${y + h}
-                    L ${x + r1} ${y + h}
-                    A ${r1} ${r2} 0 0 1 ${x} ${y + h - r2}
-                    L ${x} ${y + r2}
-                    A ${r1} ${r2} 0 0 1 ${x + r1} ${y}
-                    Z
-                  `
-                    .trim()
-                    .replace(/\s+/g, ' ');
-
-                  const rect = new fabric.Path(pathString, {
-                    originX: 'center',
-                    originY: 'center',
-                    left: 0,
-                    top: 0,
-                    fill: '#000000',
-                    absolutePositioned: false,
+                  // 裁切圖片，使其等比例填滿原佔位框
+                  img.set({
+                    scaleX: s,
+                    scaleY: s,
+                    width: pw / s,
+                    height: ph / s,
+                    cropX: (img.width - pw / s) / 2,
+                    cropY: (img.height - ph / s) / 2,
                   });
-                  img.set('clipPath', rect);
-                }
-                resolve();
-              },
-              { crossOrigin: 'anonymous' }
-            );
-          });
+
+                  // 若原圖片有設定圓角，必須重新計算 clipPath
+                  if (img.roundValue && img.roundValue > 0) {
+                    const scaleX = img.get('scaleX') || 1;
+                    const scaleY = img.get('scaleY') || 1;
+
+                    const w = img.width;
+                    const h = img.height;
+                    const rx = Math.max(0, Math.round(Number(img.roundValue) / scaleX));
+                    const ry = Math.max(0, Math.round(Number(img.roundValue) / scaleY));
+
+                    const x = -w / 2;
+                    const y = -h / 2;
+                    const r1 = Math.min(rx, w / 2);
+                    const r2 = Math.min(ry, h / 2);
+
+                    const pathString = `
+                      M ${x + r1} ${y}
+                      L ${x + w - r1} ${y}
+                      A ${r1} ${r2} 0 0 1 ${x + w} ${y + r2}
+                      L ${x + w} ${y + h - r2}
+                      A ${r1} ${r2} 0 0 1 ${x + w - r1} ${y + h}
+                      L ${x + r1} ${y + h}
+                      A ${r1} ${r2} 0 0 1 ${x} ${y + h - r2}
+                      L ${x} ${y + r2}
+                      A ${r1} ${r2} 0 0 1 ${x + r1} ${y}
+                      Z
+                    `
+                      .trim()
+                      .replace(/\s+/g, ' ');
+
+                    const rect = new fabric.Path(pathString, {
+                      originX: 'center',
+                      originY: 'center',
+                      left: 0,
+                      top: 0,
+                      fill: '#000000',
+                      absolutePositioned: false,
+                    });
+                    img.set('clipPath', rect);
+                  }
+
+                  if (parentGroup) {
+                    parentGroup.addWithUpdate(img);
+                    parentGroup.dirty = true;
+                  }
+                  resolve();
+                },
+                { crossOrigin: 'anonymous' }
+              );
+            });
+          }
         }
       }
     }
-  }
+  };
+
+  await processObjs([...canvasEditor.canvas.getObjects()]);
 };
 
 const previewRow = async (index) => {

@@ -42,15 +42,27 @@ class GroupPlugin implements IPluginTempl {
     if (!activeObj) return;
     const activegroup = activeObj.toGroup();
     const objectsInGroup = activegroup.getObjects();
+    const keys = this.editor.getExtensionKey
+      ? this.editor.getExtensionKey()
+      : ['id', 'name', 'linkData'];
     activegroup.clone((newgroup: fabric.Group) => {
       newgroup.set('id', uuid());
       this.canvas.remove(activegroup);
-      objectsInGroup.forEach((object) => {
+
+      const newObjects = newgroup.getObjects();
+      objectsInGroup.forEach((object, index) => {
         this.canvas.remove(object);
+        // 手動將原物件的自訂屬性拷貝回 clone 出來的新物件中
+        keys.forEach((key) => {
+          if (object[key] !== undefined) {
+            newObjects[index].set(key, object[key]);
+          }
+        });
       });
+
       this.canvas.add(newgroup);
       this.canvas.setActiveObject(newgroup);
-    });
+    }, keys);
   }
 
   contextMenu() {
