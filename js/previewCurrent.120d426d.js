@@ -1,0 +1,1 @@
+import{u as s,y as a,r,o as i,j as p,k as c,D as u,E as _,ae as v}from"./fabric.6adab23d.js";const d=s({__name:"previewCurrent",setup(m){const t=a("canvasEditor"),o=()=>{t.preview().then(e=>{v.ImagePreview.show({previewList:[e]})})};return(e,w)=>{const n=r("Button");return i(),p(n,{type:"text",onClick:o},{default:c(()=>[u(_(e.$t("preview")),1)]),_:1})}}});export{d as default};
