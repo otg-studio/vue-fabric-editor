@@ -46,6 +46,7 @@ const baseType = [
   'line',
   'arrow',
   'thinTailArrow',
+  'path',
 ];
 
 const update = getCurrentInstance();
