@@ -23,27 +23,38 @@
       </FormItem>
     </Form>
 
-    <Row :gutter="10">
-      <Col flex="1">
-        <Select
-          v-model="baseAttr.linkData[0]"
-          filterable
-          allow-create
-          @on-change="changeCommon('linkData', baseAttr.linkData)"
-        >
-          <Option value="src"></Option>
-          <Option value="text"></Option>
-          <Option value="repeat" label="陣列複製(repeat)"></Option>
-        </Select>
-      </Col>
-      <Col flex="1">
-        <Input
-          v-model="baseAttr.linkData[1]"
-          :placeholder="$t('plsInputVariableName')"
-          @on-change="changeCommon('linkData', baseAttr.linkData)"
-        />
-      </Col>
-    </Row>
+    <Divider plain orientation="left">
+      <h4>設定變數</h4>
+    </Divider>
+
+    <Form :label-width="70" class="form-wrap">
+      <FormItem label="啟用變數">
+        <Switch v-model="baseAttr.enableVariable" @on-change="toggleEnableVariable" />
+      </FormItem>
+
+      <template v-if="baseAttr.enableVariable">
+        <FormItem label="變數類型">
+          <Select
+            v-model="baseAttr.linkData[0]"
+            filterable
+            allow-create
+            placeholder="請選擇變數類型"
+            @on-change="changeCommon('linkData', baseAttr.linkData)"
+          >
+            <Option value="src" label="src"></Option>
+            <Option value="text" label="text"></Option>
+            <Option value="repeat" label="陣列複製(repeat)"></Option>
+          </Select>
+        </FormItem>
+        <FormItem label="變數名稱">
+          <Input
+            v-model="baseAttr.linkData[1]"
+            :placeholder="$t('plsInputVariableName')"
+            @on-change="changeCommon('linkData', baseAttr.linkData)"
+          />
+        </FormItem>
+      </template>
+    </Form>
 
     <!-- <Divider plain></Divider> -->
   </div>
@@ -59,6 +70,7 @@ const { canvasEditor, isOne } = useSelect();
 const baseAttr = reactive({
   id: 0,
   linkData: ['', ''],
+  enableVariable: false,
 });
 
 // 属性获取
@@ -68,7 +80,16 @@ const getObjectAttr = (e) => {
   if (e && e.target && e.target !== activeObject) return;
   if (activeObject) {
     baseAttr.id = activeObject.get('id');
-    baseAttr.linkData = activeObject.get('linkData') || ['', ''];
+    const linkData = activeObject.get('linkData') || ['', ''];
+    baseAttr.linkData = linkData;
+    baseAttr.enableVariable = linkData[0] !== '' || linkData[1] !== '';
+  }
+};
+
+const toggleEnableVariable = (val) => {
+  if (!val) {
+    baseAttr.linkData = ['', ''];
+    changeCommon('linkData', baseAttr.linkData);
   }
 };
 
