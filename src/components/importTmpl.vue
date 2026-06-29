@@ -99,6 +99,14 @@
           <Button size="small" type="primary" @click="exportLocalTemplates">
             {{ selectedLocalIds.length > 0 ? `匯出選取 (${selectedLocalIds.length})` : '匯出全部' }}
           </Button>
+          <Button
+            v-if="selectedLocalIds.length > 0"
+            size="small"
+            type="error"
+            @click="deleteSelectedLocalTemplates"
+          >
+            刪除選取 ({{ selectedLocalIds.length }})
+          </Button>
           <Button size="small" type="success" @click="triggerImport">匯入</Button>
           <input
             type="file"
@@ -359,6 +367,7 @@ const deleteLocal = async (id) => {
     onOk: async () => {
       const { deleteLocalTemplate } = await import('@/utils/localDB');
       await deleteLocalTemplate(id);
+      selectedLocalIds.value = selectedLocalIds.value.filter((itemId) => itemId !== id);
       loadLocal();
     },
   });
@@ -440,6 +449,23 @@ const toggleSelectAll = () => {
   } else {
     selectedLocalIds.value = localTemplates.value.map((item) => item.id);
   }
+};
+
+const deleteSelectedLocalTemplates = async () => {
+  if (selectedLocalIds.value.length === 0) return;
+  Modal.confirm({
+    title: '刪除提示',
+    content: `<p>確定要刪除選取的 ${selectedLocalIds.value.length} 個本機模板嗎？</p>`,
+    onOk: async () => {
+      const { deleteLocalTemplate } = await import('@/utils/localDB');
+      for (const id of selectedLocalIds.value) {
+        await deleteLocalTemplate(id);
+      }
+      selectedLocalIds.value = [];
+      loadLocal();
+      Message.success('批次刪除成功');
+    },
+  });
 };
 
 const exportLocalTemplates = async () => {
