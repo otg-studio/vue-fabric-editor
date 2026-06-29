@@ -137,6 +137,7 @@
               <template #list>
                 <DropdownMenu>
                   <DropdownItem name="copy">複製 ID</DropdownItem>
+                  <DropdownItem name="changeId">修改 ID</DropdownItem>
                   <DropdownItem name="rename">重新命名</DropdownItem>
                   <DropdownItem name="exportSingle" divided>匯出變數範例 (單筆)</DropdownItem>
                   <DropdownItem name="exportMulti">匯出變數範例 (多筆)</DropdownItem>
@@ -157,6 +158,10 @@
 
     <Modal v-model="showRenameModal" :title="$t('ui.renameTemplate')" @on-ok="confirmRenameLocal">
       <Input v-model="renameTargetName" :placeholder="$t('ui.plsInput')" autofocus />
+    </Modal>
+
+    <Modal v-model="showChangeIdModal" title="修改模板 ID" @on-ok="confirmChangeId">
+      <Input v-model="newTargetId" placeholder="請輸入新的 ID" autofocus />
     </Modal>
   </div>
 </template>
@@ -254,6 +259,10 @@ const showRenameModal = ref(false);
 const renameTargetId = ref('');
 const renameTargetName = ref('');
 
+const showChangeIdModal = ref(false);
+const changeIdTargetId = ref('');
+const newTargetId = ref('');
+
 const loadLocal = async () => {
   const { getLocalTemplates } = await import('@/utils/localDB');
   localTemplates.value = await getLocalTemplates();
@@ -301,6 +310,45 @@ const confirmRenameLocal = async () => {
     await saveLocalTemplate(existing);
     loadLocal();
     Message.success('重新命名成功');
+  }
+};
+
+const changeIdLocal = (info) => {
+  changeIdTargetId.value = info.id;
+  newTargetId.value = info.id;
+  showChangeIdModal.value = true;
+};
+
+const confirmChangeId = async () => {
+  if (!newTargetId.value.trim()) {
+    Message.warning('ID 不能為空');
+    return;
+  }
+  if (newTargetId.value.trim() === changeIdTargetId.value) {
+    return;
+  }
+  const { getLocalTemplates, saveLocalTemplate, deleteLocalTemplate } = await import(
+    '@/utils/localDB'
+  );
+  const list = await getLocalTemplates();
+
+  if (list.some((item) => item.id === newTargetId.value.trim())) {
+    Message.error('此 ID 已經存在');
+    return;
+  }
+
+  const existing = list.find((item) => item.id === changeIdTargetId.value);
+  if (existing) {
+    const newItem = { ...existing, id: newTargetId.value.trim(), updatedAt: Date.now() };
+    await saveLocalTemplate(newItem);
+    await deleteLocalTemplate(changeIdTargetId.value);
+
+    if (route.query.localId === changeIdTargetId.value) {
+      router.replace('/?localId=' + newTargetId.value.trim());
+    }
+
+    await loadLocal();
+    Message.success('修改 ID 成功');
   }
 };
 
@@ -363,6 +411,8 @@ const handleExportJson = (info, type) => {
 const handleLocalContextClick = (name, info) => {
   if (name === 'copy') {
     copyId(info.id);
+  } else if (name === 'changeId') {
+    changeIdLocal(info);
   } else if (name === 'rename') {
     renameLocal(info);
   } else if (name === 'exportSingle') {
