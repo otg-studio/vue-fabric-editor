@@ -8,11 +8,20 @@
 
 <template>
   <div class="logo">
-    <span>Vue Fabric Editor</span>
+    <div class="title-container">
+      <span>Vue Fabric Editor</span>
+      <span class="version">{{ version }}</span>
+    </div>
   </div>
 </template>
 
-<script setup name="Logo"></script>
+<script setup name="Logo">
+import { ref } from 'vue';
+import pkg from '../../package.json';
+
+// Use build-time injected version, fallback to package.json version
+const version = ref(import.meta.env.VITE_APP_VERSION || `v${pkg.version}`);
+</script>
 
 <style scoped lang="less">
 .logo {
@@ -22,10 +31,25 @@
   margin-right: 10px;
   margin-left: 2px;
   align-items: center;
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   span {
     font-size: 18px;
     font-weight: bold;
     margin-left: 6px;
+    line-height: 1;
+  }
+
+  .version {
+    font-size: 11px;
+    font-weight: normal;
+    color: #666;
+    margin-top: 4px;
   }
 }
 </style>
