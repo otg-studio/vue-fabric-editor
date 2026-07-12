@@ -160,7 +160,7 @@ class CopyPlugin implements IPluginTempl {
         // }
         if (item.type.indexOf('image/') === 0) {
           // 这是一个图片文件
-          const imageUrl = URL.createObjectURL(file);
+          const imageUrl = (await getImgStr(file)) as string;
           const imgEl = document.createElement('img');
           imgEl.src = imageUrl;
           // 插入页面
@@ -189,7 +189,9 @@ class CopyPlugin implements IPluginTempl {
           // 如果是激活的文字把复制的内容插入到对应光标位置
           if (
             activeObject &&
-            (activeObject.type === 'textbox' || activeObject.type === 'i-text' || activeObject.type === 'vertical-textbox') &&
+            (activeObject.type === 'textbox' ||
+              activeObject.type === 'i-text' ||
+              activeObject.type === 'vertical-textbox') &&
             activeObject.isEditing
           ) {
             const cursorPosition = activeObject.selectionStart;
