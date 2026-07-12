@@ -20,7 +20,7 @@ import { ref } from 'vue';
 import pkg from '../../package.json';
 
 // Use build-time injected version, fallback to package.json version
-const version = ref(import.meta.env.VITE_APP_VERSION || `v${pkg.version}`);
+const version = ref(import.meta.env.APP_VERSION || `v${pkg.version}`);
 </script>
 
 <style scoped lang="less">
